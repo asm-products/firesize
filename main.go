@@ -27,6 +27,7 @@ func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	splitArgs := strings.Split(string(processArgs), " ")
 
+	w.Header().Set("Cache-Control", "public, max-age=864000")
 	err = processor.Process(w, assetUrl, splitArgs...)
 	if err != nil {
 		http.Error(w, "processing failed", 500)

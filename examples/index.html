@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Firesize examples</title>
+  <link type="text/css" rel="stylesheet" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    <ul class="sections">
+      <li>
+        <div class="annotation">
+          <h1>Firesize examples</h1>
+        </div>
+      </li>
+      <li>
+        <div class="annotation">
+          <h2>Basic thumbnails</h2>
+        </div>
+      </li>
+      <li>
+        <div class="annotation">
+          <p><pre><code>-thumbnail 128x128^ -gravity center -extent 128x128 -format png</code></pre></p>
+        </div>
+        <div class="content">
+          <img data-process-args="-thumbnail 128x128^ -gravity center -extent 128x128 -format png" data-asset="http://placekitten.com/g/800/600">
+          <img data-process-args="-thumbnail 128x128^ -gravity center -extent 128x128 -format png" data-asset="http://placekitten.com/g/1024/320">
+          <img data-process-args="-thumbnail 128x128^ -gravity center -extent 128x128 -format png" data-asset="http://placekitten.com/g/320/1024">
+        </div>
+      </li>
+      <li>
+        <div class="annotation">
+          <p><pre><code>-thumbnail 128x128^ -gravity south -extent 128x128 -format png</code></pre></p>
+        </div>
+        <div class="content">
+          <img data-process-args="-thumbnail 128x128^ -gravity south -extent 128x128 -format png" data-asset="http://placekitten.com/g/800/600">
+          <img data-process-args="-thumbnail 128x128^ -gravity south -extent 128x128 -format png" data-asset="http://placekitten.com/g/1024/320">
+          <img data-process-args="-thumbnail 128x128^ -gravity south -extent 128x128 -format png" data-asset="http://placekitten.com/g/320/1024">
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script>
+    $(function(){
+      $('img[data-asset]').each(function(){
+        var data = $(this).data()
+        var url = "http://0.0.0.0:3000/" + btoa(data.processArgs) + "/" + data.asset;
+        $(this).attr('src', url)
+      });
+    });
+  </script>
+</body>
+</html>

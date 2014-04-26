@@ -21,12 +21,22 @@ func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-    assetUrl := splits[2]
+	assetUrl := string(splits[2])
+
+	processor := &GMagick{}
+
+	splitArgs := strings.Split(string(processArgs), " ")
+
+	err = processor.Process(w, assetUrl, splitArgs...)
+	if err != nil {
+		http.Error(w, "processing failed", 500)
+		return
+	}
 
 	grohl.Log(grohl.Data{
 		"action": "process",
-		"base64": string(processArgs),
-        "asset": assetUrl,
+		"args":   string(processArgs),
+		"asset":  assetUrl,
 	})
 }
 

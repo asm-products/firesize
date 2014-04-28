@@ -4,6 +4,10 @@
 
 if( typeof jQuery == 'function' ){
   (function($){
+    var settings = {
+      domain: '{{ .Domain }}'
+    };
+
     $(function(){
       $('img[data-src]').each(function(){
         var data = $(this).data();
@@ -17,10 +21,8 @@ if( typeof jQuery == 'function' ){
           frame: data.frame
         };
 
-        var url = "http://0.0.0.0:3000/" + btoa(JSON.stringify(args)) + "/" + data.src;
+        var url = settings.domain + "/" + btoa(JSON.stringify(args)) + "/" + data.src;
         $(this).attr('src', url)
-
-        console.log('src', data.src, 'url', url)
       });
     });
   })(jQuery);

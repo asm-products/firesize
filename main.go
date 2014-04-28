@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"text/template"
 
 	"github.com/technoweenie/grohl"
 )
@@ -15,7 +16,7 @@ type ImageServer struct {
 
 func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.String() == "/jquery.firesize.js" {
-		http.ServeFile(w, r, "./public/jquery.firesize.js")
+		serveJs(w, r)
 	} else {
 		serveImage(w, r)
 	}
@@ -64,6 +65,22 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 		"asset":    assetUrl,
 		"referrer": r.Header.Get("Referer"),
 	})
+}
+
+func serveJs(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("./assets/jquery.firesize.js.tmpl")
+	if err != nil {
+		http.Error(w, "failed", 500)
+	}
+	domain := os.Getenv("JS_DOMAIN")
+	if domain == "" {
+		domain = "http://0.0.0.0:3000"
+	}
+	data := struct{ Domain string }{domain}
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, "failed", 500)
+	}
 }
 
 func main() {

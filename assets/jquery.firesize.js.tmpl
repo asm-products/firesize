@@ -2,17 +2,27 @@
  * Firesize jquery plugin
  */
 
-if( typeof jQuery == 'function' ){
+;if( typeof jQuery == 'function' ){
   (function($){
-    var settings = {
-      domain: '{{ .Domain }}'
+    var pluginName = "firesize",
+      defaults = {
+      domain: "{{ .Domain }}"
     };
 
-    $(function(){
-      $('img[data-src]').each(function(){
-        var data = $(this).data();
-        var width = $(this).attr('width');
-        var height = $(this).attr('height');
+    function Firesize(el, options) {
+      this.el = el;
+      this.settings = $.extend({}, defaults, options);
+      this._defaults = defaults;
+      this._name = pluginName;
+      this.init();
+    }
+
+    Firesize.prototype = {
+      init: function () {
+        var $el = $(this.el);
+        var data = $el.data();
+        var width = $el.attr('width');
+        var height = $el.attr('height');
 
         var args = {
           width: width,
@@ -21,10 +31,24 @@ if( typeof jQuery == 'function' ){
           frame: data.frame
         };
 
-        var url = settings.domain + "/" + btoa(JSON.stringify(args)) + "/" + data.src;
-        $(this).attr('src', url)
+        $el.attr('src', $.firesize(data.src, args))
+      }
+    };
+
+    $.firesize = function(url, options) {
+      return defaults.domain + "/" + btoa(JSON.stringify(options)) + "/" + url;
+    }
+
+    $.fn.firesize = function ( options ) {
+      this.each(function() {
+        if ( !$.data( this, "plugin_" + pluginName ) ) {
+          $.data( this, "plugin_" + pluginName, new Firesize(this, options) );
+        }
       });
-    });
+      return this;
+    };
+
+    $("img[data-src]").firesize()
   })(jQuery);
 } else {
   if( typeof console.error == 'function' ) console.error('Firesize plugin requires jQuery' );

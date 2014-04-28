@@ -1,1 +1,1 @@
-web: img-resizer
+web: firesize

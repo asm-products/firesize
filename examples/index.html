@@ -15,27 +15,54 @@
       </li>
       <li>
         <div class="annotation">
-          <h2>Basic thumbnails</h2>
+          <h2>Fixed width proportionate height</h2>
         </div>
       </li>
       <li>
         <div class="annotation">
-          <p><pre><code>-thumbnail 128x128^ -gravity center -extent 128x128 -format png</code></pre></p>
+          <p><pre><code>128x</code></pre></p>
         </div>
         <div class="content">
-          <img data-process-args="-thumbnail 128x128^ -gravity center -extent 128x128 -format png" data-asset="http://placekitten.com/g/800/600">
-          <img data-process-args="-thumbnail 128x128^ -gravity center -extent 128x128 -format png" data-asset="http://placekitten.com/g/1024/320">
-          <img data-process-args="-thumbnail 128x128^ -gravity center -extent 128x128 -format png" data-asset="http://placekitten.com/g/320/1024">
+          <img width="128" data-src="http://placekitten.com/g/32/32">
+          <img width="128" data-src="http://placekitten.com/g/800/600">
+          <img width="128" data-src="http://placekitten.com/g/1024/320">
+          <img width="128" data-src="http://placekitten.com/g/320/1024">
         </div>
       </li>
       <li>
         <div class="annotation">
-          <p><pre><code>-thumbnail 128x128^ -gravity south -extent 128x128 -format png</code></pre></p>
+          <h2>Fixed height proportionate width</h2>
         </div>
         <div class="content">
-          <img data-process-args="-thumbnail 128x128^ -gravity south -extent 128x128 -format png" data-asset="http://placekitten.com/g/800/600">
-          <img data-process-args="-thumbnail 128x128^ -gravity south -extent 128x128 -format png" data-asset="http://placekitten.com/g/1024/320">
-          <img data-process-args="-thumbnail 128x128^ -gravity south -extent 128x128 -format png" data-asset="http://placekitten.com/g/320/1024">
+          <img height="128" data-src="http://placekitten.com/g/32/32">
+          <img height="128" data-src="http://placekitten.com/g/800/600">
+          <img height="128" data-src="http://placekitten.com/g/1024/320">
+          <img height="128" data-src="http://placekitten.com/g/320/1024">
+        </div>
+      </li>
+      <li>
+        <div class="annotation">
+          <h2>Fixed height and width</h2>
+        </div>
+        <div class="content">
+          <img width="128" height="128" data-gravity="center" data-src="http://placekitten.com/g/32/32">
+          <img width="128" height="128" data-gravity="center" data-src="http://placekitten.com/g/800/600">
+          <img width="128" height="128" data-gravity="center" data-src="http://placekitten.com/g/1024/320">
+          <img width="128" height="128" data-gravity="center" data-src="http://placekitten.com/g/320/1024">
+        </div>
+      </li>
+      <li>
+        <div class="annotation">
+          <h2>PSD thumbnails</h2>
+        </div>
+      </li>
+      <li>
+        <div class="annotation">
+          <p><pre><code>-thumbnail 128x128^ -gravity center -extent 128x128 -format png %{in}[0]</code></pre></p>
+        </div>
+        <div class="content">
+          <img width="128" height="128" data-gravity="center" data-frame="0"
+               data-src="http://asm-assets.s3.amazonaws.com/helpful-signup-04-24-14.psd">
         </div>
       </li>
     </ul>
@@ -45,10 +72,20 @@
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script>
     $(function(){
-      $('img[data-asset]').each(function(){
-        var data = $(this).data()
-        var url = "http://0.0.0.0:3000/" + btoa(data.processArgs) + "/" + data.asset;
-        $(this).attr('src', url)
+      $('img[data-src]').each(function(){
+        var data = $(this).data();
+        var width = $(this).attr('width');
+        var height = $(this).attr('height');
+
+        var args = {
+          width: width,
+          height: height,
+          gravity: data.gravity,
+          frame: data.frame
+        };
+
+        var url = "http://0.0.0.0:3000/" + btoa(JSON.stringify(args)) + "/" + data.src;
+        $(this).attr('src', url + "#.png")
       });
     });
   </script>

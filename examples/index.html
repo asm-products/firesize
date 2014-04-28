@@ -70,24 +70,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1-rc2/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  <script>
-    $(function(){
-      $('img[data-src]').each(function(){
-        var data = $(this).data();
-        var width = $(this).attr('width');
-        var height = $(this).attr('height');
-
-        var args = {
-          width: width,
-          height: height,
-          gravity: data.gravity,
-          frame: data.frame
-        };
-
-        var url = "http://0.0.0.0:3000/" + btoa(JSON.stringify(args)) + "/" + data.src;
-        $(this).attr('src', url + "#.png")
-      });
-    });
-  </script>
+  <script src="http://0.0.0.0:3000/jquery.firesize.js"></script>
 </body>
 </html>

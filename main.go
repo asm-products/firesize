@@ -14,6 +14,14 @@ type ImageServer struct {
 }
 
 func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.URL.String() == "/jquery.firesize.js" {
+		http.ServeFile(w, r, "./public/jquery.firesize.js")
+	} else {
+		serveImage(w, r)
+	}
+}
+
+func serveImage(w http.ResponseWriter, r *http.Request) {
 	splits := strings.SplitN(r.URL.String(), "/", 3)
 
 	argsJson, err := base64.StdEncoding.DecodeString(splits[1])

@@ -4,16 +4,22 @@
 
 ;if( typeof jQuery == 'function' ){
   (function($){
-    var pluginName = "firesize",
-      defaults = {
-      domain: "{{ .Domain }}"
+    var pluginName = "firesize";
+
+    $.firesize = {
+      settings: {
+        domain: "{{ .Domain }}"
+      }
     };
 
-    function Firesize(el, options) {
+    $.each(window.__firesize, function(){
+      $.firesize.settings[this[0]] = this[1]
+    });
+
+    console.log($.firesize.settings)
+
+    function Firesize(el) {
       this.el = el;
-      this.settings = $.extend({}, defaults, options);
-      this._defaults = defaults;
-      this._name = pluginName;
       this.init();
     }
 
@@ -31,18 +37,18 @@
           frame: data.frame
         };
 
-        $el.attr('src', $.firesize(data.src, args))
+        $el.attr('src', $.firesize.url(data.src, args))
       }
     };
 
-    $.firesize = function(url, options) {
-      return defaults.domain + "/" + btoa(JSON.stringify(options)) + "/" + url;
+    $.firesize.url = function(url, options) {
+      return $.firesize.settings.domain + "/" + btoa(JSON.stringify(options)) + "/" + url;
     }
 
-    $.fn.firesize = function ( options ) {
+    $.fn.firesize = function () {
       this.each(function() {
         if ( !$.data( this, "plugin_" + pluginName ) ) {
-          $.data( this, "plugin_" + pluginName, new Firesize(this, options) );
+          $.data( this, "plugin_" + pluginName, new Firesize(this) );
         }
       });
       return this;

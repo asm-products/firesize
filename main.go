@@ -15,7 +15,7 @@ type ImageServer struct {
 }
 
 func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.URL.String() == "/jquery.firesize.js" {
+	if r.URL.Path == "/jquery.firesize.js" {
 		serveJs(w, r)
 	} else {
 		serveImage(w, r)

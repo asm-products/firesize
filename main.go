@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/base64"
-	"encoding/json"
 	"net/http"
 	"os"
 	"strings"
@@ -23,33 +21,14 @@ func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveImage(w http.ResponseWriter, r *http.Request) {
-	splits := strings.SplitN(r.URL.String(), "/", 3)
+	splits := strings.Split(r.URL.String(), "/")
 
-	argsJson, err := base64.StdEncoding.DecodeString(splits[1])
-	if err != nil {
-		grohl.Log(grohl.Data{
-			"action": "args",
-			"parts":  splits,
-		})
-		http.Error(w, "invalid base64("+err.Error()+"): "+splits[1], 500)
-		return
-	}
-
-	assetUrl := string(splits[2])
-	var processArgs ProcessArgs
-	err = json.Unmarshal([]byte(argsJson), &processArgs)
-	if err != nil {
-		grohl.Log(grohl.Data{
-			"error": err.Error(),
-			"json":  string(argsJson),
-		})
-		return
-	}
+	processArgs := NewProcessArgs(splits[1:])
 
 	processor := &IMagick{}
 
 	// w.Header().Set("Cache-Control", "public, max-age=864000")
-	err = processor.Process(w, r, assetUrl, processArgs)
+	err := processor.Process(w, r, processArgs)
 	if err != nil {
 		grohl.Log(grohl.Data{
 			"error": err.Error(),
@@ -62,7 +41,6 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 	grohl.Log(grohl.Data{
 		"action":   "process",
 		"args":     processArgs,
-		"asset":    assetUrl,
 		"referrer": r.Header.Get("Referer"),
 	})
 }

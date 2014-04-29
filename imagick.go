@@ -18,7 +18,7 @@ type IMagick struct{}
 
 // Process a remote asset url using graphicsmagick with the args supplied
 // and write the response to w
-func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, assetUrl string, args ProcessArgs) (err error) {
+func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessArgs) (err error) {
 	executable := "convert"
 
 	tempDir, err := ioutil.TempDir("", "_firesize")
@@ -31,11 +31,11 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, assetUrl strin
 
 	grohl.Log(grohl.Data{
 		"processor": "imagick",
-		"download":  assetUrl,
+		"download":  args.Url,
 		"local":     inFile,
 	})
 
-	if err = downloadRemote(assetUrl, inFile); err != nil {
+	if err = downloadRemote(args.Url, inFile); err != nil {
 		return
 	}
 

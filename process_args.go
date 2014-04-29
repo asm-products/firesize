@@ -1,39 +1,95 @@
 package main
 
-import "strconv"
+import (
+	"regexp"
+	"strings"
+)
 
 type ProcessArgs struct {
-	Height  string `json:"height"`
-	Width   string `json:"width"`
-	Format  string `json:"format"`
-	Gravity string `json:"gravity"`
-	Frame   *int   `json:"frame"`
+	Height  string
+	Width   string
+	Format  string
+	Gravity string
+	Frame   string
+	Url     string
+}
+
+func NewProcessArgs(urlArgs []string) *ProcessArgs {
+	args := &ProcessArgs{}
+	var argCount int
+	for _, arg := range urlArgs {
+		if args.setUrlArg(arg) {
+			argCount++
+		} else {
+			break
+		}
+	}
+	args.Url = strings.Join(urlArgs[argCount:], "/")
+	return args
+}
+
+var dimensionsRgx = regexp.MustCompile(`^(\d+)?x(\d+)?$`)
+var gravityRgx = regexp.MustCompile(`^g_([a-z]+)$`)
+var frameRgx = regexp.MustCompile(`^frame_(\d+)$`)
+var formatRgx = regexp.MustCompile(`^(png|jpg|jpeg|gif)$`)
+
+func (p *ProcessArgs) setUrlArg(arg string) bool {
+	switch {
+	case dimensionsRgx.MatchString(arg):
+		dimensions := dimensionsRgx.FindStringSubmatch(arg)
+		p.Width = dimensions[1]
+		p.Height = dimensions[2]
+		return true
+
+	case gravityRgx.MatchString(arg):
+		gravity := gravityRgx.FindStringSubmatch(arg)
+		p.Gravity = gravity[1]
+		return true
+
+	case frameRgx.MatchString(arg):
+		frame := frameRgx.FindStringSubmatch(arg)
+		p.Frame = frame[1]
+		return true
+
+	case formatRgx.MatchString(arg):
+		format := formatRgx.FindStringSubmatch(arg)
+		p.Format = format[1]
+		return true
+	}
+	return false
 }
 
 func (p *ProcessArgs) CommandArgs(inFile, outFile string) (args []string, outFileWithFormat string) {
 	args = make([]string, 0)
+
+	fillArg := ">"
+	if p.Gravity != "" {
+		args = append(args, "-gravity", p.Gravity)
+		fillArg = "^"
+	}
+
 	if p.Width != "" && p.Height != "" {
-		args = append(args, "-thumbnail", p.Width+"x"+p.Height+"^")
-		args = append(args, "-extent", p.Width+"x"+p.Height)
+		args = append(args, "-thumbnail", p.Width+"x"+p.Height+fillArg)
+		args = append(args, "-crop", p.Width+"x"+p.Height+"+0+0")
 	} else if p.Width != "" {
 		args = append(args, "-thumbnail", p.Width+"x")
 	} else if p.Height != "" {
 		args = append(args, "-thumbnail", "x"+p.Height)
 	}
 
-	if p.Gravity != "" {
-		args = append(args, "-gravity", p.Gravity)
-	}
-
 	if p.Format == "" {
-		p.Format = "gif"
+		p.Format = "png"
+		if p.Frame != "" {
+			p.Format = "gif"
+		}
 	}
 	args = append(args, "-format", p.Format)
+	args = append(args, "+repage")
 
 	outFileWithFormat = outFile + "." + p.Format
 
-	if p.Frame != nil {
-		args = append(args, inFile+"["+strconv.Itoa(*p.Frame)+"]", outFileWithFormat)
+	if p.Frame != "" {
+		args = append(args, inFile+"["+p.Frame+"]", outFileWithFormat)
 	} else {
 		args = append(args, inFile, outFileWithFormat)
 	}

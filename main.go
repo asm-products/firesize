@@ -27,7 +27,7 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 
 	processor := &IMagick{}
 
-	// w.Header().Set("Cache-Control", "public, max-age=864000")
+	w.Header().Set("Cache-Control", "public, max-age=864000")
 	err := processor.Process(w, r, processArgs)
 	if err != nil {
 		grohl.Log(grohl.Data{

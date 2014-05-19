@@ -13,10 +13,17 @@ type ImageServer struct {
 }
 
 func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path == "/jquery.firesize.js" {
-		serveJs(w, r)
-	} else {
+	switch r.URL.Path {
+	default:
 		serveImage(w, r)
+	case "/":
+		http.ServeFile(w, r, "./assets/home.html")
+	case "/examples":
+		http.ServeFile(w, r, "./assets/examples.html")
+	case "/docco.css":
+		http.ServeFile(w, r, "./assets/docco.css")
+	case "/jquery.firesize.js":
+		serveJs(w, r)
 	}
 }
 
@@ -46,6 +53,23 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveJs(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles("./assets/jquery.firesize.js.tmpl")
+	if err != nil {
+		http.Error(w, "failed", 500)
+	}
+	domain := os.Getenv("JS_DOMAIN")
+	if domain == "" {
+		domain = "http://0.0.0.0:3000"
+	}
+	data := struct{ Domain string }{domain}
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, "failed", 500)
+	}
+}
+
+func serveHome(w http.ResponseWriter, r *http.Request) {
+
 	tmpl, err := template.ParseFiles("./assets/jquery.firesize.js.tmpl")
 	if err != nil {
 		http.Error(w, "failed", 500)

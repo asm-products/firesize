@@ -4,7 +4,15 @@
 
 Processes images on the fly using imagemagick.
 
-See examples/index.html for usage.
+## Get started
+
+    $ go get github.com/asm-products/firesize
+    $ go get github.com/codegangsta/gin
+    $ cd $GOPATH/src/github.com/asm-products/firesize
+    $ gin
+    [gin] listening on port 3000
+
+Open up http://localhost:3000/examples
 
 ### Assembly made
 

@@ -46,9 +46,9 @@ func serveImage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	grohl.Log(grohl.Data{
-		"action":   "process",
-		"args":     processArgs,
-		"referrer": r.Header.Get("Referer"),
+		"action":  "process",
+		"args":    processArgs,
+		"headers": r.Header,
 	})
 }
 

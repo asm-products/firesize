@@ -3,89 +3,19 @@ package main
 import (
 	"net/http"
 	"os"
-	"strings"
-	"text/template"
 
+	"github.com/codegangsta/negroni"
+	"github.com/coopernurse/gorp"
 	"github.com/technoweenie/grohl"
+	"github.com/whatupdave/mux"
 )
 
-type ImageServer struct {
-}
-
-func (i *ImageServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	switch r.URL.Path {
-	default:
-		serveImage(w, r)
-	case "/":
-		http.ServeFile(w, r, "./assets/home.html")
-	case "/examples":
-		http.ServeFile(w, r, "./assets/examples.html")
-	case "/docco.css":
-		http.ServeFile(w, r, "./assets/docco.css")
-	case "/jquery.firesize.js":
-		serveJs(w, r)
-	}
-}
-
-func serveImage(w http.ResponseWriter, r *http.Request) {
-	splits := strings.Split(r.URL.String(), "/")
-
-	processArgs := NewProcessArgs(splits[1:])
-
-	processor := &IMagick{}
-
-	w.Header().Set("Cache-Control", "public, max-age=864000")
-	err := processor.Process(w, r, processArgs)
-	if err != nil {
-		grohl.Log(grohl.Data{
-			"error": err.Error(),
-			"parts": splits,
-		})
-		http.Error(w, "processing failed", 500)
-		return
-	}
-
-	grohl.Log(grohl.Data{
-		"action":  "process",
-		"args":    processArgs,
-		"headers": r.Header,
-	})
-}
-
-func serveJs(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./assets/jquery.firesize.js.tmpl")
-	if err != nil {
-		http.Error(w, "failed", 500)
-	}
-	domain := os.Getenv("JS_DOMAIN")
-	if domain == "" {
-		domain = "http://0.0.0.0:3000"
-	}
-	data := struct{ Domain string }{domain}
-	err = tmpl.Execute(w, data)
-	if err != nil {
-		http.Error(w, "failed", 500)
-	}
-}
-
-func serveHome(w http.ResponseWriter, r *http.Request) {
-
-	tmpl, err := template.ParseFiles("./assets/jquery.firesize.js.tmpl")
-	if err != nil {
-		http.Error(w, "failed", 500)
-	}
-	domain := os.Getenv("JS_DOMAIN")
-	if domain == "" {
-		domain = "http://0.0.0.0:3000"
-	}
-	data := struct{ Domain string }{domain}
-	err = tmpl.Execute(w, data)
-	if err != nil {
-		http.Error(w, "failed", 500)
-	}
-}
+var dbmap *gorp.DbMap
 
 func main() {
+	dbmap = initDb(os.Getenv("DATABASE_URL"))
+	defer dbmap.Db.Close()
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "3000"
@@ -98,8 +28,37 @@ func main() {
 		"port":   port,
 	})
 
-	err := http.ListenAndServe(host+":"+port, &ImageServer{})
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", View("home/home")).Methods("GET")
+	r.HandleFunc("/accounts", AccountsCreate).Methods("POST")
+	r.HandleFunc("/dashboard", DashboardShow).Methods("GET")
+	r.HandleFunc("/examples", View("home/examples")).Methods("GET")
+	r.HandleFunc("/signin", SessionsNew).Methods("GET")
+	r.HandleFunc("/signout", SessionsDestroy).Methods("GET")
+
+	r.HandleFunc("/sessions", SessionsCreate).Methods("POST")
+
+	// Image processing requests
+	r.SkipClean(true)
+	r.HandleFunc("/{path:.*}", serveImage)
+
+	n := negroni.Classic()
+
+	// assets – no asset pipeline :(
+	n.Use(negroni.NewStatic(http.Dir("assets")))
+
+	// router goes last
+	n.UseHandler(r)
+
+	err := http.ListenAndServe(host+":"+port, n)
 	if err != nil {
 		panic(err)
+	}
+}
+
+func View(name string) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./app/views/"+name+".html")
 	}
 }

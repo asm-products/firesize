@@ -6,11 +6,29 @@ Processes images on the fly using imagemagick.
 
 ## Get started
 
-    $ go get github.com/asm-products/firesize
-    $ go get github.com/codegangsta/gin
-    $ cd $GOPATH/src/github.com/asm-products/firesize
-    $ gin
-    [gin] listening on port 3000
+Make sure Postgres is installed.
+
+    # Create a local development database
+    psql -c "create database rr_development"
+
+    # Install goose for running migrations
+    go get bitbucket.org/liamstask/goose/cmd/goose
+
+    # Copy sample env file
+    cp .env.sample .env
+
+    # Install forego (or use foreman)
+    go get github.com/ddollar/forego
+
+    # Run database migrations
+    forego run goose up
+
+    # Retrieve dependencies
+    go get github.com/kr/godep
+    $GOPATH/bin/godep restore ./...
+
+    # Start up the server (or use something like gin to auto-reload)
+    forego start
 
 Open up http://localhost:3000/examples
 

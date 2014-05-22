@@ -1,3 +1,4 @@
 .env
-gin-bin
-firesize
+app/tmp
+
+.anvil

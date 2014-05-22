@@ -1,48 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Firesize · The simple image resizing proxy</title>
+{{append . "moreStyles" "css/dashboard.css"}}
+{{set . "title" "Firesize"}}
+{{template "header.html" .}}
+<body>
+  <div class="container">
+    <div class="page-header">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/">Sign up</a></li>
+      </ul>
 
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+      <h1><a href="/">Firesize</a></h1>
+    </div>
 
-    <style type="text/css">
-    body {
-      background-color: #eee;
-    }
+    {{if .flash.error}}
+      <div class="alert alert-danger">{{.flash.error}}</div>
+    {{end}}
+    {{if .flash.success}}
+      <div class="alert alert-success">{{.flash.error}}</div>
+    {{end}}
 
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="page-header">
-        <h1>Firesize</h1>
-      </div>
-      <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-          <form role="form" method="post" action="/sessions">
-            <h2>Sign in</h2>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <form role="form" method="post" action="{{url "Sessions.Create"}}">
+          <h2>Sign in</h2>
 
-            <div class="form-group">
-              <input type="email" name="account[email]" class="form-control" placeholder="Your email" required autofocus>
-            </div>
-            <div class="form-group">
-              <input type="password" name="account[password]" class="form-control" placeholder="New Password" required>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          </form>
-        </div>
+          <div class="form-group">
+            <input type="email" name="email" value="{{.flash.email}}" class="form-control" placeholder="Your email" required autofocus>
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="New Password" required>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  </body>
-</html>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+{{template "footer.html" .}}

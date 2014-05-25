@@ -73,6 +73,33 @@ func (_ tStatic) ServeModule(
 	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
 }
 
+type tTestRunner struct{}
+
+var TestRunner tTestRunner
+
+func (_ tTestRunner) Index() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("TestRunner.Index", args).Url
+}
+
+func (_ tTestRunner) Run(
+	suite string,
+	test string,
+) string {
+	args := make(map[string]string)
+
+	revel.Unbind(args, "suite", suite)
+	revel.Unbind(args, "test", test)
+	return revel.MainRouter.Reverse("TestRunner.Run", args).Url
+}
+
+func (_ tTestRunner) List() string {
+	args := make(map[string]string)
+
+	return revel.MainRouter.Reverse("TestRunner.List", args).Url
+}
+
 type tApplication struct{}
 
 var Application tApplication

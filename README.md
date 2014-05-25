@@ -17,20 +17,13 @@ Make sure Postgres is installed.
     # Copy sample env file
     cp .env.sample .env
 
-    # Install forego (or use foreman)
-    go get github.com/ddollar/forego
-
     # Run database migrations
     forego run goose up
 
-    # Retrieve dependencies
-    go get github.com/kr/godep
-    $GOPATH/bin/godep restore ./...
+    # Start up the server
+    revel run github.com/asm-products/firesize
 
-    # Start up the server (or use something like gin to auto-reload)
-    forego start
-
-Open up http://localhost:3000/examples
+Open up http://localhost:9000/
 
 ## API
 

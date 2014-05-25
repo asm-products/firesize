@@ -9,7 +9,7 @@ Processes images on the fly using imagemagick.
 Make sure Postgres is installed.
 
     # Create a local development database
-    psql -c "create database rr_development"
+    psql -c "create database firesize_development"
 
     # Install goose for running migrations
     go get bitbucket.org/liamstask/goose/cmd/goose

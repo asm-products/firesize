@@ -4,6 +4,8 @@
 
 Processes images on the fly using imagemagick.
 
+![Travis Status](https://travis-ci.org/asm-products/firesize.svg)
+
 ## Get started
 
 Make sure Postgres is installed.

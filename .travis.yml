@@ -5,4 +5,4 @@ go:
   - tip
 
 script:
-  - go test -v ./...
+  - revel test github.com/asm-products/firesize

@@ -4,5 +4,8 @@ go:
   - 1.2
   - tip
 
+install:
+  - go get github.com/revel/cmd/revel
+
 script:
   - revel test github.com/asm-products/firesize

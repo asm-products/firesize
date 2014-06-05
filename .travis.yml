@@ -6,6 +6,7 @@ go:
 
 install:
   - export PATH=$PATH:$HOME/gopath/bin
+  - go get -d -v ./...
   - go get github.com/revel/cmd/revel
 
 script:

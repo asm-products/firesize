@@ -17,4 +17,4 @@ GET     /public/*filepath                       Static.Serve("public")
 GET     /favicon.ico                            Static.Serve("public/img","favicon.png")
 
 # Image processing
-# GET     /*                                      Images.Process
+GET     /*                                      Images.Process

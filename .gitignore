@@ -1,4 +1,7 @@
 .env
-app/tmp
-test-results
 .anvil
+gin-bin
+node_modules
+
+static
+test-results

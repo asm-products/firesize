@@ -1,21 +1,17 @@
 /** @jsx React.DOM */
 
 var React = require('react')
-var Router = require('react-router')
-
-var auth = require('../lib/auth')
-
 var Dashboard = React.createClass({
   mixins: [require('../lib/authenticated_route')],
 
+  componentWillMount: function() {
+    document.title = 'Dashboard'
+  },
+
+
   render: function() {
-    var token = auth.getToken();
     return (
-      <div>
-        <h1>Dashboard</h1>
-        <p>You made it!</p>
-        <p>{token}</p>
-      </div>
+      <p>Show usage details. Images processed, cache hits/misses, etc</p>
     )
   }
 })

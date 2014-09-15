@@ -16,6 +16,7 @@ func (c *HomeController) Init(r *mux.Router) {
 	r.HandleFunc("/signout", c.Index)
 	r.HandleFunc("/signup", c.Index)
 	r.HandleFunc("/dashboard", c.Index)
+	r.HandleFunc("/subdomains", c.Index)
 }
 
 func (c *HomeController) Index(w http.ResponseWriter, r *http.Request) {

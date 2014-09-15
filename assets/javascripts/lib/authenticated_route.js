@@ -1,4 +1,5 @@
-var auth = require('../lib/auth')
+var Signin = require('../components/signin.jsx')
+var auth = require('./auth')
 
 var AuthenticatedRoute = {
   statics: {

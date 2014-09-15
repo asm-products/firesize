@@ -13,17 +13,17 @@ var Signup = React.createClass({
           <h2>Sign up</h2>
 
           <div className="form-group">
-            <input type="email" name="" value="" className="form-control" placeholder="Your email" required autofocus/>
+            <input type="email" name="email" className="form-control" placeholder="Your email" required autofocus/>
             <span className="error"></span>
           </div>
 
           <div className="form-group">
-            <input type="email" name="" value="" className="form-control" placeholder="Re-enter Email" required/>
+            <input type="email" name="email_confirmation" className="form-control" placeholder="Re-enter Email" required/>
             <span className="error"></span>
           </div>
 
           <div className="form-group">
-            <input type="password" name="" value="" className="form-control" placeholder="New Password" required/>
+            <input type="password" name="password" className="form-control" placeholder="New Password" required/>
             <span className="error"></span>
           </div>
 

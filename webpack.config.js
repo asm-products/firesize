@@ -1,4 +1,5 @@
-var path = require('path');
+var webpack = require('webpack')
+var path = require('path')
 
 module.exports = {
   entry: {
@@ -15,5 +16,9 @@ module.exports = {
       { test: /\.eot$/,  loader: "file-loader" },
       { test: /\.svg$/,  loader: "file-loader" }
     ]
-  }
-};
+  },
+
+  plugins: [
+    new webpack.IgnorePlugin(/vertx/)
+  ]
+}

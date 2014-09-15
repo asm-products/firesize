@@ -2,45 +2,44 @@ package tests
 
 import (
 	"strings"
+	"testing"
 
 	"github.com/asm-products/firesize/app/models"
+	"github.com/bmizerany/assert"
 )
 
-type ProcessArgsTest struct {
-}
-
-func (t *ProcessArgsTest) TestThatProcessArgsGetsWidth() {
+func TestThatProcessArgsGetsWidth(t *testing.T) {
 	url := "128x/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
-	t.AssertEqual(&models.ProcessArgs{
+	assert.Equal(t, &models.ProcessArgs{
 		Width: "128",
 		Url:   "http://placekitten.com/g/32/32",
 	}, args)
 }
 
-func (t *ProcessArgsTest) TestThatProcessArgsGetsHeight() {
+func TestThatProcessArgsGetsHeight(t *testing.T) {
 	url := "x64/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
-	t.AssertEqual(&models.ProcessArgs{
+	assert.Equal(t, &models.ProcessArgs{
 		Height: "64",
 		Url:    "http://placekitten.com/g/32/32",
 	}, args)
 }
 
-func (t *ProcessArgsTest) TestThatProcessArgsGetsWidthAndHeight() {
+func TestThatProcessArgsGetsWidthAndHeight(t *testing.T) {
 	url := "128x64/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
-	t.AssertEqual(&models.ProcessArgs{
+	assert.Equal(t, &models.ProcessArgs{
 		Width:  "128",
 		Height: "64",
 		Url:    "http://placekitten.com/g/32/32",
 	}, args)
 }
 
-func (t *ProcessArgsTest) TestThatProcessArgsGetsTheRest() {
+func TestThatProcessArgsGetsTheRest(t *testing.T) {
 	url := "128x64/g_center/frame_0/png/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
-	t.AssertEqual(&models.ProcessArgs{
+	assert.Equal(t, &models.ProcessArgs{
 		Width:   "128",
 		Height:  "64",
 		Gravity: "center",
@@ -50,7 +49,7 @@ func (t *ProcessArgsTest) TestThatProcessArgsGetsTheRest() {
 	}, args)
 }
 
-func (t *ProcessArgsTest) TestConvertsStructIntoCommandLineArgs() {
+func TestConvertsStructIntoCommandLineArgs(t *testing.T) {
 	args := &models.ProcessArgs{
 		Width:   "128",
 		Height:  "64",
@@ -61,7 +60,7 @@ func (t *ProcessArgsTest) TestConvertsStructIntoCommandLineArgs() {
 
 	cmdArgs, _ := args.CommandArgs("in.psd", "out")
 
-	t.AssertEqual([]string{
+	assert.Equal(t, []string{
 		"-gravity", "north",
 		"-thumbnail", "128x64^",
 		"-crop", "128x64+0+0",
@@ -72,7 +71,7 @@ func (t *ProcessArgsTest) TestConvertsStructIntoCommandLineArgs() {
 	}, cmdArgs)
 }
 
-func (t *ProcessArgsTest) TestOnlyShrinksIfGravityOmitted() {
+func TestOnlyShrinksIfGravityOmitted(t *testing.T) {
 	args := &models.ProcessArgs{
 		Width:  "128",
 		Height: "64",
@@ -80,7 +79,7 @@ func (t *ProcessArgsTest) TestOnlyShrinksIfGravityOmitted() {
 
 	cmdArgs, _ := args.CommandArgs("in.gif", "out")
 
-	t.AssertEqual([]string{
+	assert.Equal(t, []string{
 		"-thumbnail", "128x64>",
 		"-crop", "128x64+0+0",
 		"-format", "png",
@@ -90,12 +89,12 @@ func (t *ProcessArgsTest) TestOnlyShrinksIfGravityOmitted() {
 	}, cmdArgs)
 }
 
-func (t *ProcessArgsTest) TestSpecifyJustHeight() {
+func TestSpecifyJustHeight(t *testing.T) {
 	args := &models.ProcessArgs{
 		Height: "64",
 	}
 	cmdArgs, _ := args.CommandArgs("in.gif", "out")
-	t.AssertEqual([]string{
+	assert.Equal(t, []string{
 		"-thumbnail", "x64",
 		"-format", "png",
 		"+repage",
@@ -104,12 +103,12 @@ func (t *ProcessArgsTest) TestSpecifyJustHeight() {
 	}, cmdArgs)
 }
 
-func (t *ProcessArgsTest) TestSpecifyJustWidth() {
+func TestSpecifyJustWidth(t *testing.T) {
 	args := &models.ProcessArgs{
 		Width: "128",
 	}
 	cmdArgs, _ := args.CommandArgs("in.psd", "out")
-	t.AssertEqual([]string{
+	assert.Equal(t, []string{
 		"-thumbnail", "128x",
 		"-format", "png",
 		"+repage",

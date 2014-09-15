@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"regexp"
 	"time"
-
-	"github.com/coopernurse/gorp"
-	"github.com/revel/revel"
 )
 
 type Account struct {
@@ -18,8 +15,8 @@ type Account struct {
 	EncryptedPassword []byte    `db:"encrypted_password"       json:"-"`
 }
 
-func FindAccountByEmail(txn *gorp.Transaction, email string) *Account {
-	accounts, err := txn.Select(Account{}, `select * from accounts where lower(email) = lower($1) limit 1`, email)
+func FindAccountByEmail(email string) *Account {
+	accounts, err := Dbm.Select(Account{}, `select * from accounts where lower(email) = lower($1) limit 1`, email)
 	if err != nil {
 		panic(err)
 	}
@@ -35,21 +32,21 @@ func (a *Account) String() string {
 
 var emailRegex = regexp.MustCompile("^.+@.+$")
 
-func (a *Account) Validate(v *revel.Validation) {
-	v.Check(a.Email,
-		revel.Required{},
-		revel.MinSize{4},
-		revel.Match{emailRegex},
-	)
-
-	ValidatePassword(v, a.Password).
-		Key("account.Password")
-}
-
-func ValidatePassword(v *revel.Validation, password string) *revel.ValidationResult {
-	return v.Check(password,
-		revel.Required{},
-		revel.MaxSize{15},
-		revel.MinSize{5},
-	)
-}
+// func (a *Account) Validate(v *revel.Validation) {
+// 	v.Check(a.Email,
+// 		revel.Required{},
+// 		revel.MinSize{4},
+// 		revel.Match{emailRegex},
+// 	)
+//
+// 	ValidatePassword(v, a.Password).
+// 		Key("account.Password")
+// }
+//
+// func ValidatePassword(v *revel.Validation, password string) *revel.ValidationResult {
+// 	return v.Check(password,
+// 		revel.Required{},
+// 		revel.MaxSize{15},
+// 		revel.MinSize{5},
+// 	)
+// }

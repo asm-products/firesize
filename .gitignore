@@ -5,3 +5,8 @@ node_modules
 
 static
 test-results
+
+*.svg
+*.woff
+*.eot
+*.ttf

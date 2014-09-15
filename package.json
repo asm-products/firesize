@@ -20,6 +20,8 @@
     "superagent": "^0.18.2"
   },
   "scripts": {
+    "postinstall": "npm run bundle",
+    "bundle": "webpack --optimize-minimize --optimize-occurence-order",
     "watch": "webpack --progress --colors --watch"
   }
 }

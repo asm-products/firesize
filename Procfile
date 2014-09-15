@@ -1,1 +1,1 @@
-web: revel run github.com/asm-products/firesize prod \$PORT
+web: firesize

@@ -1,0 +1,45 @@
+{
+	"ImportPath": "github.com/asm-products/firesize",
+	"GoVersion": "go1.2.2",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
+			"Comment": "null-218",
+			"Rev": "f3cebac2bd11c2bf03c15bfa4c66688ad02a0a40"
+		},
+		{
+			"ImportPath": "code.google.com/p/go.crypto/blowfish",
+			"Comment": "null-218",
+			"Rev": "f3cebac2bd11c2bf03c15bfa4c66688ad02a0a40"
+		},
+		{
+			"ImportPath": "github.com/coopernurse/gorp",
+			"Comment": "v1.4",
+			"Rev": "08e1d8ca19c74cb69e01ff7a8f332a2e46448c47"
+		},
+		{
+			"ImportPath": "github.com/dgrijalva/jwt-go",
+			"Comment": "v2.0.0-1-ged42077",
+			"Rev": "ed420779288d0fec5f095f6da7923d09e3108c05"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "a08edd30ad9e104612741163dc087a613829a23c"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Rev": "6577a6a8a8b66cc558ebe37f51ca07833bfa433b"
+		},
+		{
+			"ImportPath": "github.com/technoweenie/grohl",
+			"Rev": "91868e10032390c992d419d10b17cc8bfdc35808"
+		},
+		{
+			"ImportPath": "github.com/whatupdave/mux",
+			"Rev": "3a927ce2ff6e743f4b67e3c9949a3e2e6cd16137"
+		}
+	]
+}

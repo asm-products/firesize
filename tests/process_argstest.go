@@ -4,11 +4,9 @@ import (
 	"strings"
 
 	"github.com/asm-products/firesize/app/models"
-	"github.com/revel/revel"
 )
 
 type ProcessArgsTest struct {
-	revel.TestSuite
 }
 
 func (t *ProcessArgsTest) TestThatProcessArgsGetsWidth() {

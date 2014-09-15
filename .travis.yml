@@ -7,7 +7,7 @@ go:
 install:
   - export PATH=$PATH:$HOME/gopath/bin
   - go get -d -v ./...
-  - go get github.com/revel/cmd/revel
+  -
 
 script:
-  - revel test github.com/asm-products/firesize
+  - go test ./...

@@ -23,7 +23,7 @@ Make sure Postgres is installed.
     forego run goose up
 
     # Start up the server
-    revel run github.com/asm-products/firesize
+    gin
 
 Open up http://localhost:9000/
 

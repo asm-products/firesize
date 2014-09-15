@@ -8,7 +8,7 @@ import (
 	"github.com/bmizerany/assert"
 )
 
-func TestThatProcessArgsGetsWidth(t *testing.T) {
+func Test_ProcessArgsGetsWidth(t *testing.T) {
 	url := "128x/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
 	assert.Equal(t, &models.ProcessArgs{
@@ -17,7 +17,7 @@ func TestThatProcessArgsGetsWidth(t *testing.T) {
 	}, args)
 }
 
-func TestThatProcessArgsGetsHeight(t *testing.T) {
+func Test_ProcessArgsGetsHeight(t *testing.T) {
 	url := "x64/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
 	assert.Equal(t, &models.ProcessArgs{
@@ -26,7 +26,7 @@ func TestThatProcessArgsGetsHeight(t *testing.T) {
 	}, args)
 }
 
-func TestThatProcessArgsGetsWidthAndHeight(t *testing.T) {
+func Test_ProcessArgsGetsWidthAndHeight(t *testing.T) {
 	url := "128x64/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
 	assert.Equal(t, &models.ProcessArgs{
@@ -36,7 +36,7 @@ func TestThatProcessArgsGetsWidthAndHeight(t *testing.T) {
 	}, args)
 }
 
-func TestThatProcessArgsGetsTheRest(t *testing.T) {
+func Test_ProcessArgsGetsTheRest(t *testing.T) {
 	url := "128x64/g_center/frame_0/png/http://placekitten.com/g/32/32"
 	args := models.NewProcessArgs(strings.Split(url, "/"))
 	assert.Equal(t, &models.ProcessArgs{

@@ -2,8 +2,13 @@ package models
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"time"
+
+	"code.google.com/p/go.crypto/bcrypt"
+
+	"github.com/dgrijalva/jwt-go"
 )
 
 type Account struct {
@@ -11,7 +16,6 @@ type Account struct {
 	CreatedAt         time.Time `db:"created_at"  json:"created"`
 	UpdatedAt         time.Time `db:"updated_at"  json:"updated"`
 	Email             string    `db:"email"       json:"email"`
-	Password          string    `db:"-" json:"-"`
 	EncryptedPassword []byte    `db:"encrypted_password"       json:"-"`
 }
 
@@ -28,6 +32,20 @@ func FindAccountByEmail(email string) *Account {
 
 func (a *Account) String() string {
 	return fmt.Sprintf("Account(%a)", a.Email)
+}
+
+func (a *Account) GenEncryptedPassword(password string) error {
+	var err error
+	a.EncryptedPassword, err = bcrypt.GenerateFromPassword(
+		[]byte(password), bcrypt.DefaultCost)
+	return err
+}
+
+func (a *Account) GenJwt() (string, error) {
+	token := jwt.New(jwt.GetSigningMethod("HS256"))
+	token.Claims["account_id"] = a.Id
+	token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+	return token.SignedString([]byte(os.Getenv("SECRET")))
 }
 
 var emailRegex = regexp.MustCompile("^.+@.+$")

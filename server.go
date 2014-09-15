@@ -26,6 +26,7 @@ func main() {
 
 	new(controllers.HomeController).Init(r)
 	new(controllers.SessionsController).Init(r)
+	new(controllers.RegistrationsController).Init(r)
 	new(controllers.ImagesController).Init(r)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))

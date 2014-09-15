@@ -4,12 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
-	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
 	"github.com/asm-products/firesize/app/models"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/whatupdave/mux"
 )
 
@@ -50,10 +47,7 @@ func (c *SessionsController) Create(w http.ResponseWriter, r *http.Request) {
 	if account != nil {
 		err := bcrypt.CompareHashAndPassword(account.EncryptedPassword, []byte(p.Password))
 		if err == nil {
-			token := jwt.New(jwt.GetSigningMethod("HS256"))
-			token.Claims["account_id"] = account.Id
-			token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-			tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+			tokenString, err := account.GenJwt()
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 			}

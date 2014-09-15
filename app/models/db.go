@@ -22,3 +22,7 @@ func InitDb(url string) {
 	Dbm.AddTableWithName(Account{}, "accounts").SetKeys(true, "Id")
 	Dbm.TraceOn("[gorp]", log.New(os.Stdout, "sql:", log.Lmicroseconds))
 }
+
+func Insert(m interface{}) error {
+	return Dbm.Insert(m)
+}

@@ -6,6 +6,7 @@ module.exports = {
 
     "normalize": true,
     "print": true,
+    "glyphicons": true,
 
     "scaffolding": true,
     "type": true,
@@ -16,7 +17,6 @@ module.exports = {
     "buttons": true,
 
     "component-animations": true,
-    "glyphicons": true,
     "dropdowns": true,
     "button-groups": true,
     "input-groups": true,
@@ -34,6 +34,7 @@ module.exports = {
     "media": true,
     "list-group": true,
     "panels": true,
+    "responsive-embed": true,
     "wells": true,
     "close": true,
 

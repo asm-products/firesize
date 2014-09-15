@@ -5,6 +5,8 @@ var Router = require('react-router')
 
 var auth = require('../lib/auth')
 
+var FormGroup = require('./form_group.jsx')
+
 var Signin = React.createClass({
   statics: {
     attemptedTransition: null
@@ -21,9 +23,9 @@ var Signin = React.createClass({
         <form onSubmit={this.handleSubmit}>
           <h2>Sign in</h2>
 
-          <div className="form-group">
+          <FormGroup error={this.state.error && "Invalid email or password"}>
             <input type="email" ref="email" className="form-control" placeholder="Your email" required autofocus />
-          </div>
+          </FormGroup>
           <div className="form-group">
             <input type="password" ref="password" className="form-control" placeholder="Password" required />
           </div>

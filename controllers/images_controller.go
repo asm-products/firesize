@@ -13,14 +13,15 @@ type ImagesController struct {
 }
 
 func (c *ImagesController) Init(r *mux.Router) {
-	r.HandleFunc("/{args:.*}/http{path:.*}", c.Get)
+	r.HandleFunc("/{args:.*?}http{path:.*}", c.Get)
 }
 
 func (c *ImagesController) Get(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	args := append(strings.Split(vars["args"], "/"), "http"+vars["path"])
 
-	processArgs := models.NewProcessArgs(args)
+	url := "http" + vars["path"]
+	args := strings.Split(vars["args"], "/")
+	processArgs := models.NewProcessArgs(args, url)
 
 	processor := &models.IMagick{}
 
@@ -31,6 +32,7 @@ func (c *ImagesController) Get(w http.ResponseWriter, r *http.Request) {
 		grohl.Log(grohl.Data{
 			"error": err.Error(),
 			"parts": args,
+			"url":   url,
 		})
 		panic("processing failed")
 	}

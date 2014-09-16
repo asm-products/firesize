@@ -1,16 +1,16 @@
 package tests
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/asm-products/firesize/app/models"
 	"github.com/bmizerany/assert"
 )
 
+var imgUrl = "http://placekitten.com/g/32/32"
+
 func Test_ProcessArgsGetsWidth(t *testing.T) {
-	url := "128x/http://placekitten.com/g/32/32"
-	args := models.NewProcessArgs(strings.Split(url, "/"))
+	args := models.NewProcessArgs([]string{"128x"}, imgUrl)
 	assert.Equal(t, &models.ProcessArgs{
 		Width: "128",
 		Url:   "http://placekitten.com/g/32/32",
@@ -18,8 +18,7 @@ func Test_ProcessArgsGetsWidth(t *testing.T) {
 }
 
 func Test_ProcessArgsGetsHeight(t *testing.T) {
-	url := "x64/http://placekitten.com/g/32/32"
-	args := models.NewProcessArgs(strings.Split(url, "/"))
+	args := models.NewProcessArgs([]string{"x64"}, imgUrl)
 	assert.Equal(t, &models.ProcessArgs{
 		Height: "64",
 		Url:    "http://placekitten.com/g/32/32",
@@ -27,8 +26,7 @@ func Test_ProcessArgsGetsHeight(t *testing.T) {
 }
 
 func Test_ProcessArgsGetsWidthAndHeight(t *testing.T) {
-	url := "128x64/http://placekitten.com/g/32/32"
-	args := models.NewProcessArgs(strings.Split(url, "/"))
+	args := models.NewProcessArgs([]string{"128x64"}, imgUrl)
 	assert.Equal(t, &models.ProcessArgs{
 		Width:  "128",
 		Height: "64",
@@ -37,8 +35,7 @@ func Test_ProcessArgsGetsWidthAndHeight(t *testing.T) {
 }
 
 func Test_ProcessArgsGetsTheRest(t *testing.T) {
-	url := "128x64/g_center/frame_0/png/http://placekitten.com/g/32/32"
-	args := models.NewProcessArgs(strings.Split(url, "/"))
+	args := models.NewProcessArgs([]string{"128x64", "g_center", "frame_0", "png"}, imgUrl)
 	assert.Equal(t, &models.ProcessArgs{
 		Width:   "128",
 		Height:  "64",

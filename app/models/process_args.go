@@ -1,9 +1,6 @@
 package models
 
-import (
-	"regexp"
-	"strings"
-)
+import "regexp"
 
 type ProcessArgs struct {
 	Height  string
@@ -14,17 +11,12 @@ type ProcessArgs struct {
 	Url     string
 }
 
-func NewProcessArgs(urlArgs []string) *ProcessArgs {
+func NewProcessArgs(urlArgs []string, url string) *ProcessArgs {
 	args := &ProcessArgs{}
-	var argCount int
 	for _, arg := range urlArgs {
-		if args.setUrlArg(arg) {
-			argCount++
-		} else {
-			break
-		}
+		args.setUrlArg(arg)
 	}
-	args.Url = strings.Join(urlArgs[argCount:], "/")
+	args.Url = url
 	return args
 }
 

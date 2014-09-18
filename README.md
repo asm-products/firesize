@@ -8,7 +8,7 @@ Processes images on the fly using imagemagick.
 
 ## Get started
 
-Make sure Postgres is installed.
+Make sure Postgres, Nodejs and npm are installed.
 
     # Create a local development database
     psql -c "create database firesize_development"
@@ -16,16 +16,22 @@ Make sure Postgres is installed.
     # Install goose for running migrations
     go get bitbucket.org/liamstask/goose/cmd/goose
 
+    # Install gin for live reloading codes
+    go get github.com/codegangsta/gin
+
     # Copy sample env file
     cp .env.sample .env
 
     # Run database migrations
     forego run goose up
 
+    # Start up webpack to build the assets
+    npm install && npm run watch
+
     # Start up the server
     gin
 
-Open up http://localhost:9000/
+Open up http://localhost:3000/
 
 ## API
 

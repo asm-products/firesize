@@ -30,7 +30,12 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 		return
 	}
 
-	outFile, err := processImage(tempDir, inFile, args)
+	preProcessedInFile, err := preProcessImage(tempDir, inFile)
+	if err != nil {
+		return
+	}
+
+	outFile, err := processImage(tempDir, preProcessedInFile, args)
 	if err != nil {
 		return
 	}
@@ -68,6 +73,10 @@ func downloadRemote(tempDir string, url string) (string, error) {
 	_, err = io.Copy(out, resp.Body)
 
 	return inFile, err
+}
+
+func preProcessImage(tempDir string, inFile string) (string, error) {
+	return inFile, nil
 }
 
 func processImage(tempDir string, inFile string, args *ProcessArgs) (string, error) {

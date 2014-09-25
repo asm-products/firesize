@@ -20,22 +20,14 @@ type IMagick struct{}
 // and write the response to w
 func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessArgs) (err error) {
 	// setup tmp workspace
-	tempDir, err := ioutil.TempDir("", "_firesize")
+	tempDir, err := createTemporaryWorkspace()
 	if err != nil {
 		return
 	}
 	// defer os.RemoveAll(tempDir)
 
-	// download original to inFile
-	inFile := filepath.Join(tempDir, "in")
-
-	grohl.Log(grohl.Data{
-		"processor": "imagick",
-		"download":  args.Url,
-		"local":     inFile,
-	})
-
-	if err = downloadRemote(args.Url, inFile); err != nil {
+	inFile, err := downloadRemote(tempDir, args.Url)
+	if err != nil {
 		return
 	}
 
@@ -65,21 +57,34 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 	return
 }
 
-func downloadRemote(url string, localFile string) (err error) {
-	out, err := os.Create(localFile)
+func createTemporaryWorkspace() (string, error) {
+	return ioutil.TempDir("", "_firesize")
+}
+
+func downloadRemote(tempDir string, url string) (string, error) {
+	inFile := filepath.Join(tempDir, "in")
+
+	grohl.Log(grohl.Data{
+		"processor": "imagick",
+		"download":  url,
+		"local":     inFile,
+	})
+
+	out, err := os.Create(inFile)
 	if err != nil {
-		return
+		return inFile, err
 	}
 	defer out.Close()
 
 	resp, err := http.Get(url)
 	if err != nil {
-		return
+		return inFile, err
 	}
 	defer resp.Body.Close()
 
 	_, err = io.Copy(out, resp.Body)
-	return
+
+	return inFile, err
 }
 
 func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) ([]byte, error) {

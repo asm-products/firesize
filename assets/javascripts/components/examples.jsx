@@ -53,6 +53,13 @@ var Examples = React.createClass({
       <div className="content">
         <img src="/128x128/g_center/frame_0/http://asm-assets.s3.amazonaws.com/helpful-signup-04-24-14.psd"/>
       </div>
+
+      <div className="annotation">
+        <h2>GIF thumbnails</h2>
+      </div>
+      <div className="content">
+        <img src="/128x/g_center/https://d1015h9unskp4y.cloudfront.net/attachments/cbc76fe8-2998-4c18-af3a-6fd1f23a8e66/updates-product-click.gif"/>
+      </div>
     </div>
   }
 })

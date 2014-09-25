@@ -9,12 +9,17 @@ Processes images on the fly using imagemagick.
 ## Get started
 
 Make sure Postgres, Nodejs and npm are installed.
+    # Download repo & all dependencies
+    go get github.com/asm-products/firesize
 
     # Create a local development database
     psql -c "create database firesize_development"
 
     # Install goose for running migrations
     go get bitbucket.org/liamstask/goose/cmd/goose
+
+    # Install forego as it loads .env (for running goose)
+    brew install forego
 
     # Install gin for live reloading codes
     go get github.com/codegangsta/gin

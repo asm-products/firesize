@@ -19,15 +19,15 @@ type IMagick struct{}
 // Process a remote asset url using graphicsmagick with the args supplied
 // and write the response to w
 func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessArgs) (err error) {
-	executable := "convert"
-
+	// setup tmp workspace
 	tempDir, err := ioutil.TempDir("", "_firesize")
 	if err != nil {
 		return
 	}
 	// defer os.RemoveAll(tempDir)
+
+	// download original to inFile
 	inFile := filepath.Join(tempDir, "in")
-	outFile := filepath.Join(tempDir, "out")
 
 	grohl.Log(grohl.Data{
 		"processor": "imagick",
@@ -39,6 +39,8 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 		return
 	}
 
+	// create resized outFile from inFile
+	outFile := filepath.Join(tempDir, "out")
 	cmdArgs, outFileWithFormat := args.CommandArgs(inFile, outFile)
 
 	grohl.Log(grohl.Data{
@@ -46,6 +48,7 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 		"args":      cmdArgs,
 	})
 
+	executable := "convert"
 	cmd := exec.Command(executable, cmdArgs...)
 	outErr, err := runWithTimeout(cmd, 60*time.Second)
 	if err != nil {
@@ -56,6 +59,8 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 			"output":    string(outErr),
 		})
 	}
+
+	// serve response
 	http.ServeFile(w, r, outFileWithFormat)
 	return
 }

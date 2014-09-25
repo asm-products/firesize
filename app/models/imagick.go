@@ -19,7 +19,6 @@ type IMagick struct{}
 // Process a remote asset url using graphicsmagick with the args supplied
 // and write the response to w
 func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessArgs) (err error) {
-	// setup tmp workspace
 	tempDir, err := createTemporaryWorkspace()
 	if err != nil {
 		return
@@ -31,29 +30,13 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 		return
 	}
 
-	// create resized outFile from inFile
-	outFile := filepath.Join(tempDir, "out")
-	cmdArgs, outFileWithFormat := args.CommandArgs(inFile, outFile)
-
-	grohl.Log(grohl.Data{
-		"processor": "imagick",
-		"args":      cmdArgs,
-	})
-
-	executable := "convert"
-	cmd := exec.Command(executable, cmdArgs...)
-	outErr, err := runWithTimeout(cmd, 60*time.Second)
+	outFile, err := processImage(tempDir, inFile, args)
 	if err != nil {
-		grohl.Log(grohl.Data{
-			"processor": "imagick",
-			"failure":   err,
-			"args":      cmdArgs,
-			"output":    string(outErr),
-		})
+		return
 	}
 
 	// serve response
-	http.ServeFile(w, r, outFileWithFormat)
+	http.ServeFile(w, r, outFile)
 	return
 }
 
@@ -85,6 +68,30 @@ func downloadRemote(tempDir string, url string) (string, error) {
 	_, err = io.Copy(out, resp.Body)
 
 	return inFile, err
+}
+
+func processImage(tempDir string, inFile string, args *ProcessArgs) (string, error) {
+	outFile := filepath.Join(tempDir, "out")
+	cmdArgs, outFileWithFormat := args.CommandArgs(inFile, outFile)
+
+	grohl.Log(grohl.Data{
+		"processor": "imagick",
+		"args":      cmdArgs,
+	})
+
+	executable := "convert"
+	cmd := exec.Command(executable, cmdArgs...)
+	outErr, err := runWithTimeout(cmd, 60*time.Second)
+	if err != nil {
+		grohl.Log(grohl.Data{
+			"processor": "imagick",
+			"failure":   err,
+			"args":      cmdArgs,
+			"output":    string(outErr),
+		})
+	}
+
+	return outFileWithFormat, err
 }
 
 func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) ([]byte, error) {

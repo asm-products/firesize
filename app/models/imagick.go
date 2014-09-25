@@ -76,7 +76,13 @@ func downloadRemote(tempDir string, url string) (string, error) {
 }
 
 func preProcessImage(tempDir string, inFile string) (string, error) {
-	return inFile, nil
+	if isAnimatedGif(inFile) {
+		// if animated gif coalesce
+		// else return
+		return inFile, nil
+	} else {
+		return inFile, nil
+	}
 }
 
 func processImage(tempDir string, inFile string, args *ProcessArgs) (string, error) {
@@ -90,28 +96,32 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 
 	executable := "convert"
 	cmd := exec.Command(executable, cmdArgs...)
-	outErr, err := runWithTimeout(cmd, 60*time.Second)
+	var outErr bytes.Buffer
+	cmd.Stdout, cmd.Stderr = &outErr, &outErr
+	err := runWithTimeout(cmd, 60*time.Second)
 	if err != nil {
 		grohl.Log(grohl.Data{
 			"processor": "imagick",
 			"failure":   err,
 			"args":      cmdArgs,
-			"output":    string(outErr),
+			"output":    string(outErr.Bytes()),
 		})
 	}
 
 	return outFileWithFormat, err
 }
 
-func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) ([]byte, error) {
-	// Capture the output
-	var b bytes.Buffer
-	cmd.Stdout, cmd.Stderr = &b, &b
+func isAnimatedGif(inFile string) bool {
+	// identify the image
+	// identify -format %n updates-product-click.gif # => 105
+	return false
+}
 
+func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) error {
 	// Start the process
 	err := cmd.Start()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	// Kill the process if it doesn't exit in time
@@ -121,9 +131,5 @@ func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) ([]byte, error) {
 	}).Stop()
 
 	// Wait for the process to finish
-	if err := cmd.Wait(); err != nil {
-		return b.Bytes(), err
-	}
-
-	return b.Bytes(), nil
+	return cmd.Wait()
 }

@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	"github.com/technoweenie/grohl"
@@ -30,7 +31,7 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 		return
 	}
 
-	preProcessedInFile, err := preProcessImage(tempDir, inFile)
+	preProcessedInFile, err := preProcessImage(tempDir, inFile, args)
 	if err != nil {
 		return
 	}
@@ -75,11 +76,10 @@ func downloadRemote(tempDir string, url string) (string, error) {
 	return inFile, err
 }
 
-func preProcessImage(tempDir string, inFile string) (string, error) {
+func preProcessImage(tempDir string, inFile string, args *ProcessArgs) (string, error) {
 	if isAnimatedGif(inFile) {
-		// if animated gif coalesce
-		// else return
-		return inFile, nil
+		args.Format = "gif" // Total hack cos format is incorrectly .png on example
+		return coalesceAnimatedGif(tempDir, inFile)
 	} else {
 		return inFile, nil
 	}
@@ -112,9 +112,33 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 }
 
 func isAnimatedGif(inFile string) bool {
-	// identify the image
 	// identify -format %n updates-product-click.gif # => 105
+	cmd := exec.Command("identify", "-format", "%n", inFile)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := runWithTimeout(cmd, 10*time.Second)
+	if err == nil {
+		numFrames, err := strconv.Atoi(string(out.Bytes()))
+		if err == nil {
+			grohl.Log(grohl.Data{
+				"processor":  "imagick",
+				"num-frames": numFrames,
+			})
+			return numFrames > 1
+		}
+	}
+	// if anything fucks out assume not animated
 	return false
+}
+
+func coalesceAnimatedGif(tempDir string, inFile string) (string, error) {
+	outFile := filepath.Join(tempDir, "temp")
+
+	// convert do.gif -coalesce temporary.gif
+	cmd := exec.Command("convert", inFile, "-coalesce", outFile)
+	_ = runWithTimeout(cmd, 60*time.Second)
+
+	return outFile, nil
 }
 
 func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) error {

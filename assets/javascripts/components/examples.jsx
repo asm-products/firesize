@@ -150,13 +150,17 @@ var ExampleOutput = React.createClass({
       width: this.props.imageWidth,
       top: parseInt(this.props.imageHeight) + 10
     };
+    var styleImage = {
+      width: this.props.imageWidth,
+      height: this.props.imageHeight
+    };
     return <ReactCSSTransitionGroup transitionName="fs-examples-output-transition">
       <div className="fs-examples-output"  key={this.props.imageHeight}>
         <div className="fs-examples-output-wrapper" style={styleWrapper}>
           <div className="fs-examples-output-image-before" style={styleImageBefore}>
             <span className="fs-examples-output-image-before-height">{this.props.imageHeight}px</span>
           </div>
-          <img className="fs-examples-output-image" src={testImage}></img>
+          <img className="fs-examples-output-image" src={testImage} style={styleImage}></img>
           <div className="fs-examples-output-image-after" style={styleImageAfter}>
             <span className="fs-examples-output-image-before-width">{this.props.imageWidth}px</span>
           </div>

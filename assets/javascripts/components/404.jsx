@@ -1,7 +1,6 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Examples = require('./examples.jsx')
 
 var NotFound = React.createClass({
   render: function() {

@@ -15,6 +15,10 @@ Make sure Postgres, Nodejs and npm are installed.
     # Create a local development database
     psql -c "create database firesize_development"
 
+    if faile run: 
+
+    psql -d postgres -c "create database firesize_development"
+
     # Install goose for running migrations
     go get bitbucket.org/liamstask/goose/cmd/goose
 

@@ -14,6 +14,8 @@ React.renderComponent(
       <DefaultRoute name="home" handler={require('./components/home.jsx')} />
       <NotFoundRoute name="notfound" path="404" handler={require('./components/404.jsx')} />
 
+      <Route name="usage" handler={require('./components/usage.jsx')} />
+      <Route name="pricing" handler={require('./components/pricing.jsx')} />
       <Route name="signin" handler={require('./components/signin.jsx')} />
       <Route name="signup" handler={require('./components/signup.jsx')} />
       <Route name="signout" handler={require('./components/signout.jsx')} />

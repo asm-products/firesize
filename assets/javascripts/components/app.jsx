@@ -84,23 +84,21 @@ var App = React.createClass({
   },
 
   signInOutLinks: function() {
-    
-    if (this.state.signedIn) {          
 
-    return <Nav navbar={true} collapsable={true} pullRight={this.state.isPullRight} 
+    if (this.state.signedIn) {
+
+    return <Nav navbar={true} collapsable={true} pullRight={this.state.isPullRight}
               className="fs-navbar-collapse" role="navigation" id="top" bsClass="nav"
                 expanded={this.state.isExpanded}>
       <li><Link to="usage">Usage</Link></li>
       <li><Link to="pricing">Pricing</Link></li>
       <li><Link to="signout">Sign Out</Link></li>
-     
+
     </Nav>
     } else {
-      return <Nav navbar={true} collapsable={true} pullRight={true} 
+      return <Nav navbar={true} collapsable={true} pullRight={true}
               className="fs-navbar-collapse" role="navigation" id="top" bsClass="nav"
                 expanded={this.state.isExpanded}>
-        <li><Link to="usage">Usage</Link></li>
-        <li><Link to="pricing">Pricing</Link></li>
         <li><Link to="signin">Log In</Link></li>
         <li className="fs-header-signup"><Link to="signup">Sign Up</Link></li>
       </Nav>

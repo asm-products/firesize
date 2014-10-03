@@ -14,8 +14,7 @@ var Footer = React.createClass({
 			<div className="fs-footer container">
 				<h3 className="fs-footer-title">Made with 100% pure Open Source Code</h3>
 				<div className="fs-footer-content">
-					We don't fuck around. Our code is hand crafted by the finest developers and delivered to you without
-					proprietary licenses or artificial flavoring.
+					Firesize is built on <a href="https://assembly.com/firesize">Assembly</a> as an open and collaborative effort. All profits are distributed back to the makers. Come and help us make Firesize even better!
 				</div>
 			</div>
 		);

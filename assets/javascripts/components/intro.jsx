@@ -20,34 +20,22 @@ var IntroBlock = React.createClass({
 			<div className="fs-introblock" >
 				<Grid className="fs-introblock-grid">
 					<Row>
-						<Col className="fs-introblock-block" md={4}>
+						<Col className="fs-introblock-block" md={6}>
 							<div className="fs-introblock-block-icon  fs-introblock-block-icon-resize ">
 								<i className="fa fa-arrows-alt "></i>
 							</div>
 							<h3 className="fs-introblock-block-title">Dynamic Resizing</h3>
 							<div className="fs-introblock-block-content">
-								Change image sizes on the fly.
-								We'll automatically create new thumbnail or 2x "retina" versions of your images.
+								Reize images on the fly. No need to run huge batch operations whenever you need your images at a new resolution.
 							</div>
 						</Col>
-						<Col className="fs-introblock-block" md={4}>
-							<div className="fs-introblock-block-icon  fs-introblock-block-icon-loading">
-								<i className="fa fa-fast-forward "></i>
-							</div>
-							<h3 className="fs-introblock-block-title">Fast Loading</h3>
-							<div className="fs-introblock-block-content">
-								Change image sizes on the fly.
-								We'll automatically create new thumbnail or 2x "retina" versions of your images.
-							</div>
-						</Col>
-						<Col className="fs-introblock-block" md={4}>
+						<Col className="fs-introblock-block" md={6}>
 							<div className="fs-introblock-block-icon  fs-introblock-block-icon-spin">
-								<i className="fa fa-globe fs-introblock-block-icon-spin"></i>
+								<i className="fa fa-globe"></i>
 							</div>
-							<h3 className="fs-introblock-block-title">Automatic Caching</h3>
+							<h3 className="fs-introblock-block-title">No lock-in</h3>
 							<div className="fs-introblock-block-content">
-								Change image sizes on the fly.
-								We'll automatically create new thumbnail or 2x "retina" versions of your images.
+								We'll resize your images no matter where they're stored. No need to upload them to us. You can also bring your own CDN
 							</div>
 						</Col>
 					</Row>

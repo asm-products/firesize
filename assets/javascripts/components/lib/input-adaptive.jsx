@@ -38,7 +38,6 @@ var AdaptiveInput = React.createClass({
 
 	getInitialState: function() {
 		this.fontSize = this.props.fontSize ? this.props.fontSize : DEFAULT_FONT_SIZE;
-		// console.log("The value's length: ", this.props.value.length);
 		return {
 			width: (this.props.value.length + 1) * this.fontSize/2 ,
 			value: this.props.value
@@ -60,12 +59,12 @@ var AdaptiveInput = React.createClass({
 		var style = {
 			'font-size': this.fontSize,
 			'width': this.state.width,
+			'margin-left': '2px'
 		};
 
-		return <input className="AdaptiveInput" type="text" value={this.state.value} style={style} onChange={this._handleChange} />;
+		return <input className="AdaptiveInput text-center" type="text" value={this.state.value} style={style} onChange={this._handleChange} />;
 	}
 
 });
 
 module.exports = AdaptiveInput;
-

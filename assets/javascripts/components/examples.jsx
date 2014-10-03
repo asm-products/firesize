@@ -8,10 +8,11 @@ var _ = require("underscore");
 //LESS
 require('stylesheets/components/examples.less');
 
-var DEFAULT_IMAGE_URL = 'http://placekitten.com/g/320/140';
+var DEFAULT_IMAGE_URL = 'http://placekitten.com/g/800/600';
 var VALIDATOR_NUMBER = /^[0-9]+$/;
 var VALIDATOR_URL = /(http|https|ftp):\/\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?$&\/\/=]*)?/gi;
 
+var debounce = require('../lib/debounce')
 
 var ExampleMixin = {
 
@@ -63,43 +64,33 @@ var ExampleInput = React.createClass({
 
   mixins: [ExampleMixin],
 
-  _handleChangeForWidth: function(value) {
-    console.log("This is :", this.getDOMNode());
+  _handleChangeForWidth: debounce(function(value) {
     if (value.match(VALIDATOR_NUMBER)) {
       var newWidth = parseInt(value ,10);
-      console.log("ExampleInput newWidth: ", newWidth);
       this.props.handleChange({
         changeType: 'width',
         value: newWidth,
       });
-    } else {
-      console.log("Width -- Not a number");
     }
-  },
+  }, 300),
 
-  _handleChangeForHeight: function(value) {
+  _handleChangeForHeight: debounce(function(value) {
     if (value.match(VALIDATOR_NUMBER)) {
       var newHeight = parseInt(value ,10);
-      console.log("ExampleInput newHeight: ", newHeight);
       this.props.handleChange({
         changeType: 'height',
         value: newHeight,
       });
-    } else {
-      console.log("Height -- Not a number");
     }
-  },
+  }, 300),
 
   _handleChangeForUrl: function(value) {
 
     if (VALIDATOR_URL.test(value)) {
-      console.log("Good url: ", value);
       this.props.handleChange({
         changeType: 'imageUrl',
         value: value,
       });
-    } else {
-      console.log("Bad url: ", value);
     }
   },
 
@@ -109,7 +100,7 @@ var ExampleInput = React.createClass({
 
   render: function() {
     return  <div className="fs-examples-input">
-    <span className="fs-examples-input-domain">{"http://firesize.com/"}</span>
+    <span className="fs-examples-input-domain">https://firesize.com/</span>
     <AdaptiveInput ref="imageWidth" value={this.props.imageWidth.toString()} handleChange={this._handleChangeForWidth} />
     <span>x</span>
     <AdaptiveInput ref="imageHeight" value={this.props.imageHeight.toString()} handleChange={this._handleChangeForHeight} />
@@ -129,16 +120,13 @@ var ExampleOutput = React.createClass({
 
   mixins: [ExampleMixin],
 
-  componentWillUpdate: function(nextProps, nextState) {
-    console.log("nextProps: ", nextProps);
-    console.log("nextState: ", nextState);
-
-  },
-
   render: function() {
-    var testImage = "/" + this.props.imageWidth + "x"
-      + this.props.imageHeight + "/" + this.props.imagePosition
-        + this.props.imageUrl;
+    var testImage = "/" +
+      this.props.imageWidth + "x" +
+      this.props.imageHeight + "/" +
+      this.props.imagePosition +
+      this.props.imageUrl;
+
     var styleWrapper = {
       width: this.props.imageWidth,
       height: this.props.imageHeight
@@ -207,7 +195,6 @@ var Examples = React.createClass({
 
   _handleInputChange: function(data) {
 
-    console.log("_handleInputChange: ", data);
     if (data.hasOwnProperty('changeType') && data.hasOwnProperty('value')) {
       var value = data.value;
       switch (data.changeType) {
@@ -226,13 +213,8 @@ var Examples = React.createClass({
             imageUrl: value
           });
           break;
-        default:
-          console.log("_handleInputChange LOL");
       }
-    } else {
-      console.log("The data is wrong: ", data);
     }
-
   }
 })
 

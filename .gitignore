@@ -2,7 +2,9 @@
 .env
 .anvil
 gin-bin
+
 node_modules
+npm-debug.log
 
 static
 test-results

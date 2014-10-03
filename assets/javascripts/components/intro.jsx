@@ -21,7 +21,9 @@ var IntroBlock = React.createClass({
 				<Grid className="fs-introblock-grid">
 					<Row>
 						<Col className="fs-introblock-block" md={4}>
-							<i className="fa fa-arrows-alt"></i>
+							<div className="fs-introblock-block-icon  fs-introblock-block-icon-resize ">
+								<i className="fa fa-arrows-alt "></i>
+							</div>
 							<h3 className="fs-introblock-block-title">Dynamic Resizing</h3>
 							<div className="fs-introblock-block-content">
 								Change image sizes on the fly.
@@ -29,7 +31,9 @@ var IntroBlock = React.createClass({
 							</div>
 						</Col>
 						<Col className="fs-introblock-block" md={4}>
-							<i className="fa fa-fast-forward"></i>
+							<div className="fs-introblock-block-icon  fs-introblock-block-icon-loading">
+								<i className="fa fa-fast-forward "></i>
+							</div>
 							<h3 className="fs-introblock-block-title">Fast Loading</h3>
 							<div className="fs-introblock-block-content">
 								Change image sizes on the fly.
@@ -37,7 +41,9 @@ var IntroBlock = React.createClass({
 							</div>
 						</Col>
 						<Col className="fs-introblock-block" md={4}>
-							<i className="fa fa-globe"></i>
+							<div className="fs-introblock-block-icon  fs-introblock-block-icon-spin">
+								<i className="fa fa-globe fs-introblock-block-icon-spin"></i>
+							</div>
 							<h3 className="fs-introblock-block-title">Automatic Caching</h3>
 							<div className="fs-introblock-block-content">
 								Change image sizes on the fly.

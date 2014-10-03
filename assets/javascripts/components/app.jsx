@@ -55,7 +55,7 @@ var App = React.createClass({
 
     return <div>
       {this.navBarTop()}
-      <div className="container" >
+      <div className="fs-app-container" >
         {layout}
       </div>
     </div>
@@ -67,7 +67,7 @@ var App = React.createClass({
         <header className=" navbar-static-top " >
           <div className="fs-header-container container">
             <div className="navbar-header">
-              <Link to="home" className="fs-header-brand navbar-brand">Firesize</Link>
+              <Link to="home" className="fs-header-brand navbar-brand"></Link>
               <button className="fs-header-toggle navbar-toggle" type="button" onClick={this.onNavBtnOnClick}>
                 <span className="sr-only">Toggle Nav</span>
                 <span className="icon-bar"></span>

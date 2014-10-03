@@ -2,6 +2,11 @@
 
 var React = require('react');
 var Examples = require('./examples.jsx')
+var IntroBlock = require('./intro.jsx');
+
+//LESS
+require('stylesheets/components/home.less');
+
 
 var Home = React.createClass({
   componentWillMount: function() {
@@ -9,7 +14,11 @@ var Home = React.createClass({
   },
 
   render: function() {
-    return <Examples />
+    return <div>
+    	<Examples />
+    	<div className="fs-home"></div>
+    	<IntroBlock />
+    </div>
   }
 })
 

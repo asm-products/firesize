@@ -8,7 +8,7 @@ var _ = require("underscore");
 //LESS
 require('stylesheets/components/examples.less');
 
-var DEFAULT_IMAGE_URL = 'http://placekitten.com/g/800/600';
+var DEFAULT_IMAGE_URL = 'http://www.fillmurray.com/284/196';
 var VALIDATOR_NUMBER = /^[0-9]+$/;
 var VALIDATOR_URL = /(http|https|ftp):\/\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?$&\/\/=]*)?/gi;
 

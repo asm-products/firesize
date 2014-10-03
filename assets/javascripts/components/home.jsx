@@ -3,6 +3,7 @@
 var React = require('react');
 var Examples = require('./examples.jsx')
 var IntroBlock = require('./intro.jsx');
+var Footer = require('./footer.jsx');
 
 //LESS
 require('stylesheets/components/home.less');
@@ -18,6 +19,7 @@ var Home = React.createClass({
     	<Examples />
     	<div className="fs-home"></div>
     	<IntroBlock />
+      <Footer />
     </div>
   }
 })

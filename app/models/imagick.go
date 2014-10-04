@@ -105,6 +105,7 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 	if err != nil {
 		grohl.Log(grohl.Data{
 			"processor": "imagick",
+			"step":      "convert",
 			"failure":   err,
 			"args":      cmdArgs,
 			"output":    string(outErr.Bytes()),
@@ -124,20 +125,26 @@ func isAnimatedGif(inFile string) bool {
 	if err != nil {
 		output := string(stderr.Bytes())
 		grohl.Log(grohl.Data{
-			"identify-error": err,
-			"raw-stderr":     output,
+			"processor": "imagick",
+			"step":      "identify",
+			"failure":   err,
+			"output":    output,
 		})
 	} else {
 		output := string(stdout.Bytes())
 		numFrames, err := strconv.Atoi(output)
 		if err != nil {
 			grohl.Log(grohl.Data{
-				"identify-error": "non numeric identify output",
-				"raw-stdout":     output,
+				"processor": "imagick",
+				"step":      "identify",
+				"failure":   err,
+				"output":    output,
+				"message":   "non numeric identify output",
 			})
 		} else {
 			grohl.Log(grohl.Data{
 				"processor":  "imagick",
+				"step":       "identify",
 				"num-frames": numFrames,
 			})
 			return numFrames > 1

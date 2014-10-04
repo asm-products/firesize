@@ -26,7 +26,7 @@ var IntroBlock = React.createClass({
 							</div>
 							<h3 className="fs-introblock-block-title">Dynamic Resizing</h3>
 							<div className="fs-introblock-block-content">
-								Reize images on the fly. No need to run huge batch operations whenever you need your images at a new resolution.
+								Resize images on the fly. No need to run huge batch operations whenever you need your images at a new resolution.
 							</div>
 						</Col>
 						<Col className="fs-introblock-block" md={6}>

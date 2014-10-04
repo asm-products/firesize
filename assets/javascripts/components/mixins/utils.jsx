@@ -4,6 +4,7 @@
 
 var UtilsMixin = {
 
+	'use strict',
 
 	/**
 	 * Get a randome number

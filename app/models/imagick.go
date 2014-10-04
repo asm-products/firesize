@@ -159,9 +159,20 @@ func coalesceAnimatedGif(tempDir string, inFile string) (string, error) {
 
 	// convert do.gif -coalesce temporary.gif
 	cmd := exec.Command("convert", inFile, "-coalesce", outFile)
-	_ = runWithTimeout(cmd, 60*time.Second)
+	var outErr bytes.Buffer
+	cmd.Stdout, cmd.Stderr = &outErr, &outErr
 
-	return outFile, nil
+	err := runWithTimeout(cmd, 60*time.Second)
+	if err != nil {
+		grohl.Log(grohl.Data{
+			"processor": "imagick",
+			"step":      "coalesce",
+			"failure":   err,
+			"output":    string(outErr.Bytes()),
+		})
+	}
+
+	return outFile, err
 }
 
 func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) error {

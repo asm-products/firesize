@@ -117,12 +117,25 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 func isAnimatedGif(inFile string) bool {
 	// identify -format %n updates-product-click.gif # => 105
 	cmd := exec.Command("identify", "-format", "%n", inFile)
-	var out bytes.Buffer
-	cmd.Stdout = &out
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
 	err := runWithTimeout(cmd, 10*time.Second)
-	if err == nil {
-		numFrames, err := strconv.Atoi(string(out.Bytes()))
-		if err == nil {
+	if err != nil {
+		output := string(stderr.Bytes())
+		grohl.Log(grohl.Data{
+			"identify-error": err,
+			"raw-stderr":     output,
+		})
+	} else {
+		output := string(stdout.Bytes())
+		numFrames, err := strconv.Atoi(output)
+		if err != nil {
+			grohl.Log(grohl.Data{
+				"identify-error": "non numeric identify output",
+				"raw-stdout":     output,
+			})
+		} else {
 			grohl.Log(grohl.Data{
 				"processor":  "imagick",
 				"num-frames": numFrames,

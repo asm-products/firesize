@@ -17,6 +17,14 @@ import (
 
 type IMagick struct{}
 
+type processPipelineStep func(workingDirectoryPath string, inputFilePath string, args *ProcessArgs) (outputFilePath string, err error)
+
+var defaultPipeline = []processPipelineStep{
+	downloadRemote,
+	preProcessImage,
+	processImage,
+}
+
 // Process a remote asset url using graphicsmagick with the args supplied
 // and write the response to w
 func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessArgs) (err error) {
@@ -26,23 +34,17 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 	}
 	// defer os.RemoveAll(tempDir)
 
-	inFile, err := downloadRemote(tempDir, args.Url)
-	if err != nil {
-		return
-	}
+	var filePath string
 
-	preProcessedInFile, err := preProcessImage(tempDir, inFile, args)
-	if err != nil {
-		return
-	}
-
-	outFile, err := processImage(tempDir, preProcessedInFile, args)
-	if err != nil {
-		return
+	for _, step := range defaultPipeline {
+		filePath, err = step(tempDir, filePath, args)
+		if err != nil {
+			return
+		}
 	}
 
 	// serve response
-	http.ServeFile(w, r, outFile)
+	http.ServeFile(w, r, filePath)
 	return
 }
 
@@ -50,7 +52,8 @@ func createTemporaryWorkspace() (string, error) {
 	return ioutil.TempDir("", "_firesize")
 }
 
-func downloadRemote(tempDir string, url string) (string, error) {
+func downloadRemote(tempDir string, _ string, args *ProcessArgs) (string, error) {
+	url := args.Url
 	inFile := filepath.Join(tempDir, "in")
 
 	grohl.Log(grohl.Data{

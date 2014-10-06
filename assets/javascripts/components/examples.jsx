@@ -3,6 +3,7 @@
 var React = require('react/addons');
 var AdaptiveInput = require('./lib/input-adaptive.jsx');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var UtilsMixin = require('./mixins/utils.jsx');
 var _ = require("underscore");
 
 //LESS
@@ -21,11 +22,7 @@ var ExampleMixin = {
      * The URL of the test image
      * @type {[type]}
      */
-    imageUrl: function(props, propName, componentName) {
-      if (!VALIDATOR_URL.test(props[propName])) {
-        return new Error('Validation failed: url needed!')
-      }
-    },
+    imageUrl: React.PropTypes.string,
     /**
      * The width of the test image
      * @type {[type]}
@@ -44,7 +41,7 @@ var ExampleMixin = {
   getDefaultProps: function() {
 
     return {
-      imageUrl: "",
+      imageUrl: DEFAULT_IMAGE_URL,
       imageWidth: 0,
       imageHeight: 0,
       imagePosition: ""
@@ -118,7 +115,7 @@ var ExampleOutput = React.createClass({
 
   displayName: "ExampleOutput",
 
-  mixins: [ExampleMixin],
+  mixins: [ExampleMixin, UtilsMixin],
 
   render: function() {
     var testImage = "/" +
@@ -143,7 +140,7 @@ var ExampleOutput = React.createClass({
       height: this.props.imageHeight
     };
     return <ReactCSSTransitionGroup transitionName="fs-examples-output-transition">
-      <div className="fs-examples-output"  key={this.props.imageHeight}>
+      <div className="fs-examples-output"  key={this.getRandomNum()}>
         <div className="fs-examples-output-wrapper" style={styleWrapper}>
           <div className="fs-examples-output-image-before" style={styleImageBefore}>
             <span className="fs-examples-output-image-before-height">{this.props.imageHeight}px</span>

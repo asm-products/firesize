@@ -4,7 +4,7 @@
 
 Processes images on the fly using imagemagick.
 
-![Travis Status](https://travis-ci.org/asm-products/firesize.svg)
+[![Build Status](https://travis-ci.org/asm-products/firesize.svg?branch=master)](https://travis-ci.org/rails/rails)
 
 ## Get started
 
@@ -15,7 +15,7 @@ Make sure Postgres, Nodejs and npm are installed.
     # Create a local development database
     psql -c "create database firesize_development"
 
-    if faile run: 
+    if that doesn't work, try:
 
     psql -d postgres -c "create database firesize_development"
 

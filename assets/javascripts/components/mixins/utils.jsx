@@ -1,16 +1,10 @@
-/**
- * Util Mixins
- */
-
 var UtilsMixin = {
-
-	'use strict',
-
 	/**
-	 * Get a randome number
+	 * Get a random number
 	 * @return {[type]} [description]
 	 */
 	getRandomNum: function () {
+		'use strict';
 		var time = Date.now();
 		return time + 1;
 	}

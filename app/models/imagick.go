@@ -17,6 +17,14 @@ import (
 
 type IMagick struct{}
 
+type processPipelineStep func(workingDirectoryPath string, inputFilePath string, args *ProcessArgs) (outputFilePath string, err error)
+
+var defaultPipeline = []processPipelineStep{
+	downloadRemote,
+	preProcessImage,
+	processImage,
+}
+
 // Process a remote asset url using graphicsmagick with the args supplied
 // and write the response to w
 func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessArgs) (err error) {
@@ -26,23 +34,17 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 	}
 	// defer os.RemoveAll(tempDir)
 
-	inFile, err := downloadRemote(tempDir, args.Url)
-	if err != nil {
-		return
-	}
+	var filePath string
 
-	preProcessedInFile, err := preProcessImage(tempDir, inFile, args)
-	if err != nil {
-		return
-	}
-
-	outFile, err := processImage(tempDir, preProcessedInFile, args)
-	if err != nil {
-		return
+	for _, step := range defaultPipeline {
+		filePath, err = step(tempDir, filePath, args)
+		if err != nil {
+			return
+		}
 	}
 
 	// serve response
-	http.ServeFile(w, r, outFile)
+	http.ServeFile(w, r, filePath)
 	return
 }
 
@@ -50,7 +52,8 @@ func createTemporaryWorkspace() (string, error) {
 	return ioutil.TempDir("", "_firesize")
 }
 
-func downloadRemote(tempDir string, url string) (string, error) {
+func downloadRemote(tempDir string, _ string, args *ProcessArgs) (string, error) {
+	url := args.Url
 	inFile := filepath.Join(tempDir, "in")
 
 	grohl.Log(grohl.Data{
@@ -102,6 +105,7 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 	if err != nil {
 		grohl.Log(grohl.Data{
 			"processor": "imagick",
+			"step":      "convert",
 			"failure":   err,
 			"args":      cmdArgs,
 			"output":    string(outErr.Bytes()),
@@ -114,14 +118,33 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 func isAnimatedGif(inFile string) bool {
 	// identify -format %n updates-product-click.gif # => 105
 	cmd := exec.Command("identify", "-format", "%n", inFile)
-	var out bytes.Buffer
-	cmd.Stdout = &out
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
 	err := runWithTimeout(cmd, 10*time.Second)
-	if err == nil {
-		numFrames, err := strconv.Atoi(string(out.Bytes()))
-		if err == nil {
+	if err != nil {
+		output := string(stderr.Bytes())
+		grohl.Log(grohl.Data{
+			"processor": "imagick",
+			"step":      "identify",
+			"failure":   err,
+			"output":    output,
+		})
+	} else {
+		output := string(stdout.Bytes())
+		numFrames, err := strconv.Atoi(output)
+		if err != nil {
+			grohl.Log(grohl.Data{
+				"processor": "imagick",
+				"step":      "identify",
+				"failure":   err,
+				"output":    output,
+				"message":   "non numeric identify output",
+			})
+		} else {
 			grohl.Log(grohl.Data{
 				"processor":  "imagick",
+				"step":       "identify",
 				"num-frames": numFrames,
 			})
 			return numFrames > 1
@@ -136,9 +159,20 @@ func coalesceAnimatedGif(tempDir string, inFile string) (string, error) {
 
 	// convert do.gif -coalesce temporary.gif
 	cmd := exec.Command("convert", inFile, "-coalesce", outFile)
-	_ = runWithTimeout(cmd, 60*time.Second)
+	var outErr bytes.Buffer
+	cmd.Stdout, cmd.Stderr = &outErr, &outErr
 
-	return outFile, nil
+	err := runWithTimeout(cmd, 60*time.Second)
+	if err != nil {
+		grohl.Log(grohl.Data{
+			"processor": "imagick",
+			"step":      "coalesce",
+			"failure":   err,
+			"output":    string(outErr.Bytes()),
+		})
+	}
+
+	return outFile, err
 }
 
 func runWithTimeout(cmd *exec.Cmd, timeout time.Duration) error {

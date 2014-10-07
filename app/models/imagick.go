@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/technoweenie/grohl"
@@ -132,6 +133,7 @@ func isAnimatedGif(inFile string) bool {
 		})
 	} else {
 		output := string(stdout.Bytes())
+		output = strings.TrimSpace(output)
 		numFrames, err := strconv.Atoi(output)
 		if err != nil {
 			grohl.Log(grohl.Data{

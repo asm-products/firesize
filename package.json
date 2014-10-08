@@ -23,6 +23,17 @@
   "scripts": {
     "postinstall": "npm run bundle",
     "bundle": "webpack --optimize-minimize --optimize-occurence-order",
-    "watch": "webpack --progress --colors --watch"
+    "watch": "webpack --progress --colors --watch",
+    "test": "jest assets/javascripts"
+  },
+  "devDependencies": {
+    "jest-cli": "^0.1.18",
+    "react-tools": "^0.11.2"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/jest_processor.js",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/react"
+    ]
   }
 }

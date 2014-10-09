@@ -9,7 +9,11 @@ var _ = require("underscore");
 //LESS
 require('stylesheets/components/examples.less');
 
-var DEFAULT_IMAGE_URL = 'http://placekitten.com/g/800/600';
+var DEFAULT_IMAGE_GRAVITY = "g_west";
+var gravityOtherOptions = ["g_center","g_north", "g_south", "g_east"];
+var DEFAULT_IMAGE_URL = 'http://placekitten.com/g/900/600';
+var DEFAULT_IMAGE_WIDTH = 400;
+var DEFAULT_IMAGE_HEIGHT = 500
 var VALIDATOR_NUMBER = /^[0-9]+$/;
 var VALIDATOR_URL = /(http|https|ftp):\/\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?$&\/\/=]*)?/gi;
 
@@ -34,7 +38,7 @@ var ExampleMixin = {
      */
     imageHeight: React.PropTypes.number,
 
-    imagePosition: React.PropTypes.string
+    imageGravity: React.PropTypes.string
 
   },
 
@@ -44,7 +48,7 @@ var ExampleMixin = {
       imageUrl: DEFAULT_IMAGE_URL,
       imageWidth: 0,
       imageHeight: 0,
-      imagePosition: ""
+      imageGravity: DEFAULT_IMAGE_GRAVITY
     }
   }
 };
@@ -61,6 +65,28 @@ var ExampleInput = React.createClass({
 
   mixins: [ExampleMixin],
 
+  /**
+   * Handle the action when the Gravity button clicked
+   * @return {[type]} [description]
+   */
+  _handleChangeForGravity: debounce(function() {
+    
+    var currentGravity = this.props.imageGravity;
+    var newGravity = gravityOtherOptions.pop();
+    gravityOtherOptions = [currentGravity].concat(gravityOtherOptions);
+
+    this.props.handleChange({
+      changeType: 'gravity',
+      value: newGravity
+    });
+
+  }, 300),
+
+  /**
+   * Handle the action when the width of the image changes
+   * @param  {[type]} value [description]
+   * @return {[type]}       [description]
+   */
   _handleChangeForWidth: debounce(function(value) {
     if (value.match(VALIDATOR_NUMBER)) {
       var newWidth = parseInt(value ,10);
@@ -71,6 +97,11 @@ var ExampleInput = React.createClass({
     }
   }, 300),
 
+  /**
+   * Handle the action when the height of the image changes
+   * @param  {[type]} value [description]
+   * @return {[type]}       [description]
+   */
   _handleChangeForHeight: debounce(function(value) {
     if (value.match(VALIDATOR_NUMBER)) {
       var newHeight = parseInt(value ,10);
@@ -81,6 +112,11 @@ var ExampleInput = React.createClass({
     }
   }, 300),
 
+  /**
+   * Handle the action when the url of the image changes
+   * @param  {[type]} value [description]
+   * @return {[type]}       [description]
+   */
   _handleChangeForUrl: function(value) {
 
     if (VALIDATOR_URL.test(value)) {
@@ -102,7 +138,7 @@ var ExampleInput = React.createClass({
     <span>x</span>
     <AdaptiveInput ref="imageHeight" value={this.props.imageHeight.toString()} handleChange={this._handleChangeForHeight} />
     <span>/</span>
-    <span className="fs-examples-input-position">{this.props.imagePosition}</span>
+    <span className="fs-examples-input-position" onClick={this._handleChangeForGravity}>{this.props.imageGravity}</span>
     <span>/</span>
     <AdaptiveInput ref="imageUrl" value={this.props.imageUrl} handleChange={this._handleChangeForUrl} />
 
@@ -121,7 +157,7 @@ var ExampleOutput = React.createClass({
     var testImage = "/" +
       this.props.imageWidth + "x" +
       this.props.imageHeight + "/" +
-      this.props.imagePosition +
+      this.props.imageGravity +
       this.props.imageUrl;
 
     var styleWrapper = {
@@ -163,9 +199,9 @@ var Examples = React.createClass({
   getInitialState: function() {
     return {
       imageUrl: DEFAULT_IMAGE_URL,
-      imageWidth: 500,
-      imageHeight: 300,
-      imagePosition: "g_center"
+      imageWidth: DEFAULT_IMAGE_WIDTH,
+      imageHeight: DEFAULT_IMAGE_HEIGHT,
+      imageGravity: DEFAULT_IMAGE_GRAVITY
     }
   },
 
@@ -183,10 +219,10 @@ var Examples = React.createClass({
       <div onClick={this.onClick} className="fs-examples-slogan">Image Resizing on the Fly</div>
       <ExampleInput  imageWidth={this.state.imageWidth}
         imageHeight={this.state.imageHeight} imageUrl={this.state.imageUrl}
-        imagePosition={this.state.imagePosition} handleChange={this._handleInputChange}/>
+        imageGravity={this.state.imageGravity} handleChange={this._handleInputChange}/>
       <ExampleOutput imageWidth={this.state.imageWidth}
         imageHeight={this.state.imageHeight} imageUrl={this.state.imageUrl}
-        imagePosition={this.state.imagePosition}/>
+        imageGravity={this.state.imageGravity}/>
     </div>
   },
 
@@ -210,6 +246,12 @@ var Examples = React.createClass({
             imageUrl: value
           });
           break;
+        case 'gravity':
+          this.setState({
+            imageGravity: value
+          });
+          break;
+
       }
     }
   }

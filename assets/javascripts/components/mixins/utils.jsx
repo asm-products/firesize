@@ -2,9 +2,11 @@
  * Util Mixins
  */
 
-var UtilsMixin = {
+'use strict';
 
-	'use strict',
+var _ = require('underscore');
+
+var UtilsMixin = {
 
 	/**
 	 * Get a randome number
@@ -13,6 +15,15 @@ var UtilsMixin = {
 	getRandomNum: function () {
 		var time = Date.now();
 		return time + 1;
+	},
+
+	/**
+	 * Return the difference of the two arrays
+	 * @param  {[type]} a [description]
+	 * @return {[type]}   [description]
+	 */
+	diffArrays: function(arrayA, arrayB) {
+		
 	}
 
 };

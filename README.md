@@ -6,41 +6,27 @@ Processes images on the fly using imagemagick.
 
 [![Build Status](https://travis-ci.org/asm-products/firesize.svg?branch=master)](https://travis-ci.org/rails/rails)
 
-## Get started
+## Getting Started with Fig
 
-Make sure Postgres, Nodejs and npm are installed.
-    # Download repo & all dependencies
-    go get github.com/asm-products/firesize
+Prerequisites:
 
-    # Create a local development database
-    psql -c "create database firesize_development"
+* [Docker](https://docker.com/)
+* [Fig](http://www.fig.sh/)
+* [boot2docker](http://boot2docker.io/) if you're not running Linux
 
-    if that doesn't work, try:
+Create the database and run migrations:
 
-    psql -d postgres -c "create database firesize_development"
+    $ fig run web goose up
 
-    # Install goose for running migrations
-    go get bitbucket.org/liamstask/goose/cmd/goose
+Start the app:
 
-    # Install forego as it loads .env (for running goose)
-    brew install forego
+    $ fig up
 
-    # Install gin for live reloading codes
-    go get github.com/codegangsta/gin
+Get the boot2docker ip if you're not on Linux:
 
-    # Copy sample env file
-    cp .env.sample .env
+    $ boot2docker ip
 
-    # Run database migrations
-    forego run goose up
-
-    # Start up webpack to build the assets
-    npm install && npm run watch
-
-    # Start up the server
-    gin
-
-Open up http://localhost:3000/
+Open up http://192.168.59.103:3000/
 
 ## API
 

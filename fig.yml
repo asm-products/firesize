@@ -1,0 +1,24 @@
+web:
+  build: .
+  command: go-reload server.go
+  ports:
+    - "3000:3000"
+  volumes:
+    - .:/go/src/github.com/asm-products/firesize
+  links:
+    - db
+
+  environment:
+    - DATABASE_URL=postgres://postgres@db/firesize_development?sslmode=disable
+
+db:
+  image: postgres
+  ports:
+    - "5432"
+
+webpack:
+  image: node:latest
+  command: ./webpack.sh
+  working_dir: /app
+  volumes:
+    - .:/app

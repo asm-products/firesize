@@ -78,6 +78,10 @@ func (p *ProcessArgs) CommandArgs(inFile, outFile string) (args []string, outFil
 	args = append(args, "-format", p.Format)
 	args = append(args, "+repage")
 
+	// read exif metadata for original orientation
+	// http://www.imagemagick.org/script/command-line-options.php#auto-orient
+	args = append(args, "-auto-orient")
+
 	outFileWithFormat = outFile + "." + p.Format
 
 	if p.Frame != "" {

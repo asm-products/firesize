@@ -63,6 +63,7 @@ func TestConvertsStructIntoCommandLineArgs(t *testing.T) {
 		"-crop", "128x64+0+0",
 		"-format", "png",
 		"+repage",
+		"-auto-orient",
 		"in.psd[0]",
 		"out.png",
 	}, cmdArgs)
@@ -81,6 +82,7 @@ func TestOnlyShrinksIfGravityOmitted(t *testing.T) {
 		"-crop", "128x64+0+0",
 		"-format", "png",
 		"+repage",
+		"-auto-orient",
 		"in.gif",
 		"out.png",
 	}, cmdArgs)
@@ -95,6 +97,7 @@ func TestSpecifyJustHeight(t *testing.T) {
 		"-thumbnail", "x64",
 		"-format", "png",
 		"+repage",
+		"-auto-orient",
 		"in.gif",
 		"out.png",
 	}, cmdArgs)
@@ -109,6 +112,7 @@ func TestSpecifyJustWidth(t *testing.T) {
 		"-thumbnail", "128x",
 		"-format", "png",
 		"+repage",
+		"-auto-orient",
 		"in.psd",
 		"out.png",
 	}, cmdArgs)

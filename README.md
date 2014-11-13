@@ -4,7 +4,7 @@
 
 Processes images on the fly using imagemagick.
 
-[![Build Status](https://travis-ci.org/asm-products/firesize.svg?branch=master)](https://travis-ci.org/rails/rails)
+[![Build Status](https://travis-ci.org/asm-products/firesize.svg?branch=master)](https://travis-ci.org/asm-products/firesize)
 
 ## Getting Started with Fig
 

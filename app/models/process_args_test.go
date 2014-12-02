@@ -3,31 +3,30 @@ package models
 import (
 	"testing"
 
-	"github.com/asm-products/firesize/app/models"
 	"github.com/bmizerany/assert"
 )
 
 var imgUrl = "http://placekitten.com/g/32/32"
 
 func Test_ProcessArgsGetsWidth(t *testing.T) {
-	args := models.NewProcessArgs([]string{"128x"}, imgUrl)
-	assert.Equal(t, &models.ProcessArgs{
+	args := NewProcessArgs([]string{"128x"}, imgUrl)
+	assert.Equal(t, &ProcessArgs{
 		Width: "128",
 		Url:   "http://placekitten.com/g/32/32",
 	}, args)
 }
 
 func Test_ProcessArgsGetsHeight(t *testing.T) {
-	args := models.NewProcessArgs([]string{"x64"}, imgUrl)
-	assert.Equal(t, &models.ProcessArgs{
+	args := NewProcessArgs([]string{"x64"}, imgUrl)
+	assert.Equal(t, &ProcessArgs{
 		Height: "64",
 		Url:    "http://placekitten.com/g/32/32",
 	}, args)
 }
 
 func Test_ProcessArgsGetsWidthAndHeight(t *testing.T) {
-	args := models.NewProcessArgs([]string{"128x64"}, imgUrl)
-	assert.Equal(t, &models.ProcessArgs{
+	args := NewProcessArgs([]string{"128x64"}, imgUrl)
+	assert.Equal(t, &ProcessArgs{
 		Width:  "128",
 		Height: "64",
 		Url:    "http://placekitten.com/g/32/32",
@@ -35,8 +34,8 @@ func Test_ProcessArgsGetsWidthAndHeight(t *testing.T) {
 }
 
 func Test_ProcessArgsGetsTheRest(t *testing.T) {
-	args := models.NewProcessArgs([]string{"128x64", "g_center", "frame_0", "png"}, imgUrl)
-	assert.Equal(t, &models.ProcessArgs{
+	args := NewProcessArgs([]string{"128x64", "g_center", "frame_0", "png"}, imgUrl)
+	assert.Equal(t, &ProcessArgs{
 		Width:   "128",
 		Height:  "64",
 		Gravity: "center",
@@ -47,7 +46,7 @@ func Test_ProcessArgsGetsTheRest(t *testing.T) {
 }
 
 func TestConvertsStructIntoCommandLineArgs(t *testing.T) {
-	args := &models.ProcessArgs{
+	args := &ProcessArgs{
 		Width:   "128",
 		Height:  "64",
 		Gravity: "north",
@@ -70,7 +69,7 @@ func TestConvertsStructIntoCommandLineArgs(t *testing.T) {
 }
 
 func TestOnlyShrinksIfGravityOmitted(t *testing.T) {
-	args := &models.ProcessArgs{
+	args := &ProcessArgs{
 		Width:  "128",
 		Height: "64",
 	}
@@ -89,7 +88,7 @@ func TestOnlyShrinksIfGravityOmitted(t *testing.T) {
 }
 
 func TestSpecifyJustHeight(t *testing.T) {
-	args := &models.ProcessArgs{
+	args := &ProcessArgs{
 		Height: "64",
 	}
 	cmdArgs, _ := args.CommandArgs("in.gif", "out")
@@ -104,7 +103,7 @@ func TestSpecifyJustHeight(t *testing.T) {
 }
 
 func TestSpecifyJustWidth(t *testing.T) {
-	args := &models.ProcessArgs{
+	args := &ProcessArgs{
 		Width: "128",
 	}
 	cmdArgs, _ := args.CommandArgs("in.psd", "out")

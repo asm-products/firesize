@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/asm-products/firesize",
-	"GoVersion": "go1.2.2",
+	"GoVersion": "go1.3.3",
 	"Packages": [
 		"./..."
 	],

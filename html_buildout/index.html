@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>FireSize</title>
+
+	<link rel="stylesheet" type="text/css" href="fonts/proxima/stylesheet.css">
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+
+	<style type="text/css">
+
+		html, body { margin: 0; padding: 0; font-family: proxima; }
+		header { background: #f55641; position: fixed; top: 0; left: 0; right: 0; z-index: 2; }
+		header #logo { padding: 15px 0 10px 15px; }
+
+		nav	{ background: #222; position: fixed; left: 0; top: 0; width: 200px; bottom: 0; padding-top: 100px; z-index: 1; }
+		nav ul, nav ul li { list-style: none; list-style-image: none; padding: 0; margin: 0; }
+		nav ul li a { display: block; padding: 15px; border-bottom: 1px solid #333; color: #fff; text-decoration: none; }
+		nav ul li a:hover { background: #111; cursor: pointer; }
+		section { background: #fff; margin: 67px 0 0 0; margin-left: 200px; }
+		footer { #fff; }
+
+		.pull-right { float: right; }
+		.pull-left { float: left; }
+
+		ul.dropdown { height: 60px; }
+		ul.dropdown, ul.dropdown li { list-style: none; list-style-image: none; padding: 0; margin: 0; line-height: 1; }
+		ul.dropdown ul { display: none; position: absolute; background: #222; top: 60px; right: 0; margin: 0; padding: 0; width: 220px; }
+		ul.dropdown ul, ul.dropdown ul li { padding: 0; margin: 0; }
+		ul.dropdown ul li a { display: block; padding: 15px; color: #ccc; text-decoration: none; }
+		ul.dropdown ul li a:hover { color: #fff; background: #111; }
+		ul.dropdown:hover ul { display: block; }
+
+		.usermenu img.avatar { width: 45px; height: 45px; border-radius: 50px; margin: 7px 0 0 0; float: left; }
+		.usermenu .name { float: left; padding: 25px 25px 0 20px; color: #fff; }
+
+		section .top { color: #000; border-bottom: 1px solid #ccc; }
+		section .top input#search { border: 0; display: block; width: 90%; height: 60px; font-size: 20px; }
+		section .top input#search:focus { outline: none; }
+		section .top a { color: #666; }
+		section .top a:hover { color: #111; }
+		section .top i.fa { padding: 15px; }
+		section .top .pull-right { margin-right: 5px; }
+		section .top .fa-search { color: #ccc; }
+
+		section .content { padding: 20px; }
+		section .content .row { border-bottom: 1px solid #ccc; padding: 15px; font-size: 17px; color: #000; }
+		section .content .row:hover { background: #fafafa; cursor: pointer; }
+		section .content .row small { font-size: 17px; color: #ccc; }
+		section .content .row .pull-right { color: #666; }
+
+	</style>
+
+</head>
+<body>
+
+	<header>
+		<div class="pull-right">
+			<ul class="dropdown usermenu">
+				<li>
+					<img class="avatar" src="http://www.gravatar.com/avatar/018c387c1c47b997ee766b4bd8ee4ac0?s=60&d=&r=g">
+					<div class="name">Wes Edling&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down"></i></div>
+					<ul>
+						<li><a href="#">Account Settings</a></li>
+						<li><a href="#">Billing</a></li>
+						<li><a href="#">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<div id="logo">
+			<a href="#"><img src="images/firesize_logo.png" border="0"></a>
+		</div>
+	</header>
+
+	<nav>
+		<ul>
+			<li><a href="#"><i class="fa fa-dashboard fa-lg"></i>&nbsp;&nbsp;&nbsp;Dashboard</a></li>
+			<li><a href="#"><i class="fa fa-tags fa-lg"></i>&nbsp;&nbsp;&nbsp;Subdomains</a></li>
+		</ul>
+	</nav>
+
+	<section>
+		
+		<div class="top">
+			<div class="pull-right">
+				<a href="#"><i class="fa fa-plus fa-2x"></i></a>
+			</div>
+			<div class="search">
+				<div class="pull-left">
+					<i class="fa fa-search fa-2x"></i>
+				</div>
+				<input type="text" id="search" placeholder="Search Subdomains" />
+			</div>
+		</div>
+
+		<div class="content">
+			
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+			<div class="row">
+				<div class="pull-right">13 images</div>
+				mydomain<small>.firesize.com</small>
+			</div>
+
+		</div>
+
+	</section>
+
+	<footer></footer>
+
+</body>
+</html>

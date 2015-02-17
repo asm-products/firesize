@@ -20,12 +20,12 @@ module.exports = {
     loaders: [
       { test: /\.css/, loader: "style-loader!css-loader" },
       { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
-      { test: /\.gif/, loader: "url-loader?limit=10000&minetype=image/gif" },
-      { test: /\.jpg/, loader: "url-loader?limit=10000&minetype=image/jpg" },
-      { test: /\.png/, loader: "url-loader?limit=10000&minetype=image/png" },
+      { test: /\.gif/, loader: "url-loader?limit=10000&mimetype=image/gif" },
+      { test: /\.jpg/, loader: "url-loader?limit=10000&mimetype=image/jpg" },
+      { test: /\.png/, loader: "url-loader?limit=10000&mimetype=image/png" },
 
       { test: /\.jsx$/,  loader: 'jsx-loader?harmony' },
-      { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
+      { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
       { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
     ]
   },

@@ -30,3 +30,7 @@ func Insert(m interface{}) error {
 func Update(m interface{}) (count int64, err error) {
 	return Dbm.Update(m)
 }
+
+func Delete(m interface{}) (count int64, err error) {
+	return Dbm.Delete(m)
+}

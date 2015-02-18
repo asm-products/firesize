@@ -2,15 +2,15 @@ package addon
 
 import (
 	"encoding/json"
-  "log"
-  "os"
+	"log"
+	"os"
 )
 
 type ConfigApi struct {
-  ConfigVars []string `json:"config_vars"`
-  Regions    []string `json:"regions"`
-  Password   string   `json:"password"`
-  SsoSalt    string   `json:"sso_salt"`
+	ConfigVars []string `json:"config_vars"`
+	Regions    []string `json:"regions"`
+	Password   string   `json:"password"`
+	SsoSalt    string   `json:"sso_salt"`
 }
 
 type Config struct {
@@ -21,25 +21,25 @@ type Config struct {
 var config Config
 
 func Init(path string) {
-  addonFile, err := os.Open(path)
-  if err != nil {
-    log.Fatal(err)
-  }
+	addonFile, err := os.Open(path)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-  decoder := json.NewDecoder(addonFile)
-  var c Config
-  err = decoder.Decode(&c)
-  if err != nil {
-    log.Fatal(err)
-  }
+	decoder := json.NewDecoder(addonFile)
+	var c Config
+	err = decoder.Decode(&c)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-  config = c
+	config = c
 }
 
 func Id() string {
-  return config.Id
+	return config.Id
 }
 
 func Password() string {
-  return config.Api.Password
+	return config.Api.Password
 }

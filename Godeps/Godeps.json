@@ -1,9 +1,6 @@
 {
 	"ImportPath": "github.com/asm-products/firesize",
-	"GoVersion": "go1.3.3",
-	"Packages": [
-		"./..."
-	],
+	"GoVersion": "go1.4.1",
 	"Deps": [
 		{
 			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
@@ -14,11 +11,6 @@
 			"ImportPath": "code.google.com/p/go.crypto/blowfish",
 			"Comment": "null-218",
 			"Rev": "f3cebac2bd11c2bf03c15bfa4c66688ad02a0a40"
-		},
-		{
-			"ImportPath": "github.com/bmizerany/assert",
-			"Comment": "release.r60-6-ge17e998",
-			"Rev": "e17e99893cb6509f428e1728281c2ad60a6b31e3"
 		},
 		{
 			"ImportPath": "github.com/coopernurse/gorp",
@@ -33,15 +25,6 @@
 		{
 			"ImportPath": "github.com/gorilla/context",
 			"Rev": "a08edd30ad9e104612741163dc087a613829a23c"
-		},
-		{
-			"ImportPath": "github.com/kr/pretty",
-			"Comment": "go.weekly.2011-12-22-18-gbc9499c",
-			"Rev": "bc9499caa0f45ee5edb2f0209fbd61fbf3d9018f"
-		},
-		{
-			"ImportPath": "github.com/kr/text",
-			"Rev": "6807e777504f54ad073ecef66747de158294b639"
 		},
 		{
 			"ImportPath": "github.com/lib/pq",

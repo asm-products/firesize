@@ -36,6 +36,10 @@ func Init(path string) {
   config = c
 }
 
+func Id() string {
+  return config.Id
+}
+
 func Password() string {
   return config.Api.Password
 }

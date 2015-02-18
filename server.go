@@ -30,7 +30,7 @@ func main() {
 	new(controllers.SessionsController).Init(r)
 	new(controllers.RegistrationsController).Init(r)
 	new(controllers.ImagesController).Init(r)
-	new(controllers.HerokuController).Init(r)
+	new(controllers.HerokuResourcesController).Init(r)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 

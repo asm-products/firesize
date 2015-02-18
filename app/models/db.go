@@ -26,3 +26,7 @@ func InitDb(url string) {
 func Insert(m interface{}) error {
 	return Dbm.Insert(m)
 }
+
+func Update(m interface{}) (count int64, err error) {
+	return Dbm.Update(m)
+}

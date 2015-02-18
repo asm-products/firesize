@@ -19,6 +19,17 @@ type Account struct {
 	EncryptedPassword []byte    `db:"encrypted_password"       json:"-"`
 }
 
+func FindAccountById(id int64) *Account {
+	accounts, err := Dbm.Select(Account{}, `select * from accounts where id = $1 limit 1`, id)
+	if err != nil {
+		panic(err)
+	}
+	if len(accounts) == 0 {
+		return nil
+	}
+	return accounts[0].(*Account)
+}
+
 func FindAccountByEmail(email string) *Account {
 	accounts, err := Dbm.Select(Account{}, `select * from accounts where lower(email) = lower($1) limit 1`, email)
 	if err != nil {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
@@ -9,6 +8,7 @@ import (
 	"github.com/asm-products/firesize/app/models"
 	"github.com/asm-products/firesize/controllers"
 	"github.com/asm-products/firesize/templates"
+	"github.com/codegangsta/negroni"
 	"github.com/whatupdave/mux"
 )
 
@@ -34,6 +34,7 @@ func main() {
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
-	log.Printf("listening on %s:%s \n", host, port)
-	log.Fatalln(http.ListenAndServe(host+":"+port, r))
+	n := negroni.Classic()
+	n.UseHandler(r)
+	n.Run(host + ":" + port)
 }

@@ -1,1 +1,1 @@
-web: firesize
+web: ./firesize

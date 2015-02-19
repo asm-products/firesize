@@ -21,7 +21,7 @@ func main() {
 
 	templates.Init("templates")
 	models.InitDb(os.Getenv("DATABASE_URL"))
-	addon.Init("addon-manifest.json")
+	addon.Init(os.Getenv("HEROKU_ID"), os.Getenv("HEROKU_API_PASSWORD"))
 
 	r := mux.NewRouter()
 	r.SkipClean(true) // have to use whatupdave/mux until Gorilla supports this

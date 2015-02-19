@@ -154,6 +154,6 @@ func Authenticate(r *http.Request) bool {
 		return false
 	}
 
-	return username == addon.Id() &&
-		password == addon.Password()
+	return username == addon.Id &&
+		password == addon.Password
 }

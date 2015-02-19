@@ -34,7 +34,6 @@ type UpdateResourceParams struct {
 	Plan     string `json:"plan"`
 }
 
-// TODO: Save plan
 func (c *HerokuResourcesController) Create(w http.ResponseWriter, r *http.Request) {
 	if !Authenticate(r) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
@@ -50,8 +49,9 @@ func (c *HerokuResourcesController) Create(w http.ResponseWriter, r *http.Reques
 	}
 
 	account := models.Account{
-		CreatedAt: time.Now(),
 		Email:     p.HerokuId,
+		Plan:      p.Plan,
+		CreatedAt: time.Now(),
 	}
 
 	err = account.GenEncryptedPassword(p.HerokuId)
@@ -70,12 +70,12 @@ func (c *HerokuResourcesController) Create(w http.ResponseWriter, r *http.Reques
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprint(w, Response{
-		"id":     account.Id,
 		"config": map[string]string{"FIRESIZE_URL": "https://firesize.com"},
+		"id":     account.Id,
+		"plan":   account.Plan,
 	})
 }
 
-// TODO: Update plan and heroku id
 func (c *HerokuResourcesController) Update(w http.ResponseWriter, r *http.Request) {
 	if !Authenticate(r) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
@@ -103,7 +103,8 @@ func (c *HerokuResourcesController) Update(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	// account.Plan = p.Plan
+	account.Email = p.HerokuId
+	account.Plan = p.Plan
 	_, err = models.Update(account)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

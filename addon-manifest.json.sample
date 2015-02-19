@@ -10,8 +10,8 @@
       "sso_url": "https://firesize.com/sso/login"
     },
     "test": {
-      "base_url": "http://localhost:5000/heroku/resources",
-      "sso_url": "http://localhost:5000/sso/login"
+      "base_url": "http://localhost:3000/heroku/resources",
+      "sso_url": "http://localhost:3000/sso/login"
     }
   }
 }

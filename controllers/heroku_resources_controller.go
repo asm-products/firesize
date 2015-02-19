@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/asm-products/firesize/addon"
-	"github.com/asm-products/firesize/app/models"
+	"github.com/asm-products/firesize/models"
 	"github.com/whatupdave/mux"
 )
 

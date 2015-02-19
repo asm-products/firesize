@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/asm-products/firesize/addon"
-	"github.com/asm-products/firesize/app/models"
+	"github.com/asm-products/firesize/models"
 	"github.com/asm-products/firesize/controllers"
 	"github.com/asm-products/firesize/templates"
 	"github.com/codegangsta/negroni"

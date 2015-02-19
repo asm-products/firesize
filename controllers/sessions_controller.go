@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"code.google.com/p/go.crypto/bcrypt"
-	"github.com/asm-products/firesize/app/models"
+	"github.com/asm-products/firesize/models"
 	"github.com/whatupdave/mux"
 )
 

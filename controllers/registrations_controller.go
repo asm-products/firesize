@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/asm-products/firesize/app/models"
+	"github.com/asm-products/firesize/models"
 	"github.com/whatupdave/mux"
 )
 

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/asm-products/firesize/app/models"
+	"github.com/asm-products/firesize/models"
 	"github.com/technoweenie/grohl"
 	"github.com/whatupdave/mux"
 )

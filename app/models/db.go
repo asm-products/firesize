@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/coopernurse/gorp"
+	"github.com/go-gorp/gorp"
 	_ "github.com/lib/pq"
 )
 
@@ -25,4 +25,12 @@ func InitDb(url string) {
 
 func Insert(m interface{}) error {
 	return Dbm.Insert(m)
+}
+
+func Update(m interface{}) (count int64, err error) {
+	return Dbm.Update(m)
+}
+
+func Delete(m interface{}) (count int64, err error) {
+	return Dbm.Delete(m)
 }

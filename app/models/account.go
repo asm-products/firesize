@@ -17,6 +17,18 @@ type Account struct {
 	UpdatedAt         time.Time `db:"updated_at"  json:"updated"`
 	Email             string    `db:"email"       json:"email"`
 	EncryptedPassword []byte    `db:"encrypted_password"       json:"-"`
+	Plan              string    `db:"plan"        json:"plan"`
+}
+
+func FindAccountById(id int64) *Account {
+	accounts, err := Dbm.Select(Account{}, `select * from accounts where id = $1 limit 1`, id)
+	if err != nil {
+		panic(err)
+	}
+	if len(accounts) == 0 {
+		return nil
+	}
+	return accounts[0].(*Account)
 }
 
 func FindAccountByEmail(email string) *Account {

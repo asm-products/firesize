@@ -1,13 +1,14 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
+	"github.com/asm-products/firesize/addon"
 	"github.com/asm-products/firesize/app/models"
 	"github.com/asm-products/firesize/controllers"
 	"github.com/asm-products/firesize/templates"
+	"github.com/codegangsta/negroni"
 	"github.com/whatupdave/mux"
 )
 
@@ -20,6 +21,7 @@ func main() {
 
 	templates.Init("templates")
 	models.InitDb(os.Getenv("DATABASE_URL"))
+	addon.Init("addon-manifest.json")
 
 	r := mux.NewRouter()
 	r.SkipClean(true) // have to use whatupdave/mux until Gorilla supports this
@@ -28,9 +30,11 @@ func main() {
 	new(controllers.SessionsController).Init(r)
 	new(controllers.RegistrationsController).Init(r)
 	new(controllers.ImagesController).Init(r)
+	new(controllers.HerokuResourcesController).Init(r)
 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("static")))
 
-	log.Printf("listening on %s:%s \n", host, port)
-	log.Fatalln(http.ListenAndServe(host+":"+port, r))
+	n := negroni.Classic()
+	n.UseHandler(r)
+	n.Run(host + ":" + port)
 }

@@ -1,0 +1,17 @@
+{
+  "id": "firesize",
+  "api": {
+    "config_vars": [ "FIRESIZE_URL" ],
+    "regions": [ "us" ],
+    "password": "9b2d588288b278fdccf508967f1adce2",
+    "sso_salt": "130b60523cddbbbb3f849ffc6abc415d",
+    "production": {
+      "base_url": "https://firesize.com/heroku/resources",
+      "sso_url": "https://firesize.com/sso/login"
+    },
+    "test": {
+      "base_url": "http://localhost:3000/heroku/resources",
+      "sso_url": "http://localhost:3000/sso/login"
+    }
+  }
+}

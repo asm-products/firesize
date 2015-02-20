@@ -1,4 +1,5 @@
 var request = require('superagent')
+var url = require('url')
 
 var auth = {
   signin: function(email, password, cb) {
@@ -62,6 +63,16 @@ var auth = {
   },
 
   signedIn: function() {
+    var currentUrl = url.parse(window.location.href, true)
+    var token = currentUrl.query.token
+
+    if(token) {
+      sessionStorage.token = token
+
+      currentUrl.search = currentUrl.query = null
+      window.location = url.format(currentUrl)
+    }
+
     return !!sessionStorage.token
   },
 

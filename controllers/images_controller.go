@@ -16,6 +16,7 @@ func (c *ImagesController) Init(r *mux.Router) {
 	r.HandleFunc("/{args:.*?}http{path:.*}", c.Get)
 }
 
+// TODO: Record image processing for account
 func (c *ImagesController) Get(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 

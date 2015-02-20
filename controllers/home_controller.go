@@ -23,7 +23,6 @@ func (c *HomeController) Index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "text/html")
 
 	err := templates.Render(w, "layout", nil)
-
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

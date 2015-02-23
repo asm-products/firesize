@@ -70,7 +70,7 @@ func (c *HerokuResourcesController) Create(w http.ResponseWriter, r *http.Reques
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprint(w, Response{
-		"config": map[string]string{"FIRESIZE_URL": "https://d8izdk6bl4gbi.cloudfront.net"},
+		"config": map[string]string{"FIRESIZE_URL": "https://firesize.com"},
 		"id":     account.Id,
 		"plan":   account.Plan,
 	})
@@ -115,7 +115,7 @@ func (c *HerokuResourcesController) Update(w http.ResponseWriter, r *http.Reques
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, Response{
 		"id":     account.Id,
-		"config": map[string]string{"FIRESIZE_URL": "https://d8izdk6bl4gbi.cloudfront.net"},
+		"config": map[string]string{"FIRESIZE_URL": "https://firesize.com"},
 	})
 }
 

@@ -26,7 +26,36 @@ Get the boot2docker ip if you're not on Linux:
 
     $ boot2docker ip
 
-Open up http://192.168.59.103:3000/
+Open up [http://192.168.59.103:3000](http://192.168.59.103:3000)
+
+## Getting Started without Fig
+
+Prerequisites:
+
+* [Go](https://golang.org/)
+* [Node](http://nodejs.org/)
+* [Postgres](http://www.postgresql.org/)
+* [ImageMagick](http://www.imagemagick.org/)
+
+Install dependencies:
+
+    $ go get -u github.com/tools/godep \
+                bitbucket.org/liamstask/goose/cmd/goose \
+                github.com/codegangsta/gin
+
+Create the database and run migrations:
+
+    $ DATABASE_URL="dbname=firesize_development sslmode=disable" goose up
+
+Run the server:
+
+    $ gin
+
+Run the asset compiler (in a separate tab/pane):
+
+    $ ./webpack.sh
+
+Open up [http://localhost:3000](http://localhost:3000)
 
 ## API
 

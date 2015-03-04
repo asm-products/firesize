@@ -2,16 +2,17 @@ package models
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"regexp"
-	"strconv"
 	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/joaojeronimo/go-crc16"
 )
+
+var letters = []rune("abcdefghijklmnopqrstuvwxyz0123456789")
 
 type Account struct {
 	Id                int64     `db:"id" json:"id"`
@@ -68,7 +69,12 @@ func (a *Account) GenSubdomain() {
 		return
 	}
 
-	a.Subdomain = strconv.FormatUint(uint64(crc16.Crc16([]byte(a.Email))), 36)
+	randomLetters := make([]rune, 12)
+	for i := range randomLetters {
+		randomLetters[i] = letters[rand.Intn(len(letters))]
+	}
+
+	a.Subdomain = string(randomLetters)
 }
 
 var emailRegex = regexp.MustCompile("^.+@.+$")

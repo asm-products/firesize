@@ -41,11 +41,16 @@ Install dependencies:
 
     $ go get -u github.com/tools/godep \
                 bitbucket.org/liamstask/goose/cmd/goose \
-                github.com/codegangsta/gin
+                github.com/codegangsta/gin \
+                github.com/ddollar/forego
+
+Copy over some default env vars:
+
+    $ cp .env.sample .env
 
 Create the database and run migrations:
 
-    $ DATABASE_URL="dbname=firesize_development sslmode=disable" goose up
+    $ forego run goose up
 
 Run the server:
 

@@ -25,6 +25,14 @@ var gravityRgx = regexp.MustCompile(`^g_([a-z]+)$`)
 var frameRgx = regexp.MustCompile(`^frame_(\d+)$`)
 var formatRgx = regexp.MustCompile(`^(png|jpg|jpeg|gif)$`)
 
+func (p *ProcessArgs) HasOperations() bool {
+	return p.Height != "" ||
+		p.Width != "" ||
+		p.Format != "" ||
+		p.Gravity != "" ||
+		p.Frame != ""
+}
+
 func (p *ProcessArgs) setUrlArg(arg string) bool {
 	switch {
 	case dimensionsRgx.MatchString(arg):

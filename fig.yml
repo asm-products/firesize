@@ -12,7 +12,7 @@ web:
     - DATABASE_URL=postgres://postgres@db/firesize_development?sslmode=disable
 
 db:
-  image: postgres
+  image: postgres:latest
   ports:
     - "5432"
 

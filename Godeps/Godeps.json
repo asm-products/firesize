@@ -53,6 +53,10 @@
 			"Rev": "a08edd30ad9e104612741163dc087a613829a23c"
 		},
 		{
+			"ImportPath": "github.com/joaojeronimo/go-crc16",
+			"Rev": "59bd0194935ecff6f47039ee12efd09ff894a14a"
+		},
+		{
 			"ImportPath": "github.com/kr/pretty",
 			"Comment": "go.weekly.2011-12-22-18-gbc9499c",
 			"Rev": "bc9499caa0f45ee5edb2f0209fbd61fbf3d9018f"

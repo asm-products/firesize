@@ -4,20 +4,23 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"strconv"
 	"time"
 
 	"code.google.com/p/go.crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/joaojeronimo/go-crc16"
 )
 
 type Account struct {
-	Id                int64     `db:"id"          json:"id"`
-	CreatedAt         time.Time `db:"created_at"  json:"created"`
-	UpdatedAt         time.Time `db:"updated_at"  json:"updated"`
-	Email             string    `db:"email"       json:"email"`
-	EncryptedPassword []byte    `db:"encrypted_password"       json:"-"`
-	Plan              string    `db:"plan"        json:"plan"`
+	Id                int64     `db:"id" json:"id"`
+	CreatedAt         time.Time `db:"created_at" json:"created"`
+	UpdatedAt         time.Time `db:"updated_at" json:"updated"`
+	Email             string    `db:"email" json:"email"`
+	EncryptedPassword []byte    `db:"encrypted_password" json:"-"`
+	Plan              string    `db:"plan" json:"plan"`
+	Subdomain         string    `db:"subdomain" json:"subdomain"`
 }
 
 func FindAccountById(id int64) *Account {
@@ -58,6 +61,14 @@ func (a *Account) GenJwt() (string, error) {
 	token.Claims["account_id"] = a.Id
 	token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 	return token.SignedString([]byte(os.Getenv("SECRET")))
+}
+
+func (a *Account) GenSubdomain() {
+	if a.Subdomain != "" {
+		return
+	}
+
+	a.Subdomain = strconv.FormatUint(uint64(crc16.Crc16([]byte(a.Email))), 36)
 }
 
 var emailRegex = regexp.MustCompile("^.+@.+$")

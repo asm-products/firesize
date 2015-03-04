@@ -35,6 +35,9 @@ func (c *RegistrationsController) Create(w http.ResponseWriter, r *http.Request)
 		CreatedAt: time.Now(),
 		Email:     p.Email,
 	}
+
+	account.GenSubdomain()
+
 	if err = account.GenEncryptedPassword(p.Password); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

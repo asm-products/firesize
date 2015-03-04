@@ -54,6 +54,8 @@ func (c *HerokuResourcesController) Create(w http.ResponseWriter, r *http.Reques
 		CreatedAt: time.Now(),
 	}
 
+	account.GenSubdomain()
+
 	err = account.GenEncryptedPassword(p.HerokuId)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

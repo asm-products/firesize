@@ -116,3 +116,27 @@ func TestSpecifyJustWidth(t *testing.T) {
 		"out.png",
 	}, cmdArgs)
 }
+
+func TestHasNoOperationsWithJustUrl(t *testing.T) {
+	args := &ProcessArgs{
+		Url: "http://someth.ing",
+	}
+	assert.T(t, !args.HasOperations())
+}
+
+func TestHasOperationsWithAnythingThatIsNotUrl(t *testing.T) {
+	args := &ProcessArgs{Height: "1"}
+	assert.T(t, args.HasOperations())
+
+	args = &ProcessArgs{Width: "1"}
+	assert.T(t, args.HasOperations())
+
+	args = &ProcessArgs{Format: "1"}
+	assert.T(t, args.HasOperations())
+
+	args = &ProcessArgs{Gravity: "1"}
+	assert.T(t, args.HasOperations())
+
+	args = &ProcessArgs{Frame: "1"}
+	assert.T(t, args.HasOperations())
+}

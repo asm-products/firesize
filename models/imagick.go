@@ -37,6 +37,11 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 
 	var filePath string
 
+	// No operations? Just proxy the request
+	if !args.HasOperations() {
+		return proxyRequest(w, args)
+	}
+
 	for _, step := range defaultPipeline {
 		filePath, err = step(tempDir, filePath, args)
 		if err != nil {
@@ -51,6 +56,16 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 
 func createTemporaryWorkspace() (string, error) {
 	return ioutil.TempDir("", "_firesize")
+}
+
+func proxyRequest(w http.ResponseWriter, args *ProcessArgs) error {
+	resp, err := http.Get(args.Url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	_, err = io.Copy(w, resp.Body)
+	return err
 }
 
 func downloadRemote(tempDir string, _ string, args *ProcessArgs) (string, error) {

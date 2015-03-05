@@ -16,8 +16,16 @@ func (c *ImagesController) Init(r *mux.Router) {
 	r.HandleFunc("/{args:.*?}http{path:.*}", c.Get)
 }
 
-// TODO: Record image processing for account
+// TODO: Don't allow requests without an account subdomain
 func (c *ImagesController) Get(w http.ResponseWriter, r *http.Request) {
+	subdomain := strings.Split(r.URL.Host, ".")[0]
+	if subdomain != "" {
+		account := models.FindAccountBySubdomain(subdomain)
+		if account != nil {
+			// Record image request for account
+		}
+	}
+
 	vars := mux.Vars(r)
 
 	url := "http" + vars["path"]

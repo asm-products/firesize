@@ -46,6 +46,17 @@ func FindAccountByEmail(email string) *Account {
 	return accounts[0].(*Account)
 }
 
+func FindAccountBySubdomain(subdomain string) *Account {
+	accounts, err := Dbm.Select(Account{}, `select * from accounts where subdomain = $1 limit 1`, subdomain)
+	if err != nil {
+		panic(err)
+	}
+	if len(accounts) == 0 {
+		return nil
+	}
+	return accounts[0].(*Account)
+}
+
 func (a *Account) String() string {
 	return fmt.Sprintf("Account(%a)", a.Email)
 }
@@ -75,6 +86,10 @@ func (a *Account) GenSubdomain() {
 	}
 
 	a.Subdomain = string(randomLetters)
+}
+
+func (a *Account) FiresizeUrl() string {
+	return fmt.Sprintf("https://%s.firesize.com", a.Subdomain)
 }
 
 var emailRegex = regexp.MustCompile("^.+@.+$")

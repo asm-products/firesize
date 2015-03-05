@@ -16,15 +16,10 @@ func (c *ImagesController) Init(r *mux.Router) {
 	r.HandleFunc("/{args:.*?}http{path:.*}", c.Get)
 }
 
-// TODO: Don't allow requests without an account subdomain
+// TODO: Pass through requests without an account subdomain
 func (c *ImagesController) Get(w http.ResponseWriter, r *http.Request) {
 	subdomain := strings.Split(r.URL.Host, ".")[0]
-	if subdomain != "" {
-		account := models.FindAccountBySubdomain(subdomain)
-		if account != nil {
-			// Record image request for account
-		}
-	}
+	models.CreateImageRequestForSubdomain(subdomain)
 
 	vars := mux.Vars(r)
 

@@ -20,6 +20,7 @@ func InitDb(url string) {
 
 	Dbm = &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
 	Dbm.AddTableWithName(Account{}, "accounts").SetKeys(true, "Id")
+	Dbm.AddTableWithName(ImageRequest{}, "image_requests").SetKeys(true, "Id")
 	Dbm.TraceOn("[gorp]", log.New(os.Stdout, "sql:", log.Lmicroseconds))
 }
 

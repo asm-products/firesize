@@ -1,4 +1,4 @@
-package tests
+package controllers
 
 import (
 	"net/http"
@@ -6,7 +6,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/asm-products/firesize/controllers"
 	"github.com/asm-products/firesize/models"
 	"github.com/whatupdave/mux"
 )
@@ -17,7 +16,7 @@ func TestRecordingImageRequests(t *testing.T) {
 
 	router := mux.NewRouter()
 	router.SkipClean(true)
-	new(controllers.ImagesController).Init(router)
+	new(ImagesController).Init(router)
 
 	recorder := httptest.NewRecorder()
 

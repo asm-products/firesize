@@ -34,31 +34,7 @@ var App = React.createClass({
   },
 
   render: function() {
-    var layout
-    if (this.state.signedIn) {
-      layout = <div>
-        <div className="row">
-          <div className="col-md-2">
-            <ul className="nav nav-sidebar">
-              <li><Link to="dashboard">Dashboard</Link></li>
-              <li><Link to="subdomains">Subdomains</Link></li>
-            </ul>
-          </div>
-          <div className="col-md-10">
-            {this.props.activeRouteHandler()}
-          </div>
-        </div>
-      </div>
-    } else {
-      layout = this.props.activeRouteHandler()
-    }
-
-    return <div>
-      {this.navBarTop()}
-      <div className="fs-app-container" >
-        {layout}
-      </div>
-    </div>
+    return this.props.activeRouteHandler()
   },
 
   navBarTop: function() {

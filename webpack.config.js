@@ -20,6 +20,7 @@ module.exports = {
     loaders: [
       { test: /\.css/, loader: "style-loader!css-loader" },
       { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
+      { test: /\.scss/, loader: "style-loader!css-loader!sass-loader?&includePaths[]=" + (path.resolve(__dirname, "./node_modules")) },
       { test: /\.gif/, loader: "url-loader?limit=10000&mimetype=image/gif" },
       { test: /\.jpg/, loader: "url-loader?limit=10000&mimetype=image/jpg" },
       { test: /\.png/, loader: "url-loader?limit=10000&mimetype=image/png" },

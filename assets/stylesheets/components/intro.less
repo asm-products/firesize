@@ -4,38 +4,39 @@
 
 @import '~stylesheets/lib/variable.less';
 @import '~stylesheets/lib/animate.less';
+
 .fs-introblock {
-	padding: 60px 0px;
-	background-color: @color-orange;
-	.fs-introblock-grid {
-		.fs-introblock-block {
-			font-size: 70px;
-			color: @color-white;
-			text-align: center;
-			.fs-introblock-block-icon {
-				padding: 20px 0px;
-			}
-			.fs-introblock-block-icon-loading:hover {
-				-webkit-animation: fs-animate-arrow-fast 3s infinite;
-				-webkit-animation: fs-animate-arrow-fast 3s infinite;
-	            animation: fs-animate-arrow-fast 3s infinite;
-        	}
+  padding: 60px 0px;
+  background-color: @color-orange;
+  .fs-introblock-grid {
+    .fs-introblock-block {
+      font-size: 70px;
+      color: @color-white;
+      text-align: center;
+      .fs-introblock-block-icon {
+        padding: 20px 0px;
+      }
+      .fs-introblock-block-icon-loading:hover {
+        -webkit-animation: fs-animate-arrow-fast 3s infinite;
+        -webkit-animation: fs-animate-arrow-fast 3s infinite;
+        animation: fs-animate-arrow-fast 3s infinite;
+      }
 
-        	.fs-introblock-block-icon-resize:hover {
-				-webkit-animation: fs-animate-scale 3s  infinite;
-				-moz-animation: fs-animate-scale 3s  infinite;
-	            animation: fs-animate-scale 3s infinite;
-        	}
-        	.fs-introblock-block-icon-spin:hover {
-        		-webkit-animation:fs-animate-spin 2s linear infinite;
-			    -moz-animation:fs-animate-spin 2s linear infinite;
-			    animation:fs-animate-spin 2s linear infinite;
-        	}
+      .fs-introblock-block-icon-resize:hover {
+        -webkit-animation: fs-animate-scale 3s  infinite;
+        -moz-animation: fs-animate-scale 3s  infinite;
+        animation: fs-animate-scale 3s infinite;
+      }
+      .fs-introblock-block-icon-spin:hover {
+        -webkit-animation:fs-animate-spin 2s linear infinite;
+        -moz-animation:fs-animate-spin 2s linear infinite;
+        animation:fs-animate-spin 2s linear infinite;
+      }
 
-			.fs-introblock-block-content {
-				font-size: 18px;
-				padding: 5px;
-			}
-		}	
-	}
+      .fs-introblock-block-content {
+        font-size: 18px;
+        padding: 5px;
+      }
+    }	
+  }
 }

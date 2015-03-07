@@ -33,13 +33,21 @@ var Home = React.createClass({
   header: function() {
     return (
       <div className="bg-red">
-        <div>
-          <div>Logo Firesize</div>
-          <a href="https://addons.heroku.com/firesize">Install the Heroku add-on</a>
+        <div className="clearfix p2">
+          <a href="#" className="left red-dark">
+            Logo Firesize
+          </a>
+          <a href="https://addons.heroku.com/firesize" className="right red-dark">
+            <span className="sm-hide">Install</span>
+            <span className="sm-show">Install the Heroku add-on</span>
+          </a>
         </div>
-        <div className="center py4">
-          <h1 className="white shadow">On the fly image resizing</h1>
-          <h3 className="red-dark">No code required. Built-in CDN.</h3>
+
+        <div className="col-10 mx-auto">
+          <div className="center" style={{ paddingTop: '3rem', paddingBottom: '12rem' }}>
+            <h1 className="white text-shadow">On the fly image resizing</h1>
+            <h3 className="red-dark">No code required. Built-in CDN.</h3>
+          </div>
         </div>
       </div>
     )
@@ -47,8 +55,22 @@ var Home = React.createClass({
 
   example: function() {
     return (
-      <div className="p3 shadow bg-white">
-        <Examples />        
+      <div className="clearfix" style={{ marginTop: '-10rem' }}>
+        <div className="col-10 mx-auto" style={{ maxWidth: '750px' }}>
+          <div className="px3 shadow-2 bg-white">
+            <div className="py1 border-bottom" style={{ paddingTop: '1.5rem', borderWidth: '3px' }}>
+              <p className="gray h6">
+                <span style={{ padding: '0.25rem' }}>firesize.com/</span>
+                <span className="black border shadow" style={{ padding: '0.25rem 0.5rem' }}>500x300</span>
+                <span className="p1">/</span>
+                <span className="black border shadow" style={{ padding: '0.25rem 0.5rem' }}>http://imgur.com/afjh39j.png</span>
+              </p>
+            </div>
+            <div className="py2" style={{ paddingBottom: '2rem' }}>
+              <img src="http://firesize.com/720x480/g_center/https://unsplash.imgix.net/photo-1417436026361-a033044d901f?fit=crop&fm=jpg&h=480&q=75&w=720" />
+            </div>
+          </div>
+        </div>
       </div>
     )
   },

@@ -24,7 +24,6 @@ func main() {
 	templates.Init("templates")
 	models.InitDb(os.Getenv("DATABASE_URL"))
 	addon.Init(os.Getenv("HEROKU_ID"), os.Getenv("HEROKU_API_PASSWORD"), os.Getenv("HEROKU_SSO_SALT"))
-
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	r := mux.NewRouter()

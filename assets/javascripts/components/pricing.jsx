@@ -1,16 +1,13 @@
 /**
- * @jsx React.DOM
- */
+ * @jsx React.DOM */
 
 var React = require('react');
 
 var Pricing = React.createClass({
 
-	render: function() {
-		return (
-			<p>The pricing page</p>
-		);
-	}
+  render: function() {
+    return <p>The pricing page</p>;
+  }
 
 });
 

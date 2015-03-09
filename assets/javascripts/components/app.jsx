@@ -1,25 +1,21 @@
 /** @jsx React.DOM */
 
-var React = require('react')
-var Router = require('react-router')
+var React = require('react');
+var Router = require('react-router');
 var Navbar = require('react-bootstrap').Navbar;
 var Nav = require('react-bootstrap').Nav;
 var NavItem = require('react-bootstrap').NavItem;
-var Link = Router.Link
+var Link = Router.Link;
 
-//LESS
-require('stylesheets/components/header.less')
-
-var auth = require('../lib/auth')
-
-var SignedIn = require('./signed_in.jsx')
+var auth = require('../lib/auth');
+var SignedIn = require('./signed_in.jsx');
 
 var App = React.createClass({
   getInitialState: function() {
     return {
       signedIn: auth.signedIn(),
-      isExpanded: false,
-    }
+      isExpanded: false
+    };
   },
 
   setStateOnAuth: function(signedIn) {
@@ -29,36 +25,12 @@ var App = React.createClass({
   },
 
   componentWillMount: function() {
-    auth.onChange = this.setStateOnAuth
-    auth.signin()
+    auth.onChange = this.setStateOnAuth;
+    auth.signin();
   },
 
   render: function() {
-    var layout
-    if (this.state.signedIn) {
-      layout = <div>
-        <div className="row">
-          <div className="col-md-2">
-            <ul className="nav nav-sidebar">
-              <li><Link to="dashboard">Dashboard</Link></li>
-              <li><Link to="subdomains">Subdomains</Link></li>
-            </ul>
-          </div>
-          <div className="col-md-10">
-            {this.props.activeRouteHandler()}
-          </div>
-        </div>
-      </div>
-    } else {
-      layout = this.props.activeRouteHandler()
-    }
-
-    return <div>
-      {this.navBarTop()}
-      <div className="fs-app-container" >
-        {layout}
-      </div>
-    </div>
+    return this.props.activeRouteHandler();
   },
 
   navBarTop: function() {
@@ -84,26 +56,27 @@ var App = React.createClass({
   },
 
   signInOutLinks: function() {
-
     if (this.state.signedIn) {
-
-    return <Nav navbar={true} collapsable={true} pullRight={this.state.isPullRight}
-              className="fs-navbar-collapse" role="navigation" id="top" bsClass="nav"
-                expanded={this.state.isExpanded}>
-      <li><Link to="usage">Usage</Link></li>
-      <li><Link to="pricing">Pricing</Link></li>
-      <li><Link to="signout">Sign Out</Link></li>
-
-    </Nav>
+      return (
+        <Nav navbar={true} collapsable={true} pullRight={this.state.isPullRight}
+          className="fs-navbar-collapse" role="navigation" id="top" bsClass="nav"
+          expanded={this.state.isExpanded}>
+          <li><Link to="usage">Usage</Link></li>
+          <li><Link to="pricing">Pricing</Link></li>
+          <li><Link to="signout">Sign Out</Link></li>
+        </Nav>
+      );
     } else {
-      return <Nav navbar={true} collapsable={true} pullRight={true}
-              className="fs-navbar-collapse" role="navigation" id="top" bsClass="nav"
-                expanded={this.state.isExpanded}>
-        <li><Link to="signin">Log In</Link></li>
-        <li className="fs-header-signup"><Link to="signup">Sign Up</Link></li>
-      </Nav>
+      return (
+        <Nav navbar={true} collapsable={true} pullRight={true}
+          className="fs-navbar-collapse" role="navigation" id="top" bsClass="nav"
+          expanded={this.state.isExpanded}>
+          <li><Link to="signin">Log In</Link></li>
+          <li className="fs-header-signup"><Link to="signup">Sign Up</Link></li>
+        </Nav>
+      );
     }
-},
+  },
 
   onNavBtnOnClick: function() {
     var currentIsExpanded = this.state.isExpanded;
@@ -112,6 +85,6 @@ var App = React.createClass({
       isExpanded: !currentIsExpanded,
     });
   }
-})
+});
 
-module.exports = App
+module.exports = App;

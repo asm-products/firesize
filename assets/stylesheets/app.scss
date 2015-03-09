@@ -1,0 +1,30 @@
+@import 'variables';
+@import 'basscss';
+@import 'homepage';
+
+html, body {
+  background-color: #fafafa;
+  font-size: 24px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.red-dark {
+  color: $red-dark;
+}
+
+a.red-dark:hover {
+  color: darken($red-dark, 10%);
+}
+
+.text-shadow {
+  text-shadow: 0 1px 1px rgba($black, 0.1);
+}
+
+.shadow,
+.shadow-1 {
+  box-shadow: 0 1px 2px rgba($black, 0.1);
+}
+
+.shadow-2 {
+  box-shadow: 0 3px 6px rgba($black, 0.1);
+}

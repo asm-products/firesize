@@ -1,3 +1,24 @@
+.homepage-logo {
+  height: 30px;
+  &:hover {
+    text-decoration: none;
+  }
+  span {
+    height: 30px;
+    line-height: 30px;
+    // TODO Make this part nicer, normally we dont need
+    // position to allign stuff...
+    position: relative;
+    top: -5px;
+  }
+}
+
+.homepage-preview-part {
+  padding: 0.25rem 0.5rem;
+  display: inline-block;
+  font-size: 16px;
+}
+
 .homepage-feature-boxes {
   display: flex;
   max-width: 800px;

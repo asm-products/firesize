@@ -9,7 +9,33 @@ require('stylesheets/app.scss');
 
 var Home = React.createClass({
   componentWillMount: function() {
-    document.title = 'Home';
+    document.title = 'Firesize | Home';
+  },
+
+  getInitialState: function() {
+    return {
+      previewUrl: 'http://firesize.com/720x480/g_center/http://i.imgur.com/hHpJscb.png'
+    };
+  },
+
+  updatePreview: function() {
+    // Throttle onKeyUp event and update previewUrl
+    // in state when we finally trigger
+    if (this.handle) clearTimeout(this.handle);
+    this.handle = setTimeout(function() {
+      this.setState({
+        previewUrl: [
+          'http://firesize.com/',
+          this.refs.width.getDOMNode().value,
+          'x',
+          this.refs.height.getDOMNode().value,
+          '/g_center/',
+          this.refs.url.getDOMNode().value
+        ].join('')
+      });
+
+      this.handle = null;
+    }.bind(this), 500);
   },
 
   render: function() {
@@ -27,9 +53,9 @@ var Home = React.createClass({
     return (
       <div className="bg-red">
         <div className="clearfix p2">
-          <a href="#" className="left red-dark">
+          <a href="/" className="left red-dark block homepage-logo">
             <img src={FiresizeLogo} height="30" width="30" className="mr1" />
-            <span style={{ verticalAlign: 'top', height: '30px' }}>FireSize</span>
+            <span>FireSize</span>
           </a>
           <a href="https://addons.heroku.com/firesize" className="right red-dark">
             <span className="sm-hide">Install</span>
@@ -52,16 +78,32 @@ var Home = React.createClass({
       <div className="clearfix" style={{ marginTop: '-10rem' }}>
         <div className="col-10 mx-auto" style={{ maxWidth: '750px' }}>
           <div className="px3 shadow-2 bg-white">
-            <div className="py1 border-bottom" style={{ paddingTop: '1.5rem', borderWidth: '3px' }}>
+            <div className="border-bottom" style={{ paddingTop: '1.5rem', borderWidth: '3px' }}>
               <p className="gray h6">
-                <span style={{ padding: '0.25rem' }}>firesize.com/</span>
-                <span className="black border shadow" style={{ padding: '0.25rem 0.5rem' }}>500x300</span>
-                <span className="p1">/</span>
-                <span className="black border shadow" style={{ padding: '0.25rem 0.5rem' }}>http://imgur.com/afjh39j.png</span>
+
+                <span className="p1">firesize.com/</span>
+                <input ref="width"
+                  className="homepage-preview-part black border shadow mb0"
+                  onKeyUp={this.updatePreview}
+                  style={{ width: '28px' }}
+                  defaultValue="720" />
+                <span className="p1">x</span>
+                <input ref="height"
+                  className="homepage-preview-part black border shadow mb0"
+                  onKeyUp={this.updatePreview}
+                  style={{ width: '28px' }}
+                  defaultValue="480" />
+                <span className="p1">/g_center/</span>
+                <input ref="url"
+                  className="homepage-preview-part black border shadow mb0"
+                  onKeyUp={this.updatePreview}
+                  style={{ width: '244px' }}
+                  defaultValue="http://i.imgur.com/hHpJscb.png" />
+
               </p>
             </div>
             <div className="py2" style={{ paddingBottom: '2rem' }}>
-              <img src="http://firesize.com/720x480/g_center/https://unsplash.imgix.net/photo-1417436026361-a033044d901f?fit=crop&fm=jpg&h=480&q=75&w=720" />
+              <img src={this.state.previewUrl} />
             </div>
           </div>
         </div>

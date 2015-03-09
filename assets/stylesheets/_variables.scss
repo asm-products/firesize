@@ -44,7 +44,7 @@ $button-font-weight: bold !default;
 $button-line-height: 1.125rem !default;
 $button-padding-y: .5rem !default;
 $button-padding-x: 1rem !default;
-$container-width: 64em !default;
+$container-width: 52em !default;
 $black: #222 !default;
 $dark-gray: $black !default;
 $mid-gray: $gray !default;
@@ -62,4 +62,4 @@ $hover-background-color: $darken-1 !default;
 
 $breakpoint-sm: '(min-width: 40em)';
 $breakpoint-md: '(min-width: 52em)';
-$breakpoint-lg: '(min-width: 64em)';
+$breakpoint-lg: '(min-width: 52em)';

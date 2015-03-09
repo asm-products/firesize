@@ -3,9 +3,6 @@
 var React = require('react')
 var Router = require('react-router')
 
-var Examples = require('./examples.jsx')
-var Footer = require('./footer.jsx');
-var IntroBlock = require('./intro.jsx');
 var FiresizeLogo = require('../../images/firesize_logo.png');
 
 require('stylesheets/app.scss');
@@ -73,15 +70,34 @@ var Home = React.createClass({
 
   body: function() {
     return (
-      <div>
-      </div>
+      <section className="homepage-feature-boxes">
+        <div className="homepage-feature-box">
+          <h1>Instant setup</h1>
+          <p>
+            Just include the firesize url and resize options as part of your
+            image url and we'll resize your image and return it to you all on
+            the fly. You wont need any background workers, thumbnailURLs or
+            CDN configuration.
+          </p>
+        </div>
+        <div className="homepage-feature-box">
+          <h1>Pay-as-you-go</h1>
+          <p>
+            Just include the firesize url and resize options as part of your
+            image url and we'll resize your image and return it to you all on
+            the fly. You wont need any background workers, thumbnailURLs or
+            CDN configuration.
+          </p>
+        </div>
+      </section>
     )
   },
 
   footer: function() {
     return (
-      <div>
-      </div>
+      <footer className="homepage-footer">
+        Built by the community on <a href="https://assembly.com" target="_blank">Assembly</a>
+      </footer>
     )
   }
 });

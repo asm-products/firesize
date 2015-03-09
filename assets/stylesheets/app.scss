@@ -1,10 +1,11 @@
 @import 'variables';
-
 @import 'basscss';
+@import 'homepage';
 
 html, body {
   background-color: #fafafa;
   font-size: 24px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .red-dark {

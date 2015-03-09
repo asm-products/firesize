@@ -3,7 +3,7 @@
 var React = require('react')
 var Router = require('react-router')
 
-var FiresizeLogo = require('../../images/firesize_logo.png');
+var FiresizeLogo = require('../../images/logo.png');
 
 require('stylesheets/app.scss');
 
@@ -28,7 +28,8 @@ var Home = React.createClass({
       <div className="bg-red">
         <div className="clearfix p2">
           <a href="#" className="left red-dark">
-            <img src={FiresizeLogo} />
+            <img src={FiresizeLogo} height="30" width="30" className="mr1" />
+            <span style={{ verticalAlign: 'top', height: '30px' }}>FireSize</span>
           </a>
           <a href="https://addons.heroku.com/firesize" className="right red-dark">
             <span className="sm-hide">Install</span>

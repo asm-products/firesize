@@ -38,7 +38,7 @@ var Home = React.createClass({
         </div>
 
         <div className="col-10 mx-auto">
-          <div className="center" style={{ paddingTop: '3rem', paddingBottom: '12rem' }}>
+          <div className="center" style={{ paddingTop: '3rem', paddingBottom: '13rem' }}>
             <h1 className="white text-shadow">On the fly image resizing</h1>
             <h3 className="red-dark">No code required. Built-in CDN.</h3>
           </div>
@@ -77,7 +77,7 @@ var Home = React.createClass({
           <p>
             Just include the firesize url and resize options as part of your
             image url and we'll resize your image and return it to you all on
-            the fly. You wont need any background workers, thumbnailURLs or
+            the fly. You wont need any background workers, thumbnail service or
             CDN configuration.
           </p>
         </div>
@@ -97,7 +97,7 @@ var Home = React.createClass({
   footer: function() {
     return (
       <footer className="homepage-footer">
-        Built by the community on <a href="https://assembly.com" target="_blank">Assembly</a>
+        Built by the community on <a href="https://assembly.com/firesize" target="_blank">Assembly</a>
       </footer>
     )
   }

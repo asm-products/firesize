@@ -3,14 +3,15 @@ package templates
 import (
 	"html/template"
 	"net/http"
+	"path"
 )
 
 var (
 	templates *template.Template
 )
 
-func Init(path string) {
-	templates = template.Must(template.ParseGlob(path + "/*.gohtml"))
+func Init(filePath string) {
+	templates = template.Must(template.ParseGlob(path.Join(filePath, "*.gohtml")))
 }
 
 func Render(w http.ResponseWriter, name string, data interface{}) error {

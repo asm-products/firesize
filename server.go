@@ -1,10 +1,10 @@
 package main
 
 import (
+	"math/rand"
 	"net/http"
 	"os"
-  "math/rand"
-  "time"
+	"time"
 
 	"github.com/asm-products/firesize/addon"
 	"github.com/asm-products/firesize/controllers"
@@ -25,7 +25,7 @@ func main() {
 	models.InitDb(os.Getenv("DATABASE_URL"))
 	addon.Init(os.Getenv("HEROKU_ID"), os.Getenv("HEROKU_API_PASSWORD"), os.Getenv("HEROKU_SSO_SALT"))
 
-  rand.Seed(time.Now().UTC().UnixNano())
+	rand.Seed(time.Now().UTC().UnixNano())
 
 	r := mux.NewRouter()
 	r.SkipClean(true) // have to use whatupdave/mux until Gorilla supports this

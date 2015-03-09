@@ -1,19 +1,16 @@
 /** @jsx React.DOM */
 
+var _ = require('underscore');
 var React = require('react/addons');
 var AdaptiveInput = require('./lib/input-adaptive.jsx');
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var UtilsMixin = require('./mixins/utils.jsx');
-var _ = require("underscore");
-
-//LESS
-require('stylesheets/components/examples.less');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var DEFAULT_IMAGE_URL = 'http://placekitten.com/g/800/600';
 var VALIDATOR_NUMBER = /^[0-9]+$/;
 var VALIDATOR_URL = /(http|https|ftp):\/\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?$&\/\/=]*)?/gi;
 
-var debounce = require('../lib/debounce')
+var debounce = require('../lib/debounce');
 
 var ExampleMixin = {
 

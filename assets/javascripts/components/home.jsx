@@ -6,26 +6,22 @@ var Router = require('react-router')
 var Examples = require('./examples.jsx')
 var Footer = require('./footer.jsx');
 var IntroBlock = require('./intro.jsx');
+var FiresizeLogo = require('../../images/firesize_logo.png');
 
 require('stylesheets/app.scss');
 
 var Home = React.createClass({
   componentWillMount: function() {
-    document.title = 'Home'
+    document.title = 'Home';
   },
 
   render: function() {
-    var header = this.header()
-    var example = this.example()
-    var body = this.body()
-    var footer = this.footer()
-
     return (
       <div>
-        {header}
-        {example}
-        {body}
-        {footer}
+        {this.header()}
+        {this.example()}
+        {this.body()}
+        {this.footer()}
       </div>
     )
   },
@@ -35,7 +31,7 @@ var Home = React.createClass({
       <div className="bg-red">
         <div className="clearfix p2">
           <a href="#" className="left red-dark">
-            Logo Firesize
+            <img src={FiresizeLogo} />
           </a>
           <a href="https://addons.heroku.com/firesize" className="right red-dark">
             <span className="sm-hide">Install</span>
@@ -88,6 +84,6 @@ var Home = React.createClass({
       </div>
     )
   }
-})
+});
 
-module.exports = Home
+module.exports = Home;

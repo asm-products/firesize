@@ -40,8 +40,8 @@ var Signin = React.createClass({
     var email = this.refs.email.getDOMNode().value.trim()
     var password = this.refs.password.getDOMNode().value.trim()
 
-    auth.signin(email, password, function(signedIn) {
-      if (!signedIn) {
+    auth.signin(email, password, function(error) {
+      if (error) {
         return this.setState({ error: true })
       }
 

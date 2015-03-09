@@ -13,7 +13,7 @@ var Dashboard = React.createClass({
   mixins: [require('../lib/authenticated_route')],
 
   componentWillMount: function() {
-    document.title = 'Dashboard';
+    document.title = 'Firesize | Dashboard';
   },
 
   render: function() {

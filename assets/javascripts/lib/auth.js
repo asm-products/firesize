@@ -1,82 +1,103 @@
-var request = require('superagent')
-var url = require('url')
+var url = require('url');
+var request = require('superagent');
 
-var auth = {
-  signin: function(email, password, cb) {
-    if (sessionStorage.token) {
-      cb && cb(true)
-      this.onChange(true)
-      return
-    }
-    if (arguments.length === 0) {
-      return
-    }
-    request
-      .post('/api/sessions')
-      .send({ email: email, password: password })
-      .set('Accept', 'application/json')
-      .end(function(error, res){
-        if (error === null && res.ok) {
-          cb && cb(true)
-          this.onChange(true)
-          sessionStorage.token = JSON.parse(res.text).token
-        } else {
-          cb && cb(false)
-          this.onChange(false)
+var internals = {};
+
+internals.signin = function(email, password, callback) {
+  // Extracted done cause we call two things all the time
+  var done = function(err) {
+    if (callback) callback(err);
+    this.onChange(!err);
+  }.bind(this);
+
+  if (sessionStorage && sessionStorage.getItem('token')) {
+    return done();
+  }
+
+  if (!email || email === '' || !password || password === '') {
+    return done(new Error('Email and Password are required for signing in'));
+  }
+
+  request
+    .post('/api/sessions')
+    .send({ email: email, password: password })
+    .set('Accept', 'application/json')
+    .end(function(error, res) {
+      if (error === null && res.ok) {
+        if (sessionStorage) {
+          sessionStorage.setItem('token', JSON.parse(res.text).token);
         }
-      }.bind(this))
-  },
+        done();
+      } else {
+        done(new Error('Bad response from api'));
+      }
+    })
+};
 
-  signup: function(email, password, cb) {
-    if (sessionStorage.token) {
-      cb && cb(true)
-      this.onChange(true)
-      return
-    }
-    if (arguments.length === 0) {
-      return
-    }
-    request
-      .post('/api/registrations')
-      .send({ email: email, password: password })
-      .set('Accept', 'application/json')
-      .end(function(error, res){
-        if (error === null && res.ok) {
-          cb && cb(true)
-          this.onChange(true)
-          sessionStorage.token = JSON.parse(res.text).token
-        } else {
-          cb && cb(false)
-          this.onChange(false)
+internals.signup = function(email, password, callback) {
+  // Extracted done cause we call two things all the time
+  var done = function(err) {
+    if (callback) callback(err);
+    this.onChange(!err);
+  }.bind(this);
+
+  if (sessionStorage && sessionStorage.getItem('token')) {
+    return done();
+  }
+
+  if (!email || email === '' || !password || password === '') {
+    return done(new Error('Email and Password are required for signing up'));
+  }
+
+  request
+    .post('/api/registrations')
+    .send({ email: email, password: password })
+    .set('Accept', 'application/json')
+    .end(function(error, res) {
+      if (error === null && res.ok) {
+        if (sessionStorage) {
+          sessionStorage.setItem('token', JSON.parse(res.text).token);
         }
-      }.bind(this))
-  },
+        done();
+      } else {
+        done(new Error('Bad response from api'));
+      }
+    }.bind(this))
+};
 
-  getToken: function() {
-    return sessionStorage.token
-  },
+internals.signout = function(cb) {
+  if (sessionStorage) {
+    sessionStorage.deleteItem('token');
+  }
+  if (callback) callback();
+  this.onChange(false);
+};
 
-  signout: function(cb) {
-    delete sessionStorage.token
-    cb && cb()
-    this.onChange(false)
-  },
+internals.getToken = function() {
+  if (sessionStorage) {
+    return sessionStorage.getItem('token');
+  } else {
+    return '';
+  }
+};
 
-  signedIn: function() {
-    var currentUrl = url.parse(window.location.href, true)
-    var token = currentUrl.query.token
+internals.signedIn = function() {
+  var currentUrl = url.parse(window.location.href, true);
+  var token = currentUrl.query.token;
 
-    if(token) {
-      sessionStorage.token = token
-
-      currentUrl.search = currentUrl.query = null
-      window.location = url.format(currentUrl)
+  if (token) {
+    if (sessionStorage) {
+      sessionStorage.setItem('token', token);
     }
 
-    return !!sessionStorage.token
-  },
+    currentUrl.search = null;
+    currentUrl.query = null;
+    window.location = url.format(currentUrl);
+  }
 
-  onChange: function() {}
-}
+  return !!sessionStorage.getItem('token');
+};
 
-module.exports = auth
+internals.onChange = function() {};
+
+module.exports = internals;

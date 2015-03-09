@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "basscss": "^5.0.1",
+    "highlight.js": "^8.4.0",
     "jest-cli": "^0.1.18",
     "react-tools": "^0.11.2",
     "sass-loader": "^0.4.1"

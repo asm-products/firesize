@@ -13,15 +13,8 @@ React.renderComponent((
     <Route handler={require('./components/app.jsx')}>
       <DefaultRoute name="home" handler={require('./components/home.jsx')} />
       <NotFoundRoute name="notfound" path="404" handler={require('./components/404.jsx')} />
-
-      <Route name="usage" handler={require('./components/usage.jsx')} />
-      <Route name="pricing" handler={require('./components/pricing.jsx')} />
-      <Route name="signin" handler={require('./components/signin.jsx')} />
-      <Route name="signup" handler={require('./components/signup.jsx')} />
-      <Route name="signout" handler={require('./components/signout.jsx')} />
-
       <Route name="dashboard" handler={require('./components/dashboard.jsx')} />
-      <Route name="subdomains" handler={require('./components/subdomains.jsx')} />
+      <Route name="docs" handler={require('./components/documentation.jsx')} />
     </Route>
   </Routes>
 ), document.body);

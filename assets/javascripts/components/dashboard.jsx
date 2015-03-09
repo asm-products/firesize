@@ -1,8 +1,13 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
+var Highlight = require('../lib/highlight.jsx');
 var Navbar = require('./navbar.jsx');
+
+require('stylesheets/app.scss');
 
 var Dashboard = React.createClass({
   mixins: [require('../lib/authenticated_route')],
@@ -16,14 +21,20 @@ var Dashboard = React.createClass({
       <div>
         <Navbar />
 
-        <div className="container mt3">
+        <div className="container py3">
           <div className="bg-white border p3">
             <h2 className="mt0">Getting Started</h2>
             <p className="mb0">Look's like you're new around here. We'll, first
-            things first. Take a look at the <a href="#">documentation</a> to
+            things first. Take a look at the <Link to="docs">Getting Started guide</Link> to
             start using FireSize. Once you're using the service you can always
             check back here to check your usage for the month or change
             configuration options.</p>
+          </div>
+
+          <div className="bg-white border-left border-right border-bottom p3">
+            <Highlight>
+              {'<img src="https://assembly.firesize.com/500x300/g_center/https://imgur.com/28h4fh34">'}
+            </Highlight>
           </div>
 
           <div className="bg-white border p3 mt3">

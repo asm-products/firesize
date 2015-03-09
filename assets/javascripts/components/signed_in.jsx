@@ -1,14 +1,14 @@
 /** @jsx React.DOM */
 
-var React = require('react')
-var Router = require('react-router')
-var Link = Router.Link
+var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 
 var SignedIn = React.createClass({
   mixins: [require('../lib/authenticated_route')],
 
   render: function() {
-    return <div>
+    return (
       <div className="container">
         <div className="row">
           <div className="col-md-2">
@@ -22,8 +22,8 @@ var SignedIn = React.createClass({
           </div>
         </div>
       </div>
-    </div>
+    );
   }
 })
 
-module.exports = SignedIn
+module.exports = SignedIn;

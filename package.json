@@ -2,11 +2,13 @@
   "name": "firesize",
   "version": "0.0.1",
   "dependencies": {
-    "css-loader": "^0.9.0",
+    "basscss": "^5.0.1",
     "bootstrap-webpack": "0.0.2",
+    "css-loader": "^0.9.0",
     "file-loader": "^0.7.2",
     "font-awesome": "^4.2.0",
     "font-awesome-webpack": "gowravshekar/font-awesome-webpack",
+    "highlight.js": "^8.4.0",
     "jsx-loader": "^0.11.0",
     "less": "^1.7.5",
     "less-loader": "^0.7.7",
@@ -14,6 +16,7 @@
     "react-addons": "^0.9.0",
     "react-bootstrap": "^0.12.0",
     "react-router": "^0.7.0",
+    "sass-loader": "^0.4.1",
     "style-loader": "^0.8.0",
     "superagent": "^0.18.2",
     "underscore": "^1.7.0",
@@ -27,11 +30,8 @@
     "test": "jest assets/javascripts"
   },
   "devDependencies": {
-    "basscss": "^5.0.1",
-    "highlight.js": "^8.4.0",
     "jest-cli": "^0.1.18",
-    "react-tools": "^0.11.2",
-    "sass-loader": "^0.4.1"
+    "react-tools": "^0.11.2"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jest_processor.js",

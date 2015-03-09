@@ -2,12 +2,20 @@ language: go
 
 go:
   - 1.4.1
-  
+
+addons:
+  postgresql: "9.3"
+
 install:
   - go install -race std
   - go get golang.org/x/tools/cmd/cover
   - go get github.com/tools/godep
+  - go get bitbucket.org/liamstask/goose/cmd/goose
   - export PATH=$PATH:$HOME/gopath/bin
+
+before_script:
+  - psql -c 'create database firesize_test;' -U postgres
+  - DATABASE_URL=postgres://localhost/firesize_test?sslmode=disable goose up
 
 script:
   - godep go test -race -v ./...

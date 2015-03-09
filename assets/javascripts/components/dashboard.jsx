@@ -32,6 +32,8 @@ var Dashboard = React.createClass({
           </div>
 
           <div className="bg-white border-left border-right border-bottom p3">
+            <h4 className="h6 gray bold caps mt0 mb3">image_sample.html</h4>
+
             <Highlight>
               {'<img src="https://assembly.firesize.com/500x300/g_center/https://imgur.com/28h4fh34">'}
             </Highlight>

@@ -7,8 +7,8 @@ var Subdomains = React.createClass({
   render: function() {
     return (
       <p>TODO: Show and edit registered subdomains</p>
-    )
+    );
   }
 })
 
-module.exports = Subdomains
+module.exports = Subdomains;

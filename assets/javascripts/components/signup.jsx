@@ -1,9 +1,9 @@
 /** @jsx React.DOM */
 
-var React = require('react')
-var Router = require('react-router')
+var React = require('react');
+var Router = require('react-router');
 
-var auth = require('../lib/auth')
+var auth = require('../lib/auth');
 
 var Signup = React.createClass({
   render: function() {
@@ -54,4 +54,4 @@ var Signup = React.createClass({
   }
 })
 
-module.exports = Signup
+module.exports = Signup;

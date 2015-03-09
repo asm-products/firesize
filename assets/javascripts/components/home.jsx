@@ -5,8 +5,6 @@ var Router = require('react-router')
 
 var FiresizeLogo = require('../../images/logo.png');
 
-require('stylesheets/app.scss');
-
 var Home = React.createClass({
   componentWillMount: function() {
     document.title = 'Firesize | Home';

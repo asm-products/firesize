@@ -1,0 +1,25 @@
+.homepage-feature-boxes {
+  display: flex;
+  max-width: 800px;
+  width: 90%;
+  margin: 0 auto;
+  .homepage-feature-box {
+    flex: 1 0;
+    margin: 15px;
+    padding: 30px;
+    h1 {
+      font-weight: 300;
+      font-size: 38px;
+    }
+    p {
+      line-height: 1.4;
+      font-size: 16px;
+    }
+  }
+}
+
+.homepage-footer {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 60px;
+}

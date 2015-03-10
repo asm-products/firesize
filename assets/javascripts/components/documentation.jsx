@@ -45,6 +45,36 @@ var Documentation = React.createClass({
           </div>
 
           <div className="bg-white border p3 mt3">
+            <h2 className="mt0">Heroku Environment Variables</h2>
+            <p className="mb0">When you add FireSize as an add-on, we'll
+            generate a unique subdomain for your account and assign it to
+            the <code>FIRESIZE_URL</code> environment variable. We recommend
+            reading up on how Heroku recommends using environment variables to
+            configure your applications. Also, below are some examples of using
+            the <code>FIRESIZE_URL</code> with popular templating
+            languages.</p>
+          </div>
+          <div className="bg-white border-left border-right border-bottom p3">
+            <h4 className="h6 gray bold caps mb1">image_sample.html.erb</h4>
+
+            <Highlight>
+              {'<img src="<%= ENV[\'FIRESIZE_URL\'] %>/500x300/g_center/https://imgur.com/28h4fh34">'}
+            </Highlight>
+
+            <h4 className="h6 gray bold caps mt3 mb1">image_sample.html.ejs</h4>
+
+            <Highlight>
+              {'<img src="<%= process.env.FIRESIZE_URL %>/500x300/g_center/https://imgur.com/28h4fh34">'}
+            </Highlight>
+
+            <h4 className="h6 gray bold caps mt3 mb1">image_sample.html.jinja2</h4>
+
+            <Highlight>
+              {'<img src="{{os.environ[\'FIRESIZE_URL\']}}/500x300/g_center/https://imgur.com/28h4fh34">'}
+            </Highlight>
+          </div>
+
+          <div className="bg-white border p3 mt3">
             <h2 className="mt0">Resizing Options</h2>
             <p className="mb3">As you saw above, each image resizing option can
             be included as a url segment directly in the FireSize url. Below
@@ -53,35 +83,124 @@ var Documentation = React.createClass({
             come before the original image url as the last url segment.</p>
 
             <h3>Dimensions</h3>
-            <p className="mb3">[horizontal-pixels]x[vertical-pixels]</p>
+            <div className="mb3">
+              <div>
+                <p className="h4 mb0">
+                  <strong>[horizontal]x[vertical]</strong>
+                </p>
+                <p className="h5">
+                  Specifies the new dimensions in pixels of the resized image. 
+                </p>
+              </div>
+            </div>
 
             <h3>Gravity</h3>
-            <p className="mb3">
-              g_none
-              g_center
-              g_east
-              g_forget
-              g_northeast
-              g_north
-              g_northwest
-              g_southeast
-              g_south
-              g_southwest
-              g_west
-            </p>
+            <div className="mb3">
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_none</strong>
+                </p>
+                <p className="h5">
+                  Does not crop the image. Instead resizes to the largest bounds comtained in the specified dimensions.
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_center</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the center
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_northwest</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the top left corner
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_north</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the top
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_southeast</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the bottom right corner
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_south</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the bottom
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_southwest</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the bottom left corner
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_west</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the left
+                </p>
+              </div>
+              <div className="mb2">
+                <p className="h4 mb0">
+                  <strong>g_northeast</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the top right corner
+                </p>
+              </div>
+              <div>
+                <p className="h4 mb0">
+                  <strong>g_east</strong>
+                </p>
+                <p className="h5">
+                  Crops the image from the right
+                </p>
+              </div>
+            </div>
 
             <h3>Frame</h3>
-            <p className="mb3">
-              frame_[frame-number]
-            </p>
+            <div className="mb3">
+              <div>
+                <p className="h4 mb0">
+                  <strong>frame_[number]</strong>
+                </p>
+                <p className="h5">
+                  If the image file has multiple frames, like an animated gif for instance, only the frame with the index specified will be 
+                </p>
+              </div>
+            </div>
 
             <h3>Format</h3>
-            <p className="mb3 mb0">
-              png
-              jpg
-              jpeg
-              gif
-            </p>
+            <div>
+              <div>
+                <p className="h4 mb0">
+                  <strong>png, jpg, jpeg, gif</strong>
+                </p>
+                <p className="h5 mb0">
+                  Convert the image into the specified file format
+                </p>
+              </div>
+            </div>
           </div>
 
           <div className="bg-white border p3 mt3">
@@ -94,6 +213,17 @@ var Documentation = React.createClass({
               served directly from the cache will not count towards your
               resized images quota for the month.
             </p>
+          </div>
+
+          <div className="bg-white border p3 mt3">
+            <h2 className="mt0">Plan Limits</h2>
+            <p className="mb0">What happens if I go over my image resizing
+              limit for the month? First of all you shouldn't worry. Before
+              degrading service, we'll always try to get in contact with the
+              owners of the account and give them plenty of time to either
+              upgrade or reduce usage. But, if after many attempts we still
+              can't resolve the overage, we'll simply pass-through to the
+              original, unprocessed image.</p>
           </div>
         </div>
       </div>

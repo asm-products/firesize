@@ -29,11 +29,27 @@ var Dashboard = React.createClass({
           </div>
 
           <div className="bg-white border-left border-right border-bottom p3">
-            <h4 className="h6 gray bold caps mt0 mb3">image_sample.html</h4>
+            <h4 className="h6 gray bold caps mt0 mb1">image_sample.html</h4>
 
             <Highlight>
               {'<img src="https://assembly.firesize.com/500x300/g_center/https://imgur.com/28h4fh34">'}
             </Highlight>
+
+            <h4 className="h6 gray bold caps mt3 mb1">image_sample.html.erb</h4>
+
+            <Highlight>
+              {'<img src="<%= ENV[\'FIRESIZE_URL\'] %>/500x300/g_center/https://imgur.com/28h4fh34">'}
+            </Highlight>
+
+            <h4 className="h6 gray bold caps mt3 mb1">image_sample.html.ejs</h4>
+
+            <Highlight>
+              {'<img src="<%= process.env.FIRESIZE_URL %>/500x300/g_center/https://imgur.com/28h4fh34">'}
+            </Highlight>
+
+            <div className="mt3">
+              <Link to="docs">See more examples</Link>
+            </div>
           </div>
 
           <div className="bg-white border p3 mt3">

@@ -1,7 +1,6 @@
 package jwt
 
 import (
-	"bytes"
 	"crypto"
 	"crypto/hmac"
 	"errors"
@@ -15,9 +14,10 @@ type SigningMethodHMAC struct {
 
 // Specific instances for HS256 and company
 var (
-	SigningMethodHS256 *SigningMethodHMAC
-	SigningMethodHS384 *SigningMethodHMAC
-	SigningMethodHS512 *SigningMethodHMAC
+	SigningMethodHS256  *SigningMethodHMAC
+	SigningMethodHS384  *SigningMethodHMAC
+	SigningMethodHS512  *SigningMethodHMAC
+	ErrSignatureInvalid = errors.New("signature is invalid")
 )
 
 func init() {
@@ -56,8 +56,8 @@ func (m *SigningMethodHMAC) Verify(signingString, signature string, key interfac
 			hasher := hmac.New(m.Hash.New, keyBytes)
 			hasher.Write([]byte(signingString))
 
-			if !bytes.Equal(sig, hasher.Sum(nil)) {
-				err = errors.New("Signature is invalid")
+			if !hmac.Equal(sig, hasher.Sum(nil)) {
+				err = ErrSignatureInvalid
 			}
 		}
 		return err
@@ -66,6 +66,8 @@ func (m *SigningMethodHMAC) Verify(signingString, signature string, key interfac
 	return ErrInvalidKey
 }
 
+// Implements the Sign method from SigningMethod for this signing method.
+// Key must be []byte
 func (m *SigningMethodHMAC) Sign(signingString string, key interface{}) (string, error) {
 	if keyBytes, ok := key.([]byte); ok {
 		if !m.Hash.Available() {

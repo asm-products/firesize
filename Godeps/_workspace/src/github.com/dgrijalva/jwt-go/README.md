@@ -19,7 +19,7 @@ This library supports the parsing and verification as well as the generation and
 Parsing and verifying tokens is pretty straight forward.  You pass in the token and a function for looking up the key.  This is done as a callback since you may need to parse the token to find out what signing method and key was used.
 
 ```go
-	token, err := jwt.Parse(myToken, func(token *jwt.Token) ([]byte, error) {
+	token, err := jwt.Parse(myToken, func(token *jwt.Token) (interface{}, error) {
 		return myLookupKey(token.Header["kid"])
 	})
 
@@ -34,7 +34,7 @@ Parsing and verifying tokens is pretty straight forward.  You pass in the token 
 
 ```go
 	// Create the token
-	token := jwt.New(jwt.GetSigningMethod("HS256"))
+	token := jwt.New(jwt.SigningMethodHS256)
 	// Set some claims
 	token.Claims["foo"] = "bar"
 	token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()

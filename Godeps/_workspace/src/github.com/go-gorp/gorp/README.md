@@ -58,6 +58,13 @@ For the latest code in master:
 
 https://godoc.org/github.com/go-gorp/gorp
 
+## Supported Go versions
+
+This package is compatible with the last 2 major versions of Go, at this time `1.3` and `1.4`.
+
+Any earlier versions are only supported on a best effort basis and can be dropped any time.
+Go has a great compatibility promise. Upgrading your program to a newer version of Go should never really be a problem.
+
 ## Quickstart
 
 ```go
@@ -268,7 +275,7 @@ See the `TestWithEmbeddedStruct` function in `gorp_test.go` for a full example.
 
 Automatically create / drop registered tables.  This is useful for unit tests
 but is entirely optional.  You can of course use gorp with tables created manually,
-or with a separate migration tool (like goose: https://bitbucket.org/liamstask/goose).
+or with a separate migration tool (like [goose](https://bitbucket.org/liamstask/goose) or [migrate](https://github.com/mattes/migrate)).
 
 ```go
 // create all registered tables
@@ -509,6 +516,8 @@ Full list of hooks that you can implement:
     
 ### Optimistic Locking
 
+#### Note that this behaviour has changed in v2. See [Migration Guide](#migration-guide).
+
 gorp provides a simple optimistic locking feature, similar to Java's JPA, that
 will raise an error if you try to update/delete a row whose `version` column
 has a value different than the one in memory.  This provides a safe way to do
@@ -640,13 +649,17 @@ go test
 go test -bench="Bench" -benchtime 10
 ```
 
-Valid `GORP_TEST_DIALECT` values are: "mysql", "postgres", "sqlite3"
+Valid `GORP_TEST_DIALECT` values are: "mysql"(for mymysql), "gomysql"(for go-sql-driver), "postgres", "sqlite"
 See the `test_all.sh` script for examples of all 3 databases.  This is the script I run
 locally to test the library.
 
 ## Performance
 
 gorp uses reflection to construct SQL queries and bind parameters.  See the BenchmarkNativeCrud vs BenchmarkGorpCrud in gorp_test.go for a simple perf test.  On my MacBook Pro gorp is about 2-3% slower than hand written SQL.
+
+## Migration guide
+#### Pre-v2 to v2
+Automatic mapping of the version column used in optimistic locking has been removed as it could cause problems if the type was not int. The version column must now explicitly be set with tablemap.SetVersionCol().
 
 ## Help/Support
 

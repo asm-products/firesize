@@ -125,10 +125,11 @@ func (l *ListenerConn) setState(newState int32) bool {
 // away or should be discarded because we couldn't agree on the state with the
 // server backend.
 func (l *ListenerConn) listenerConnLoop() (err error) {
-	defer errRecover(&err)
+	defer l.cn.errRecover(&err)
 
+	r := &readBuf{}
 	for {
-		t, r, err := l.cn.recvMessage()
+		t, err := l.cn.recvMessage(r)
 		if err != nil {
 			return err
 		}
@@ -169,8 +170,6 @@ func (l *ListenerConn) listenerConnLoop() (err error) {
 			return fmt.Errorf("unexpected message %q from server in listenerConnLoop", t)
 		}
 	}
-
-	panic("not reached")
 }
 
 // This is the main routine for the goroutine receiving on the database
@@ -239,7 +238,7 @@ func (l *ListenerConn) Ping() error {
 // The caller must be holding senderLock (see acquireSenderLock and
 // releaseSenderLock).
 func (l *ListenerConn) sendSimpleQuery(q string) (err error) {
-	defer errRecover(&err)
+	defer l.cn.errRecover(&err)
 
 	// must set connection state before sending the query
 	if !l.setState(connStateExpectResponse) {
@@ -317,8 +316,6 @@ func (l *ListenerConn) ExecSimpleQuery(q string) (executed bool, err error) {
 			return false, fmt.Errorf("unknown response for simple query: %q", m.typ)
 		}
 	}
-
-	panic("not reached")
 }
 
 func (l *ListenerConn) Close() error {
@@ -427,6 +424,13 @@ func NewListener(name string,
 	return l
 }
 
+// Returns the notification channel for this listener.  This is the same
+// channel as Notify, and will not be recreated during the life time of the
+// Listener.
+func (l *Listener) NotificationChannel() <-chan *Notification {
+	return l.Notify
+}
+
 // Listen starts listening for notifications on a channel.  Calls to this
 // function will block until an acknowledgement has been received from the
 // server.  Note that Listener automatically re-establishes the connection
@@ -524,8 +528,8 @@ func (l *Listener) Unlisten(channel string) error {
 
 // UnlistenAll removes all channels from the Listener's channel list.  Returns
 // immediately with no error if there is no connection.  Note that you might
-// still get notifications for any of the deleted channels even after Unlisten
-// has returned.
+// still get notifications for any of the deleted channels even after
+// UnlistenAll has returned.
 func (l *Listener) UnlistenAll() error {
 	l.lock.Lock()
 	defer l.lock.Unlock()
@@ -630,8 +634,6 @@ func (l *Listener) resync(cn *ListenerConn, notificationChan <-chan *Notificatio
 			return err
 		}
 	}
-
-	panic("not reached")
 }
 
 // caller should NOT be holding l.lock

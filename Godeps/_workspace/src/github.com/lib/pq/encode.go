@@ -5,11 +5,13 @@ import (
 	"database/sql/driver"
 	"encoding/hex"
 	"fmt"
-	"github.com/lib/pq/oid"
 	"math"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
+
+	"github.com/lib/pq/oid"
 )
 
 func encode(parameterStatus *parameterStatus, x interface{}, pgtypOid oid.Oid) []byte {
@@ -35,7 +37,8 @@ func encode(parameterStatus *parameterStatus, x interface{}, pgtypOid oid.Oid) [
 	case bool:
 		return []byte(fmt.Sprintf("%t", v))
 	case time.Time:
-		return []byte(v.Format(time.RFC3339Nano))
+		return formatTs(v)
+
 	default:
 		errorf("encode: unknown type for %T", v)
 	}
@@ -96,7 +99,7 @@ func appendEncodedText(parameterStatus *parameterStatus, buf []byte, x interface
 	case bool:
 		return strconv.AppendBool(buf, v)
 	case time.Time:
-		return append(buf, v.Format(time.RFC3339Nano)...)
+		return append(buf, formatTs(v)...)
 	case nil:
 		return append(buf, "\\N"...)
 	default:
@@ -147,12 +150,6 @@ func appendEscapedText(buf []byte, text string) []byte {
 func mustParse(f string, typ oid.Oid, s []byte) time.Time {
 	str := string(s)
 
-	// Special case until time.Parse bug is fixed:
-	// http://code.google.com/p/go/issues/detail?id=3487
-	if str[len(str)-2] == '.' {
-		str += "0"
-	}
-
 	// check for a 30-minute-offset timezone
 	if (typ == oid.T_timestamptz || typ == oid.T_timetz) &&
 		str[len(str)-3] == ':' {
@@ -179,12 +176,45 @@ func mustAtoi(str string) int {
 	return result
 }
 
+// The location cache caches the time zones typically used by the client.
+type locationCache struct {
+	cache map[int]*time.Location
+	lock  sync.Mutex
+}
+
+// All connections share the same list of timezones. Benchmarking shows that
+// about 5% speed could be gained by putting the cache in the connection and
+// losing the mutex, at the cost of a small amount of memory and a somewhat
+// significant increase in code complexity.
+var globalLocationCache *locationCache = newLocationCache()
+
+func newLocationCache() *locationCache {
+	return &locationCache{cache: make(map[int]*time.Location)}
+}
+
+// Returns the cached timezone for the specified offset, creating and caching
+// it if necessary.
+func (c *locationCache) getLocation(offset int) *time.Location {
+	c.lock.Lock()
+	defer c.lock.Unlock()
+
+	location, ok := c.cache[offset]
+	if !ok {
+		location = time.FixedZone("", offset)
+		c.cache[offset] = location
+	}
+
+	return location
+}
+
 // This is a time function specific to the Postgres default DateStyle
 // setting ("ISO, MDY"), the only one we currently support. This
 // accounts for the discrepancies between the parsing available with
 // time.Parse and the Postgres date formatting quirks.
 func parseTs(currentLocation *time.Location, str string) (result time.Time) {
 	monSep := strings.IndexRune(str, '-')
+	// this is Gregorian year, not ISO Year
+	// In Gregorian system, the year 1 BC is followed by AD 1
 	year := mustAtoi(str[:monSep])
 	daySep := monSep + 3
 	month := mustAtoi(str[monSep+1 : daySep])
@@ -212,7 +242,6 @@ func parseTs(currentLocation *time.Location, str string) (result time.Time) {
 
 	nanoSec := 0
 	tzOff := 0
-	bcSign := 1
 
 	if remainderIdx < len(str) && str[remainderIdx:remainderIdx+1] == "." {
 		fracStart := remainderIdx + 1
@@ -246,18 +275,21 @@ func parseTs(currentLocation *time.Location, str string) (result time.Time) {
 			tzSec = mustAtoi(str[tzStart+7 : tzStart+9])
 			remainderIdx += 3
 		}
-		tzOff = (tzSign * tzHours * (60 * 60)) + (tzMin * 60) + tzSec
+		tzOff = tzSign * ((tzHours * 60 * 60) + (tzMin * 60) + tzSec)
 	}
+	var isoYear int
 	if remainderIdx < len(str) && str[remainderIdx:remainderIdx+3] == " BC" {
-		bcSign = -1
+		isoYear = 1 - year
 		remainderIdx += 3
+	} else {
+		isoYear = year
 	}
 	if remainderIdx < len(str) {
 		errorf("expected end of input, got %v", str[remainderIdx:])
 	}
-	t := time.Date(bcSign*year, time.Month(month), day,
+	t := time.Date(isoYear, time.Month(month), day,
 		hour, minute, second, nanoSec,
-		time.FixedZone("", tzOff))
+		globalLocationCache.getLocation(tzOff))
 
 	if currentLocation != nil {
 		// Set the location of the returned Time based on the session's
@@ -271,6 +303,40 @@ func parseTs(currentLocation *time.Location, str string) (result time.Time) {
 	}
 
 	return t
+}
+
+// formatTs formats t into a format postgres understands.
+func formatTs(t time.Time) (b []byte) {
+	// Need to send dates before 0001 A.D. with " BC" suffix, instead of the
+	// minus sign preferred by Go.
+	// Beware, "0000" in ISO is "1 BC", "-0001" is "2 BC" and so on
+	bc := false
+	if t.Year() <= 0 {
+		// flip year sign, and add 1, e.g: "0" will be "1", and "-10" will be "11"
+		t = t.AddDate((-t.Year())*2+1, 0, 0)
+		bc = true
+	}
+	b = []byte(t.Format(time.RFC3339Nano))
+
+	_, offset := t.Zone()
+	offset = offset % 60
+	if offset != 0 {
+		// RFC3339Nano already printed the minus sign
+		if offset < 0 {
+			offset = -offset
+		}
+
+		b = append(b, ':')
+		if offset < 10 {
+			b = append(b, '0')
+		}
+		b = strconv.AppendInt(b, int64(offset), 10)
+	}
+
+	if bc {
+		b = append(b, " BC"...)
+	}
+	return b
 }
 
 // Parse a bytea value received from the server.  Both "hex" and the legacy

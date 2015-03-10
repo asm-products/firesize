@@ -23,7 +23,7 @@ func (c *Context) log(data Data) error {
 // New creates a duplicate Context object, merging the given data with the
 // Context's data.
 func (c *Context) New(data Data) *Context {
-	return newContext(c.Merge(data), c.Logger, c.TimeUnit, c.ErrorReporter, c._statter)
+	return newContext(c.Merge(data), c.Logger, c.TimeUnit, c.ErrorReporter, c._statter.dup())
 }
 
 // Add adds the key and value to the Context's data.
@@ -39,6 +39,11 @@ func (c *Context) Merge(data Data) Data {
 	} else {
 		return dupeMaps(c.data, data)
 	}
+}
+
+// Data returns the Context's current Data.
+func (c *Context) Data() Data {
+	return c.data
 }
 
 // Delete removes the key from the Context's data.

@@ -2,8 +2,8 @@
 
 set -e
 
-dropdb   firesize_development
-dropdb   firesize_test
-createdb firesize_development
-createdb firesize_test
-foreman run goose up
+fig run db dropdb   -h db -U postgres firesize_development
+fig run db dropdb   -h db -U postgres firesize_test
+fig run db createdb -h db -U postgres firesize_development
+fig run db createdb -h db -U postgres firesize_test
+fig run web goose up

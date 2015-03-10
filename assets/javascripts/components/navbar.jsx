@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 
-var React = require('react')
+var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
 
@@ -13,14 +13,16 @@ var Navbar = React.createClass({
     return (
       <div className="bg-red">
         <div className="container clearfix p2">
-          <Link to="home" className="left red-dark">
+
+          <Link to="home" className="left red-dark block homepage-logo">
             <img src={FiresizeLogo} height="30" width="30" className="mr1" />
-            <span style={{ verticalAlign: 'top', height: '30px' }}>FireSize</span>
+            <span>FireSize</span>
           </Link>
+
           <div className="right">
-            <Link to="dashboard" className="red-dark ml3">Dashboard</Link>
-            <Link to="docs" className="red-dark ml3">Docs</Link>
+            {this.props.links}
           </div>
+
         </div>
       </div>
     )

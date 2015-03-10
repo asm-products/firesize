@@ -1,12 +1,10 @@
-var Signin = require('../components/signin.jsx');
-
 var auth = require('./auth');
 
 var AuthenticatedRoute = {
   statics: {
     willTransitionTo: function (transition) {
       if (!auth.signedIn()) {
-        Signin.attemptedTransition = transition;
+        auth.setTransition(transition);
         transition.redirect('/signin');
       }
     }

@@ -95,7 +95,11 @@ internals.signedIn = function() {
     window.location = url.format(currentUrl);
   }
 
-  return !!sessionStorage.getItem('token');
+  return sessionStorage.getItem('token') !== '';
+};
+
+internals.setTransition = function(transition) {
+  internals.transition = transition;
 };
 
 internals.onChange = function() {};

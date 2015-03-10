@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var React = require('react')
-var Router = require('react-router')
+var React = require('react');
+var Router = require('react-router');
 
 var FiresizeLogo = require('../../images/logo.png');
 
@@ -50,17 +50,6 @@ var Home = React.createClass({
   header: function() {
     return (
       <div className="bg-red">
-        <div className="clearfix p2">
-          <a href="/" className="left red-dark block homepage-logo">
-            <img src={FiresizeLogo} height="30" width="30" className="mr1" />
-            <span>FireSize</span>
-          </a>
-          <a href="https://addons.heroku.com/firesize" className="right red-dark">
-            <span className="sm-hide">Install</span>
-            <span className="sm-show">Install the Heroku add-on</span>
-          </a>
-        </div>
-
         <div className="col-10 mx-auto">
           <div className="center" style={{ paddingTop: '3rem', paddingBottom: '13rem' }}>
             <h1 className="white text-shadow">On the fly image resizing</h1>

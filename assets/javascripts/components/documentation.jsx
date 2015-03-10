@@ -4,8 +4,6 @@ var React = require('react');
 
 var Highlight = require('../lib/highlight.jsx');
 
-var Navbar = require('./navbar.jsx');
-
 var Documentation = React.createClass({
   mixins: [require('../lib/authenticated_route')],
 
@@ -16,8 +14,6 @@ var Documentation = React.createClass({
   render: function() {
     return (
       <div>
-        <Navbar />
-
         <div className="container py3">
           <div className="bg-white border p3">
             <h2 className="mt0">Getting Started</h2>

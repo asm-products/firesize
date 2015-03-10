@@ -14,6 +14,7 @@ func (c *HomeController) Init(r *mux.Router) {
 	r.HandleFunc("/", c.Index)
 	r.HandleFunc("/dashboard", c.Index)
 	r.HandleFunc("/docs", c.Index)
+	r.HandleFunc("/404", c.Index)
 }
 
 func (c *HomeController) Index(w http.ResponseWriter, r *http.Request) {

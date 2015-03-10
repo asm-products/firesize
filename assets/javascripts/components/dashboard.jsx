@@ -5,7 +5,6 @@ var Router = require('react-router');
 var Link = Router.Link;
 
 var Highlight = require('../lib/highlight.jsx');
-var Navbar = require('./navbar.jsx');
 
 require('stylesheets/app.scss');
 
@@ -19,8 +18,6 @@ var Dashboard = React.createClass({
   render: function() {
     return (
       <div>
-        <Navbar />
-
         <div className="container py3">
           <div className="bg-white border p3">
             <h2 className="mt0">Getting Started</h2>

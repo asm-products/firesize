@@ -1,27 +1,19 @@
 {
   "name": "firesize",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "dependencies": {
     "basscss": "^5.0.1",
-    "bootstrap-webpack": "0.0.2",
-    "css-loader": "^0.9.0",
-    "file-loader": "^0.7.2",
-    "font-awesome": "^4.2.0",
-    "font-awesome-webpack": "gowravshekar/font-awesome-webpack",
+    "css-loader": "^0.9.1",
+    "file-loader": "^0.8.1",
     "highlight.js": "^8.4.0",
-    "jsx-loader": "^0.11.0",
-    "less": "^1.7.5",
-    "less-loader": "^0.7.7",
-    "react": "^0.11.1",
-    "react-addons": "^0.9.0",
-    "react-bootstrap": "^0.12.0",
-    "react-router": "^0.7.0",
+    "jsx-loader": "^0.12.2",
+    "react": "^0.12.2",
+    "react-router": "^0.12.4",
     "sass-loader": "^0.4.1",
-    "style-loader": "^0.8.0",
-    "superagent": "^0.18.2",
-    "underscore": "^1.7.0",
+    "style-loader": "^0.8.3",
+    "superagent": "^0.21.0",
     "url-loader": "^0.5.5",
-    "webpack": "^1.4.0-beta6"
+    "webpack": "^1.7.2"
   },
   "scripts": {
     "postinstall": "npm run bundle",
@@ -30,8 +22,8 @@
     "test": "jest assets/javascripts"
   },
   "devDependencies": {
-    "jest-cli": "^0.1.18",
-    "react-tools": "^0.11.2"
+    "jest-cli": "^0.4.0",
+    "react-tools": "^0.12.2"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jest_processor.js",

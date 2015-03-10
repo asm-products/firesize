@@ -3,6 +3,7 @@
 var React = require('react');
 var Router = require('react-router');
 var Link = Router.Link;
+var RouteHandler = Router.RouteHandler;
 
 var Navbar = require('./navbar.jsx');
 
@@ -21,7 +22,7 @@ var WebsiteHandler = React.createClass({
     return (
       <div>
         <Navbar links={this.navbarLinks()} />
-        {this.props.activeRouteHandler()}
+        <RouteHandler />
       </div>
     );
   },

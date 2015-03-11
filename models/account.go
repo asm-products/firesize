@@ -35,6 +35,22 @@ func FindAccountById(id int64) *Account {
 	return accounts[0].(*Account)
 }
 
+func FindAccountByJwt(jwtString string) *Account {
+  token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
+    return []byte(os.Getenv("SECRET")), nil
+  })
+  if err != nil || !token.Valid {
+    panic(err)
+  }
+
+  account := FindAccountById(int64(token.Claims["account_id"].(float64)))
+  if err != nil {
+    panic(err)
+  }
+
+  return account
+}
+
 func FindAccountByEmail(email string) *Account {
 	accounts, err := Dbm.Select(Account{}, `select * from accounts where lower(email) = lower($1) limit 1`, email)
 	if err != nil {

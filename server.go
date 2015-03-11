@@ -30,6 +30,7 @@ func main() {
 	r := mux.NewRouter()
 	r.SkipClean(true) // have to use whatupdave/mux until Gorilla supports this
 
+	new(controllers.AccountsController).Init(r)
 	new(controllers.HerokuResourcesController).Init(r)
 	new(controllers.HomeController).Init(r)
 	new(controllers.ImagesController).Init(r)

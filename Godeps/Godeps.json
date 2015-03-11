@@ -19,11 +19,6 @@
 			"Rev": "f3cebac2bd11c2bf03c15bfa4c66688ad02a0a40"
 		},
 		{
-			"ImportPath": "code.google.com/p/go.crypto/blowfish",
-			"Comment": "null-218",
-			"Rev": "f3cebac2bd11c2bf03c15bfa4c66688ad02a0a40"
-		},
-		{
 			"ImportPath": "github.com/bmizerany/assert",
 			"Comment": "release.r60-6-ge17e998",
 			"Rev": "e17e99893cb6509f428e1728281c2ad60a6b31e3"
@@ -73,7 +68,7 @@
 		},
 		{
 			"ImportPath": "github.com/mattn/go-sqlite3",
-			"Rev": "1b2a5560c2127947f8f4d49087320e0629031714"
+			"Rev": "aa317ad229dc78838481d326abf23113e55f381f"
 		},
 		{
 			"ImportPath": "github.com/technoweenie/grohl",
@@ -97,6 +92,10 @@
 			"ImportPath": "github.com/ziutek/mymysql/native",
 			"Comment": "v1.5.4",
 			"Rev": "e08c2f35356576b3c3690c252fe5dca728ae9292"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "1351f936d976c60a0a48d728281922cf63eafb8d"
 		}
 	]
 }

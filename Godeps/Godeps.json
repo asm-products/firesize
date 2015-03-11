@@ -15,8 +15,8 @@
 		},
 		{
 			"ImportPath": "code.google.com/p/go.crypto/bcrypt",
-			"Comment": "null-218",
-			"Rev": "f3cebac2bd11c2bf03c15bfa4c66688ad02a0a40"
+			"Comment": "null-236",
+			"Rev": "69e2a90ed92d03812364aeb947b7068dc42e561e"
 		},
 		{
 			"ImportPath": "github.com/bmizerany/assert",
@@ -49,8 +49,8 @@
 		},
 		{
 			"ImportPath": "github.com/kr/pretty",
-			"Comment": "go.weekly.2011-12-22-26-gcb0850c",
-			"Rev": "cb0850c1681cbca3233e84f7e6ec3e4c3f352085"
+			"Comment": "go.weekly.2011-12-22-18-gbc9499c",
+			"Rev": "bc9499caa0f45ee5edb2f0209fbd61fbf3d9018f"
 		},
 		{
 			"ImportPath": "github.com/kr/text",
@@ -63,8 +63,8 @@
 		},
 		{
 			"ImportPath": "github.com/lib/pq",
-			"Comment": "go1.0-cutoff-23-g835d5eb",
-			"Rev": "835d5eb08da4541f26181e6958d7400da769e44b"
+			"Comment": "go1.0-cutoff-28-g72d960f",
+			"Rev": "72d960fe96ac86dfd376b0de7ca81c0334838d0b"
 		},
 		{
 			"ImportPath": "github.com/mattn/go-sqlite3",

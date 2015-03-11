@@ -2,12 +2,11 @@ package pretty
 
 import (
 	"fmt"
+	"github.com/kr/text"
 	"io"
 	"reflect"
 	"strconv"
 	"text/tabwriter"
-
-	"github.com/kr/text"
 )
 
 const (
@@ -57,7 +56,7 @@ func (fo formatter) passThrough(f fmt.State, c rune) {
 func (fo formatter) Format(f fmt.State, c rune) {
 	if fo.force || c == 'v' && f.Flag('#') && f.Flag(' ') {
 		w := tabwriter.NewWriter(f, 4, 4, 1, ' ', 0)
-		p := &printer{tw: w, Writer: w, visited: make(map[visit]int)}
+		p := &printer{tw: w, Writer: w}
 		p.printValue(reflect.ValueOf(fo.x), true, fo.quote)
 		w.Flush()
 		return
@@ -67,9 +66,7 @@ func (fo formatter) Format(f fmt.State, c rune) {
 
 type printer struct {
 	io.Writer
-	tw      *tabwriter.Writer
-	visited map[visit]int
-	depth   int
+	tw *tabwriter.Writer
 }
 
 func (p *printer) indent() *printer {
@@ -88,19 +85,7 @@ func (p *printer) printInline(v reflect.Value, x interface{}, showType bool) {
 	}
 }
 
-// printValue must keep track of already-printed pointer values to avoid
-// infinite recursion.
-type visit struct {
-	v   uintptr
-	typ reflect.Type
-}
-
 func (p *printer) printValue(v reflect.Value, showType, quote bool) {
-	if p.depth > 10 {
-		io.WriteString(p, "!%v(DEPTH EXCEEDED)")
-		return
-	}
-
 	switch v.Kind() {
 	case reflect.Bool:
 		p.printInline(v, v.Bool(), showType)
@@ -152,16 +137,6 @@ func (p *printer) printValue(v reflect.Value, showType, quote bool) {
 		writeByte(p, '}')
 	case reflect.Struct:
 		t := v.Type()
-		if v.CanAddr() {
-			addr := v.UnsafeAddr()
-			vis := visit{addr, t}
-			if vd, ok := p.visited[vis]; ok && vd < p.depth {
-				p.fmtString(t.String()+"{(CYCLIC REFERENCE)}", false)
-				break // don't print v again
-			}
-			p.visited[vis] = p.depth
-		}
-
 		if showType {
 			io.WriteString(p, t.String())
 		}
@@ -181,7 +156,7 @@ func (p *printer) printValue(v reflect.Value, showType, quote bool) {
 					if expand {
 						writeByte(pp, '\t')
 					}
-					showTypeInStruct = labelType(f.Type)
+					showTypeInStruct = f.Type.Kind() == reflect.Interface
 				}
 				pp.printValue(getField(v, i), showTypeInStruct, true)
 				if expand {
@@ -200,9 +175,7 @@ func (p *printer) printValue(v reflect.Value, showType, quote bool) {
 		case e.Kind() == reflect.Invalid:
 			io.WriteString(p, "nil")
 		case e.IsValid():
-			pp := *p
-			pp.depth++
-			pp.printValue(e, showType, true)
+			p.printValue(e, showType, true)
 		default:
 			io.WriteString(p, v.Type().String())
 			io.WriteString(p, "(nil)")
@@ -247,10 +220,8 @@ func (p *printer) printValue(v reflect.Value, showType, quote bool) {
 			io.WriteString(p, v.Type().String())
 			io.WriteString(p, ")(nil)")
 		} else {
-			pp := *p
-			pp.depth++
-			writeByte(pp, '&')
-			pp.printValue(e, true, true)
+			writeByte(p, '&')
+			p.printValue(e, true, true)
 		}
 	case reflect.Chan:
 		x := v.Pointer()
@@ -299,14 +270,6 @@ func canExpand(t reflect.Type) bool {
 	case reflect.Map, reflect.Struct,
 		reflect.Interface, reflect.Array, reflect.Slice,
 		reflect.Ptr:
-		return true
-	}
-	return false
-}
-
-func labelType(t reflect.Type) bool {
-	switch t.Kind() {
-	case reflect.Interface, reflect.Struct:
 		return true
 	}
 	return false

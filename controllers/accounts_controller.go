@@ -26,12 +26,5 @@ func (c *AccountsController) Show(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-  fmt.Fprint(w, Response{
-    "subdomain": account.Subdomain,
-    "plan": account.Plan,
-    "plan_limit": 100,
-    "request_count": 80,
-    "requests": []map[string]interface{}{},
-    "only_allow_whitelisted": true,
-  })
+  fmt.Fprint(w, Response(account.Serialize()))
 }

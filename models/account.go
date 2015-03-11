@@ -108,6 +108,17 @@ func (a *Account) FiresizeUrl() string {
 	return fmt.Sprintf("https://%s.firesize.com", a.Subdomain)
 }
 
+func (a *Account) Serialize() map[string]interface{} {
+  return map[string]interface{}{
+    "subdomain": a.Subdomain,
+    "plan": a.Plan,
+    "plan_limit": 100,
+    "request_count": 80,
+    "requests": []map[string]interface{}{},
+    "only_allow_whitelisted": true,
+  }
+}
+
 var emailRegex = regexp.MustCompile("^.+@.+$")
 
 // func (a *Account) Validate(v *revel.Validation) {

@@ -13,7 +13,6 @@ var Dashboard = React.createClass({
 
   getInitialState: function() {
     return {
-      loading: false,
       subdomain: 'subdomain',
       plan: 'Free',
       plan_limit: 100,
@@ -34,8 +33,6 @@ var Dashboard = React.createClass({
         var account = response.body;
         this.setState(account);
       }.bind(this));
-
-    this.setState({ loading: true });
   },
 
   render: function() {
@@ -93,7 +90,7 @@ var Dashboard = React.createClass({
                     return (
                       <tr>
                         <td>{request.url}</td>
-                        <td>{request.created_at}</td>
+                        <td>{request.created}</td>
                       </tr>
                     )
                   })}

@@ -36,19 +36,19 @@ func FindAccountById(id int64) *Account {
 }
 
 func FindAccountByJwt(jwtString string) *Account {
-  token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
-    return []byte(os.Getenv("SECRET")), nil
-  })
-  if err != nil || !token.Valid {
-    panic(err)
-  }
+	token, err := jwt.Parse(jwtString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("SECRET")), nil
+	})
+	if err != nil || !token.Valid {
+		panic(err)
+	}
 
-  account := FindAccountById(int64(token.Claims["account_id"].(float64)))
-  if err != nil {
-    panic(err)
-  }
+	account := FindAccountById(int64(token.Claims["account_id"].(float64)))
+	if err != nil {
+		panic(err)
+	}
 
-  return account
+	return account
 }
 
 func FindAccountByEmail(email string) *Account {
@@ -109,22 +109,22 @@ func (a *Account) FiresizeUrl() string {
 }
 
 func (a *Account) Serialize() map[string]interface{} {
-  now := time.Now()
-  month := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, time.UTC)
+	now := time.Now()
+	month := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, time.UTC)
 
-  requests, err := Dbm.Select(ImageRequest{}, `SELECT * FROM image_requests WHERE account_id = $1 AND DATE_TRUNC('month', created_at) = $2 ORDER BY image_requests.created_at DESC`, a.Id, month)
+	requests, err := Dbm.Select(ImageRequest{}, `SELECT * FROM image_requests WHERE account_id = $1 AND DATE_TRUNC('month', created_at) = $2 ORDER BY image_requests.created_at DESC`, a.Id, month)
 	if err != nil {
 		panic(err)
 	}
 
-  return map[string]interface{}{
-    "subdomain": a.Subdomain,
-    "plan": a.Plan,
-    "plan_limit": 100,
-    "request_count": len(requests),
-    "requests": requests,
-    "only_allow_whitelisted": true,
-  }
+	return map[string]interface{}{
+		"subdomain":              a.Subdomain,
+		"plan":                   a.Plan,
+		"plan_limit":             100,
+		"request_count":          len(requests),
+		"requests":               requests,
+		"only_allow_whitelisted": true,
+	}
 }
 
 var emailRegex = regexp.MustCompile("^.+@.+$")

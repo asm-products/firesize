@@ -7,12 +7,13 @@ import (
 
 type ImageRequest struct {
 	Id        int64     `db:"id" json:"id"`
+	Url       string    `db:"url" json:"url"`
 	CreatedAt time.Time `db:"created_at" json:"created"`
 	UpdatedAt time.Time `db:"updated_at" json:"updated"`
 	AccountId int64     `db:"account_id" json:"account_id"`
 }
 
-func CreateImageRequestForSubdomain(subdomain string) error {
+func CreateImageRequestForSubdomain(subdomain string, url string) error {
 	account := FindAccountBySubdomain(subdomain)
 	if account == nil {
 		return errors.New("Account not found")
@@ -21,6 +22,7 @@ func CreateImageRequestForSubdomain(subdomain string) error {
 	imageRequest := ImageRequest{
 		CreatedAt: time.Now(),
 		AccountId: account.Id,
+		Url:       url,
 	}
 
 	err := Insert(&imageRequest)

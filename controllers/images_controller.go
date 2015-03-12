@@ -19,7 +19,7 @@ func (c *ImagesController) Init(r *mux.Router) {
 // TODO: Pass through requests without an account subdomain
 func (c *ImagesController) Get(w http.ResponseWriter, r *http.Request) {
 	subdomain := strings.Split(r.Host, ".")[0]
-	models.CreateImageRequestForSubdomain(subdomain)
+	models.CreateImageRequestForSubdomain(subdomain, r.RequestURI)
 
 	vars := mux.Vars(r)
 

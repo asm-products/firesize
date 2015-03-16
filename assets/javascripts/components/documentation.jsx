@@ -19,7 +19,7 @@ var Documentation = React.createClass({
             <h2 className="mt0">Getting Started</h2>
             <p className="mb0">Let's resize your first image. All you have to
             do is take your original image url and add the firesize url prefix
-            to the src attribute. FireSize automatically grabs the original
+            to the src attribute. Firesize automatically grabs the original
             image and resizes it on the fly. Here's an example:</p>
           </div>
           <div className="bg-white border-left border-right border-bottom p3">
@@ -46,7 +46,7 @@ var Documentation = React.createClass({
 
           <div className="bg-white border p3 mt3">
             <h2 className="mt0">Heroku Environment Variables</h2>
-            <p className="mb0">When you add FireSize as an add-on, we'll
+            <p className="mb0">When you add Firesize as an add-on, we'll
             generate a unique subdomain for your account and assign it to
             the <code>FIRESIZE_URL</code> environment variable. We recommend
             reading up on how Heroku recommends using environment variables to
@@ -77,7 +77,7 @@ var Documentation = React.createClass({
           <div className="bg-white border p3 mt3">
             <h2 className="mt0">Resizing Options</h2>
             <p className="mb3">As you saw above, each image resizing option can
-            be included as a url segment directly in the FireSize url. Below
+            be included as a url segment directly in the Firesize url. Below
             are a list of options, allowed values and what they mean. You can
             include any number of these options in any order as long as they
             come before the original image url as the last url segment.</p>

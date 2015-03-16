@@ -36,6 +36,11 @@ var Dashboard = React.createClass({
   },
 
   render: function() {
+    var emptyState
+    if (!this.state.requests.length) {
+      emptyState = <tr><td><span className="gray">Haven't seen any reqeusts yet.</span></td></tr>
+    }
+
     return (
       <div>
         <div className="container py3">
@@ -94,6 +99,7 @@ var Dashboard = React.createClass({
                       </tr>
                     )
                   })}
+                  {emptyState}
                 </tbody>
               </table>
             </div>

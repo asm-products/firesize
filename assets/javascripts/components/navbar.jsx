@@ -16,7 +16,7 @@ var Navbar = React.createClass({
 
           <Link to="home" className="left red-dark block homepage-logo">
             <img src={FiresizeLogo} height="30" width="30" className="mr1" />
-            <span>FireSize</span>
+            <span>Firesize</span>
           </Link>
 
           <div className="right">

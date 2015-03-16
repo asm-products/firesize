@@ -1,4 +1,4 @@
-[FireSize](http://addons.heroku.com/firesize) let's you resize images on the
+[Firesize](http://addons.heroku.com/firesize) let's you resize images on the
 fly with just a simple HTTP request.
 
 You can resize and convert images without any configuration, background
@@ -8,7 +8,7 @@ to cache resized images all for free.
 
 ## Provisioning the add-on
 
-FireSize can be attached to a Heroku application via the  CLI:
+Firesize can be attached to a Heroku application via the  CLI:
 
 > callout
 > A list of all plans available can be found [pricing page](http://addons.heroku.com/firesize).
@@ -18,7 +18,7 @@ $ heroku addons:add firesize
 -----> Adding firesize to sharp-mountain-4005... done, v18 (free)
 ```
 
-Once FireSize has been added a `FIRESIZE_URL` setting will be available in the
+Once Firesize has been added a `FIRESIZE_URL` setting will be available in the
 app configuration and will contain the your unique firesize url used for image
 resizing. This can be confirmed using the `heroku config:get` command.
 
@@ -27,7 +27,7 @@ $ heroku config:get FIRESIZE_URL
 https://j29fjskei39d.firesize.com
 ```
 
-After installing FireSize you can go ahead and start using the just by altering
+After installing Firesize you can go ahead and start using the just by altering
 your image urls.
 
 ## Getting Started
@@ -61,7 +61,7 @@ Jinja2:
 
 ## Monitoring & Logging
 
-FireSize activity can be observed within the Heroku log-stream by [[describe add-on logging recognition, if any]].
+Firesize activity can be observed within the Heroku log-stream by [[describe add-on logging recognition, if any]].
 
 ```term
 $ heroku logs -t | grep 'firesize pattern'
@@ -70,12 +70,12 @@ $ heroku logs -t | grep 'firesize pattern'
 ## Dashboard
 
 > callout
-> For more information on the features available within the FireSize dashboard please see the docs at [https://firesize.com/docs](https://firesize.com/docs).
+> For more information on the features available within the Firesize dashboard please see the docs at [https://firesize.com/docs](https://firesize.com/docs).
 
 You can also view your current usage information, configure your domain, or
 even whitelist specific image source locations. Visit our dashboard by visiting
 the [Heroku Dashboard](https://dashboard.heroku.com/apps) and clicking on
-FireSize in your app's addon list.
+Firesize in your app's addon list.
 
 ## Migrating between plans
 
@@ -92,7 +92,7 @@ $ heroku addons:upgrade firesize:premium
 
 ## Removing the add-on
 
-FireSize can be removed via the  CLI.
+Firesize can be removed via the  CLI.
 
 > warning
 > This will destroy all associated data and cannot be undone!
@@ -104,7 +104,7 @@ $ heroku addons:remove firesize
 
 ## Support
 
-All FireSize support and runtime issues should be submitted via one of the
+All Firesize support and runtime issues should be submitted via one of the
 [Heroku Support channels](support-channels). Any non-support related issues or
 product feedback is welcome at
 [patrick@firesize.com](mailto:patrick@firesize.com).

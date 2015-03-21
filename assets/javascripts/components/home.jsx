@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Router = require('react-router');
+var Link = Router.Link;
 
 var FiresizeLogo = require('../../images/logo.png');
 
@@ -102,22 +103,16 @@ var Home = React.createClass({
     return (
       <section className="homepage-feature-boxes">
         <div className="homepage-feature-box">
-          <h1>Instant setup</h1>
-          <p>
-            Just include the firesize url and resize options as part of your
-            image url and we'll resize your image and return it to you all on
-            the fly. You wont need any background workers, thumbnail service or
-            CDN configuration.
-          </p>
+          <h2>No Code Required</h2>
+          <p>Firesize only needs a simple url. You don't need to write any
+          code or include any libraries -- just prefix your current image urls
+          with your new FireSize subdomain. That's it.</p>
         </div>
         <div className="homepage-feature-box">
-          <h1>Pay-as-you-go</h1>
-          <p>
-            Just include the firesize url and resize options as part of your
-            image url and we'll resize your image and return it to you all on
-            the fly. You wont need any background workers, thumbnailURLs or
-            CDN configuration.
-          </p>
+          <h2>Built-in CDN</h2>
+          <p>After resizing your images, we'll host them behind a CDN free of
+          charge. You're images will be quickly delivered to your users, and
+          only new resizes will count towards your plan's limit each month.</p>
         </div>
       </section>
     )
@@ -125,8 +120,15 @@ var Home = React.createClass({
 
   footer: function() {
     return (
-      <footer className="homepage-footer">
-        Built by the community on <a href="https://assembly.com/firesize" target="_blank">Assembly</a>
+      <footer className="center mt4">
+        <p className="h2 mb4">Built by the community on <a href="https://assembly.com/firesize" target="_blank">Assembly</a></p>
+        <hr />
+        <div className="mb3">
+          <Link to="docs" className="mr3">Docs</Link>
+          <a className="mr3" href="mailto:firesize@helpful.io">Support</a>
+          <a className="mr3" href="https://addons.heroku.com/firesize">Heroku Add-on</a>
+          <a className="mr3" href="https://assembly.com/firesize">Assembly</a>
+        </div>
       </footer>
     )
   }

@@ -214,17 +214,6 @@ var Documentation = React.createClass({
               resized images quota for the month.
             </p>
           </div>
-
-          <div className="bg-white border p3 mt3">
-            <h2 className="mt0">Plan Limits</h2>
-            <p className="mb0">What happens if I go over my image resizing
-              limit for the month? First of all you shouldn't worry. Before
-              degrading service, we'll always try to get in contact with the
-              owners of the account and give them plenty of time to either
-              upgrade or reduce usage. But, if after many attempts we still
-              can't resolve the overage, we'll simply pass-through to the
-              original, unprocessed image.</p>
-          </div>
         </div>
       </div>
     );

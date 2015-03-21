@@ -111,7 +111,7 @@ var Home = React.createClass({
         <div className="homepage-feature-box">
           <h2>Built-in CDN</h2>
           <p>After resizing your images, we'll host them behind a CDN free of
-          charge. You're images will be quickly delivered to your users, and
+          charge. Your images will be quickly delivered to your users, and
           only new resizes will count towards your plan's limit each month.</p>
         </div>
       </section>

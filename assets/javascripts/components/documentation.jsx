@@ -101,7 +101,7 @@ var Documentation = React.createClass({
                   <strong>g_none</strong>
                 </p>
                 <p className="h5">
-                  Does not crop the image. Instead resizes to the largest bounds comtained in the specified dimensions.
+                  Does not crop the image. Instead resizes to the largest bounds contained in the specified dimensions.
                 </p>
               </div>
               <div className="mb2">

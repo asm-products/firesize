@@ -89,7 +89,7 @@ var Documentation = React.createClass({
                   <strong>[horizontal]x[vertical]</strong>
                 </p>
                 <p className="h5">
-                  Specifies the new dimensions in pixels of the resized image. 
+                  Specifies the new dimensions in pixels of the resized image.
                 </p>
               </div>
             </div>
@@ -185,7 +185,7 @@ var Documentation = React.createClass({
                   <strong>frame_[number]</strong>
                 </p>
                 <p className="h5">
-                  If the image file has multiple frames, like an animated gif for instance, only the frame with the index specified will be 
+                  If the image file has multiple frames, like an animated gif for instance, only the frame with the index specified will be returned.
                 </p>
               </div>
             </div>

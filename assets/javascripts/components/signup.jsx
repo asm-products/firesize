@@ -53,10 +53,10 @@ var Signup = React.createClass({
     var email = this.refs.email.getDOMNode().value.trim()
     var password = this.refs.password.getDOMNode().value.trim()
 
-    auth.signup(email, password, function(signedIn) {
-      console.log(signedIn);
+    auth.signup(email, password, function(error) {
+      console.log(error);
 
-      if (!signedIn) {
+      if (error) {
         return this.setState({ error: true })
       }
 
@@ -65,7 +65,7 @@ var Signup = React.createClass({
         Signup.attemptedTransition = null
         transition.retry()
       } else {
-        Router.replaceWith('/dashboard')
+        window.location.href = "/dashboard";
       }
     }.bind(this))
   }

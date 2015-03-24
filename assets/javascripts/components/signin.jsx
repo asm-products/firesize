@@ -19,13 +19,26 @@ var Signin = React.createClass({
       error: false
     }
   },
+
   render: function() {
+    var error;
+
+    if (this.state.error) {
+      error = (
+        <div className="bold center p2 mb2 white bg-red rounded">
+          Oops. Something went wrong.
+        </div>
+      );
+    }
+
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit} className="col sm-col-6">
           <h2>Sign in</h2>
 
           <fieldset className="fieldset-reset">
+            {error}
+
             <div className="mb2">
               <input type="email" ref="email" className="block full-width field-light" placeholder="Your email" autofocus />
             </div>
@@ -56,7 +69,7 @@ var Signin = React.createClass({
         Signin.attemptedTransition = null
         transition.retry()
       } else {
-        Router.replaceWith('/dashboard')
+        window.location.href = "/dashboard";
       }
     }.bind(this))
   }

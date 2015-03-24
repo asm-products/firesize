@@ -65,7 +65,7 @@ internals.signup = function(email, password, callback) {
     }.bind(this))
 };
 
-internals.signout = function(cb) {
+internals.signout = function(callback) {
   if (sessionStorage) {
     sessionStorage.setItem('token', '');
   }

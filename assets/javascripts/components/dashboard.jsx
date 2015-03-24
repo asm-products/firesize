@@ -7,6 +7,7 @@ var request = require('superagent');
 var url = require('url');
 
 var Highlight = require('../lib/highlight.jsx');
+var auth = require('../lib/auth');
 
 var Dashboard = React.createClass({
   mixins: [require('../lib/authenticated_route')],

@@ -13,7 +13,8 @@ var AppHandler = React.createClass({
     return [
       <Link to="dashboard" className="red-dark ml3">Dashboard</Link>,
       <Link to="docs" className="red-dark ml3">Docs</Link>,
-      <a className="red-dark ml3" href="mailto:firesize@helpful.io">Support</a>
+      <a className="red-dark ml3" href="mailto:firesize@helpful.io">Support</a>,
+      <Link to="signout" className="red-dark ml3">Sign out</Link>
     ];
   },
 

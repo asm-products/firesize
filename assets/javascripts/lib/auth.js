@@ -67,7 +67,7 @@ internals.signup = function(email, password, callback) {
 
 internals.signout = function(cb) {
   if (sessionStorage) {
-    sessionStorage.deleteItem('token');
+    sessionStorage.setItem('token', '');
   }
   if (callback) callback();
   this.onChange(false);
@@ -95,7 +95,8 @@ internals.signedIn = function() {
     window.location = url.format(currentUrl);
   }
 
-  return sessionStorage.getItem('token') !== '';
+  var token = sessionStorage.getItem('token')
+  return token && token !== '';
 };
 
 internals.setTransition = function(transition) {

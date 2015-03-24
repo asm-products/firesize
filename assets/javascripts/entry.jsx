@@ -17,7 +17,10 @@ var routes = [
   <Route handler={AppHandler}>
     <Route name="dashboard" handler={require('./components/dashboard.jsx')} />
     <Route name="docs" handler={require('./components/documentation.jsx')} />
-    <NotFoundRoute name="notfound" path="404" handler={require('./components/404.jsx')} />
+    <Route name="signup" handler={require('./components/signup.jsx')} />
+    <Route name="signin" handler={require('./components/signin.jsx')} />
+    <Route name="signout" handler={require('./components/signout.jsx')} />
+    <NotFoundRoute name="notfound" handler={require('./components/404.jsx')} />
   </Route>
 ];
 

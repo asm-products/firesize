@@ -11,8 +11,8 @@ var Signout = React.createClass({
   },
 
   render: function() {
-    return <p>You are now signed out</p>;
+    window.location.href = "/";
   }
-})
+});
 
 module.exports = Signout;

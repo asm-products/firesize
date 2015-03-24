@@ -10,7 +10,7 @@ var Navbar = require('./navbar.jsx');
 var WebsiteHandler = React.createClass({
 
   navbarLinks: function() {
-    return (
+    return [
       <a href="https://addons.heroku.com/firesize" className="red-dark">
         <span className="sm-hide">
           <span className="inline-block bold mr2 py1 px2 white bg-blue rounded h6">Free during Beta!</span>
@@ -20,8 +20,9 @@ var WebsiteHandler = React.createClass({
           <span className="inline-block bold mr2 py1 px2 white bg-blue rounded h6">Free during Beta!</span>
           Install the Heroku add-on
         </span>
-      </a>
-    );
+      </a>,
+      <Link to="signin" className="red-dark ml3">Sign in</Link>
+    ];
   },
 
   render: function() {

@@ -33,7 +33,7 @@ var Signin = React.createClass({
 
     return (
       <div className="container">
-        <form onSubmit={this.handleSubmit} className="col sm-col-6">
+        <form onSubmit={this.handleSubmit} className="col sm-col-6 auth-form shadow-1">
           <h2>Sign in</h2>
 
           <fieldset className="fieldset-reset">
@@ -47,7 +47,7 @@ var Signin = React.createClass({
               <input type="password" ref="password" className="block full-width field-light" placeholder="Password" />
             </div>
 
-            <button className="button" type="submit">Sign in</button>
+            <button className="button button-big regular full-width" type="submit">Sign in</button>
           </fieldset>
         </form>
       </div>

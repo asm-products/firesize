@@ -64,7 +64,7 @@ Open up [http://localhost:3000](http://localhost:3000)
 
 ## API
 
-    /{width}x{height}/{gravity}/{frame}/{source}
+    /{width}x{height}{modifier}/{gravity}/{frame}/{source}
 
 Some examples:
 
@@ -79,6 +79,9 @@ Some examples:
 
     # height and width, cropped to center
     https://firesize.com/128x128/g_center/http://placekitten.com/g/32/32
+
+    # height and width, ignore aspect ratio
+    https://firesize.com/128x96!/g_center/http://placekitten.com/g/32/32
 
     # PSD with layer 0
     https://firesize.com/128x128/g_center/frame_0/http://asm-assets.s3.amazonaws.com/helpful-signup-04-24-14.psd

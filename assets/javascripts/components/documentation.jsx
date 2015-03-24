@@ -86,10 +86,37 @@ var Documentation = React.createClass({
             <div className="mb3">
               <div>
                 <p className="h4 mb0">
-                  <strong>[horizontal]x[vertical]</strong>
+                  <strong>[width]x[height][modifier]</strong>
                 </p>
                 <p className="h5">
                   Specifies the new dimensions in pixels of the resized image.
+                </p>
+                <p className="h5">
+                  The modifier works only if you give both width and height. It has the following effect:
+                </p>
+                <p className="h4 mb0">
+                  <strong>widthxheight^</strong>
+                </p>
+                <p className="h5">
+                  Minimum values of width and height given, aspect ratio preserved. That's the default if gravity is set.
+                </p>
+                <p className="h4 mb0">
+                  <strong>widthxheight!</strong>
+                </p>
+                <p className="h5">
+                  Width and height emphatically given, original aspect ratio ignored.
+                </p>
+                <p className="h4 mb0">
+                  <strong>widthxheight&gt;</strong>
+                </p>
+                <p className="h5">
+                  Shrinks an image with dimension(s) larger than the corresponding width and/or height argument(s). That's the default if gravity is not set.
+                </p>
+                <p className="h4 mb0">
+                  <strong>widthxheight&lt;</strong>
+                </p>
+                <p className="h5">
+                  Enlarges an image with dimension(s) smaller than the corresponding width and/or height argument(s).
                 </p>
               </div>
             </div>

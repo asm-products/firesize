@@ -3,12 +3,13 @@ package models
 import "regexp"
 
 type ProcessArgs struct {
-	Height  string
-	Width   string
-	Format  string
-	Gravity string
-	Frame   string
-	Url     string
+	Height    string
+	Width     string
+	ResizeMod string
+	Format    string
+	Gravity   string
+	Frame     string
+	Url       string
 }
 
 func NewProcessArgs(urlArgs []string, url string) *ProcessArgs {
@@ -20,7 +21,7 @@ func NewProcessArgs(urlArgs []string, url string) *ProcessArgs {
 	return args
 }
 
-var dimensionsRgx = regexp.MustCompile(`^(\d+)?x(\d+)?$`)
+var dimensionsRgx = regexp.MustCompile(`^(\d+)?x(\d+)?([<>!^])?$`)
 var gravityRgx = regexp.MustCompile(`^g_([a-z]+)$`)
 var frameRgx = regexp.MustCompile(`^frame_(\d+)$`)
 var formatRgx = regexp.MustCompile(`^(png|jpg|jpeg|gif)$`)
@@ -39,6 +40,7 @@ func (p *ProcessArgs) setUrlArg(arg string) bool {
 		dimensions := dimensionsRgx.FindStringSubmatch(arg)
 		p.Width = dimensions[1]
 		p.Height = dimensions[2]
+		p.ResizeMod = dimensions[3]
 		return true
 
 	case gravityRgx.MatchString(arg):
@@ -62,14 +64,18 @@ func (p *ProcessArgs) setUrlArg(arg string) bool {
 func (p *ProcessArgs) CommandArgs(inFile, outFile string) (args []string, outFileWithFormat string) {
 	args = make([]string, 0)
 
-	fillArg := ">"
 	if p.Gravity != "" {
 		args = append(args, "-gravity", p.Gravity)
-		fillArg = "^"
+		if p.ResizeMod == "" {
+			p.ResizeMod = "^"
+		}
 	}
 
+	if p.ResizeMod == "" {
+		p.ResizeMod = ">"
+	}
 	if p.Width != "" && p.Height != "" {
-		args = append(args, "-thumbnail", p.Width+"x"+p.Height+fillArg)
+		args = append(args, "-thumbnail", p.Width+"x"+p.Height+p.ResizeMod)
 		args = append(args, "-crop", p.Width+"x"+p.Height+"+0+0")
 	} else if p.Width != "" {
 		args = append(args, "-thumbnail", p.Width+"x")

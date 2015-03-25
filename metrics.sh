@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-db=$(heroku config | grep DATABASE_URL | tr -s ' ' | cut -d ' ' -f 2)
+db=$(heroku config --app firesize | grep DATABASE_URL | tr -s ' ' | cut -d ' ' -f 2)
 
 function sql {
   psql $db -t -c "$1" | tr -s ' '
@@ -30,7 +30,7 @@ active_count=$(sql "SELECT COUNT(DISTINCT image_requests.account_id) FROM image_
 active=$(sql "SELECT accounts.email, COUNT(accounts.email) FROM image_requests JOIN accounts ON image_requests.account_id = accounts.id GROUP BY accounts.email ORDER BY COUNT(accounts.email) DESC LIMIT 10;")
 
 echo "All time"
-echo "-------"
+echo "--------"
 echo "Heroku Signups: $heroku"
 echo "Manaul Signups: $manual"
 echo "Image resizes: $resizes"

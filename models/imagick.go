@@ -16,6 +16,11 @@ import (
 	"github.com/technoweenie/grohl"
 )
 
+// Low timeout as we can potentially run 3 convert steps and in all
+// cases in a Heroku environment there is a hard limit of 30secs before
+// your request is simply killed
+var normalTimeout = 10 * time.Second
+
 type IMagick struct{}
 
 type processPipelineStep func(workingDirectoryPath string, inputFilePath string, args *ProcessArgs) (outputFilePath string, err error)
@@ -24,6 +29,7 @@ var defaultPipeline = []processPipelineStep{
 	downloadRemote,
 	preProcessImage,
 	processImage,
+	postProcessImage,
 }
 
 // Process a remote asset url using graphicsmagick with the args supplied
@@ -117,7 +123,7 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 	cmd := exec.Command(executable, cmdArgs...)
 	var outErr bytes.Buffer
 	cmd.Stdout, cmd.Stderr = &outErr, &outErr
-	err := runWithTimeout(cmd, 60*time.Second)
+	err := runWithTimeout(cmd, normalTimeout)
 	if err != nil {
 		grohl.Log(grohl.Data{
 			"processor": "imagick",
@@ -129,6 +135,39 @@ func processImage(tempDir string, inFile string, args *ProcessArgs) (string, err
 	}
 
 	return outFileWithFormat, err
+}
+
+func postProcessImage(tempDir string, inFile string, args *ProcessArgs) (string, error) {
+	// If it originally "mp4" was requested even if before processing
+	// changed it to "gif"
+	grohl.Log(grohl.Data{"args": args})
+	if args.RequestFormat == "mp4" && args.Format == "gif" {
+		outFile := filepath.Join(tempDir, "video.mp4")
+		cmdArgs := []string{"-f", "gif", "-i", inFile, outFile}
+
+		grohl.Log(grohl.Data{
+			"processor": "ffmpeg",
+			"args":      cmdArgs,
+		})
+
+		cmd := exec.Command("ffmpeg", cmdArgs...)
+		var outErr bytes.Buffer
+		cmd.Stdout, cmd.Stderr = &outErr, &outErr
+		err := runWithTimeout(cmd, normalTimeout)
+		if err != nil {
+			grohl.Log(grohl.Data{
+				"processor": "ffmpeg",
+				"step":      "post-process-mp4",
+				"failure":   err,
+				"args":      cmdArgs,
+				"output":    string(outErr.Bytes()),
+			})
+		}
+
+		return outFile, err
+	}
+
+	return inFile, nil
 }
 
 func isAnimatedGif(inFile string) bool {

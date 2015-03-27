@@ -36,12 +36,13 @@ func Test_ProcessArgsGetsWidthAndHeight(t *testing.T) {
 func Test_ProcessArgsGetsTheRest(t *testing.T) {
 	args := NewProcessArgs([]string{"128x64", "g_center", "frame_0", "png"}, imgUrl)
 	assert.Equal(t, &ProcessArgs{
-		Width:   "128",
-		Height:  "64",
-		Gravity: "center",
-		Frame:   "0",
-		Format:  "png",
-		Url:     "http://placekitten.com/g/32/32",
+		Width:         "128",
+		Height:        "64",
+		Gravity:       "center",
+		Frame:         "0",
+		RequestFormat: "png",
+		Format:        "png",
+		Url:           "http://placekitten.com/g/32/32",
 	}, args)
 }
 

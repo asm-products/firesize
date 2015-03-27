@@ -55,10 +55,6 @@ func (p *IMagick) Process(w http.ResponseWriter, r *http.Request, args *ProcessA
 		}
 	}
 
-	// cache that image as rending is costly and url guaranties uniqueness
-	// as long a original source has content based hashes for it's assets
-	// TODO(kiasaki) Be nice guys and do the cache based on source ourselves?
-	w.Header().Set("Cache-control", "public, max-age=259200")
 	// serve response
 	http.ServeFile(w, r, filePath)
 	return

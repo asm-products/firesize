@@ -4,9 +4,7 @@ var React = require('react');
 
 var Highlight = require('../lib/highlight.jsx');
 
-var Documentation = React.createClass({
-  mixins: [require('../lib/authenticated_route')],
-
+var DocsMixin = {
   componentWillMount: function() {
     document.title = 'Docs';
   },
@@ -223,6 +221,6 @@ var Documentation = React.createClass({
       </div>
     );
   }
-})
+};
 
-module.exports = Documentation;
+module.exports = DocsMixin;

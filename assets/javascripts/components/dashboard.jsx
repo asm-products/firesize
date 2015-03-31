@@ -48,7 +48,7 @@ var Dashboard = React.createClass({
           <div className="bg-white border p3">
             <h2 className="mt0">Getting Started</h2>
             <p className="mb0">Look's like you're new around here. We'll, first
-            things first. Take a look at the <Link to="docs">Getting Started guide</Link> to
+            things first. Take a look at the <Link to="authdocs">Getting Started guide</Link> to
             start using FireSize. Once you're using the service you can always
             check back here to check your usage for the month or change
             configuration options.</p>
@@ -74,7 +74,7 @@ var Dashboard = React.createClass({
             </Highlight>
 
             <div className="mt3">
-              <Link to="docs">See more examples</Link>
+              <Link to="authdocs">See more examples</Link>
             </div>
           </div>
 

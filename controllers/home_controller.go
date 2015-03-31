@@ -14,6 +14,7 @@ func (c *HomeController) Init(r *mux.Router) {
 	r.HandleFunc("/", c.Index)
 	r.HandleFunc("/dashboard", c.Index)
 	r.HandleFunc("/docs", c.Index)
+	r.HandleFunc("/authdocs", c.Index)
 	r.HandleFunc("/signup", c.Index)
 	r.HandleFunc("/signin", c.Index)
 	r.HandleFunc("/signout", c.Index)

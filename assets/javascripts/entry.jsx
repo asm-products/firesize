@@ -15,10 +15,11 @@ var routes = [
     <DefaultRoute name="home" handler={require('./components/home.jsx')} />
     <Route name="signup" handler={require('./components/signup.jsx')} />
     <Route name="signin" handler={require('./components/signin.jsx')} />
+    <Route name="docs" handler={require('./components/docs.jsx')} />
   </Route>,
   <Route handler={AppHandler}>
     <Route name="dashboard" handler={require('./components/dashboard.jsx')} />
-    <Route name="docs" handler={require('./components/documentation.jsx')} />
+    <Route name="authdocs" handler={require('./components/auth_docs.jsx')} />
     <Route name="signout" handler={require('./components/signout.jsx')} />
     <NotFoundRoute name="notfound" handler={require('./components/404.jsx')} />
   </Route>

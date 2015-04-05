@@ -39,7 +39,7 @@ var Dashboard = React.createClass({
   render: function() {
     var emptyState
     if (!this.state.requests.length) {
-      emptyState = <tr><td><span className="gray">Haven't seen any reqeusts yet.</span></td></tr>
+      emptyState = <tr><td><span className="gray">Haven't seen any requests yet.</span></td></tr>
     }
 
     return (

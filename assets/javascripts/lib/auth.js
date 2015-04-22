@@ -65,9 +65,9 @@ internals.signup = function(email, password, callback) {
     }.bind(this))
 };
 
-internals.signout = function(cb) {
+internals.signout = function(callback) {
   if (sessionStorage) {
-    sessionStorage.deleteItem('token');
+    sessionStorage.setItem('token', '');
   }
   if (callback) callback();
   this.onChange(false);
@@ -95,7 +95,8 @@ internals.signedIn = function() {
     window.location = url.format(currentUrl);
   }
 
-  return sessionStorage.getItem('token') !== '';
+  var token = sessionStorage.getItem('token')
+  return token && token !== '';
 };
 
 internals.setTransition = function(transition) {

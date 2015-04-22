@@ -4,9 +4,7 @@ var React = require('react');
 
 var Highlight = require('../lib/highlight.jsx');
 
-var Documentation = React.createClass({
-  mixins: [require('../lib/authenticated_route')],
-
+var DocsMixin = {
   componentWillMount: function() {
     document.title = 'Docs';
   },
@@ -221,10 +219,15 @@ var Documentation = React.createClass({
             <div>
               <div>
                 <p className="h4 mb0">
-                  <strong>png, jpg, jpeg, gif</strong>
+                  <strong>png, jpg, jpeg, gif, mp4</strong>
+                </p>
+                <p className="h5">
+                  Convert the image into the specified file format
                 </p>
                 <p className="h5 mb0">
-                  Convert the image into the specified file format
+                  <strong>mp4</strong> format will only work on gifs and will
+                  behave like them for all the other rules, only, it will be
+                  converted to an mp4 at the end.
                 </p>
               </div>
             </div>
@@ -245,6 +248,6 @@ var Documentation = React.createClass({
       </div>
     );
   }
-})
+};
 
-module.exports = Documentation;
+module.exports = DocsMixin;

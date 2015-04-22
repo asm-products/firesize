@@ -8,6 +8,7 @@
     "highlight.js": "^8.4.0",
     "jsx-loader": "^0.12.2",
     "react": "^0.12.2",
+    "react-addons": "^0.9.1-deprecated",
     "react-router": "^0.12.4",
     "sass-loader": "^0.4.1",
     "style-loader": "^0.8.3",

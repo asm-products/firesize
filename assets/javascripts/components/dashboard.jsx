@@ -7,6 +7,7 @@ var request = require('superagent');
 var url = require('url');
 
 var Highlight = require('../lib/highlight.jsx');
+var auth = require('../lib/auth');
 
 var Dashboard = React.createClass({
   mixins: [require('../lib/authenticated_route')],
@@ -38,7 +39,7 @@ var Dashboard = React.createClass({
   render: function() {
     var emptyState
     if (!this.state.requests.length) {
-      emptyState = <tr><td><span className="gray">Haven't seen any reqeusts yet.</span></td></tr>
+      emptyState = <tr><td><span className="gray">Haven't seen any requests yet.</span></td></tr>
     }
 
     return (
@@ -47,7 +48,7 @@ var Dashboard = React.createClass({
           <div className="bg-white border p3">
             <h2 className="mt0">Getting Started</h2>
             <p className="mb0">Look's like you're new around here. We'll, first
-            things first. Take a look at the <Link to="docs">Getting Started guide</Link> to
+            things first. Take a look at the <Link to="authdocs">Getting Started guide</Link> to
             start using FireSize. Once you're using the service you can always
             check back here to check your usage for the month or change
             configuration options.</p>
@@ -73,7 +74,7 @@ var Dashboard = React.createClass({
             </Highlight>
 
             <div className="mt3">
-              <Link to="docs">See more examples</Link>
+              <Link to="authdocs">See more examples</Link>
             </div>
           </div>
 

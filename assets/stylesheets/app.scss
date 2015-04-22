@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'basscss';
 @import 'homepage';
+@import 'auth';
 @import 'github';
 
 html, body {
@@ -17,6 +18,10 @@ a.red-dark:hover {
   color: darken($red-dark, 10%);
 }
 
+.bg-red-dark {
+  background-color: $red-dark;
+}
+
 .text-shadow {
   text-shadow: 0 1px 1px rgba($black, 0.1);
 }
@@ -28,4 +33,8 @@ a.red-dark:hover {
 
 .shadow-2 {
   box-shadow: 0 3px 6px rgba($black, 0.1);
+}
+
+.shadow-inset {
+  box-shadow: inset 0 1px 2px rgba($black, 0.1);
 }

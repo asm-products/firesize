@@ -55,6 +55,8 @@ var Home = React.createClass({
           <div className="center" style={{ paddingTop: '3rem', paddingBottom: '13rem' }}>
             <h1 className="white text-shadow">On the fly image resizing</h1>
             <h3 className="red-dark">No code required. Built-in CDN.</h3>
+
+            <Link to="signup" className="button h3 p2 mt3">Sign up &mdash; it's free</Link>
           </div>
         </div>
       </div>

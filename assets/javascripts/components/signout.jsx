@@ -6,13 +6,13 @@ var Router = require('react-router');
 var auth = require('../lib/auth');
 
 var Signout = React.createClass({
-  componentDidMount: function() {
-    auth.signout();
-  },
-
   render: function() {
-    return <p>You are now signed out</p>;
+    auth.signout(function() {
+      window.location.href = "/";
+    });
+
+    return <div />;
   }
-})
+});
 
 module.exports = Signout;

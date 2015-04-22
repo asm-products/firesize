@@ -3,13 +3,14 @@ package models
 import "regexp"
 
 type ProcessArgs struct {
-	Height    string
-	Width     string
-	ResizeMod string
-	Format    string
-	Gravity   string
-	Frame     string
-	Url       string
+	ResizeMod     string
+	Height        string
+	Width         string
+	RequestFormat string
+	Format        string
+	Gravity       string
+	Frame         string
+	Url           string
 }
 
 func NewProcessArgs(urlArgs []string, url string) *ProcessArgs {
@@ -24,7 +25,7 @@ func NewProcessArgs(urlArgs []string, url string) *ProcessArgs {
 var dimensionsRgx = regexp.MustCompile(`^(\d+)?x(\d+)?([<>!^])?$`)
 var gravityRgx = regexp.MustCompile(`^g_([a-z]+)$`)
 var frameRgx = regexp.MustCompile(`^frame_(\d+)$`)
-var formatRgx = regexp.MustCompile(`^(png|jpg|jpeg|gif)$`)
+var formatRgx = regexp.MustCompile(`^(png|jpg|jpeg|gif|mp4)$`)
 
 func (p *ProcessArgs) HasOperations() bool {
 	return p.Height != "" ||
@@ -55,6 +56,7 @@ func (p *ProcessArgs) setUrlArg(arg string) bool {
 
 	case formatRgx.MatchString(arg):
 		format := formatRgx.FindStringSubmatch(arg)
+		p.RequestFormat = format[1]
 		p.Format = format[1]
 		return true
 	}

@@ -12,8 +12,9 @@ var AppHandler = React.createClass({
   navbarLinks: function() {
     return [
       <Link to="dashboard" className="red-dark ml3">Dashboard</Link>,
-      <Link to="docs" className="red-dark ml3">Docs</Link>,
-      <a className="red-dark ml3" href="mailto:firesize@helpful.io">Support</a>
+      <Link to="authdocs" className="red-dark ml3">Docs</Link>,
+      <a className="red-dark ml3" href="mailto:firesize@helpful.io">Support</a>,
+      <Link to="signout" className="red-dark ml3">Sign out</Link>
     ];
   },
 

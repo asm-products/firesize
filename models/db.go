@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/go-gorp/gorp"
+	"gopkg.in/gorp.v1"
 	_ "github.com/lib/pq"
 )
 
